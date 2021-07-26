@@ -1,0 +1,22 @@
+
+Family: gaussian 
+Link function: identity 
+
+Formula:
+resid ~ s(day, by = as.numeric(bat_sex == "male"), k = 7, bs = "cc") + 
+    s(day, by = as.numeric(bat_sex == "female"), k = 7, bs = "cc")
+
+Parametric coefficients:
+            Estimate Std. Error t value Pr(>|t|)
+(Intercept)   0.1989     0.4860   0.409    0.683
+
+Approximate significance of smooth terms:
+                                          edf Ref.df     F p-value  
+s(day):as.numeric(bat_sex == "male")   0.5385 0.5385 0.201  0.7425  
+s(day):as.numeric(bat_sex == "female") 3.7764 4.4677 1.911  0.0913 .
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Rank: 12/13
+R-sq.(adj) =  0.0123   Deviance explained = 2.02%
+GCV =  128.5  Scale est. = 127.23    n = 530
