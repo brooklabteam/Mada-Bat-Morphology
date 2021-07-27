@@ -40,8 +40,6 @@ data1$day= yday(data1$collection_date)
 head(data1)
 
 
-
-
 ### sub-select to just our 3 spp. of interest
 Allspp <- filter(select(data1, sampleid,bat_species, roost_site, collection_date,month,day, bat_sex, 
                         bat_age_class, bat_weight_g, bat_forearm_mm, bat_tibia_mm, ear_length_mm, body_length_cm), 
@@ -81,44 +79,24 @@ AllsppAdult_Mora$bat_forearm_mm= as.numeric(AllsppAdult_Mora$bat_forearm_mm)
 p1 <- ggplot(data = AllsppAdult_Mora) + geom_point(aes(x=bat_forearm_mm,y=bat_weight_g, color=bat_species))
 
 print(p1) #this is all species together. 
-#you cannot fit a linear model without also including 
-#a transformation because the interaction here is exponential
-#previously, you wrote:
-#modAllspp <- lmodel2(bat_weight_g~bat_forearm_mm, data=AllsppAdult_Mora,nperm= 99)
+
 #look with log10
 p2 <- ggplot(data = AllsppAdult_Mora) + geom_point(aes(x=bat_forearm_mm,y=bat_weight_g)) +
       scale_y_log10() + scale_x_log10()
 print(p2)
 
-
-#remove the outliers from the eidolon data especially.
-
+#now divide up by species
 Eid.df = subset(AllsppAdult_Mora, bat_species=="Eidolon dupreanum")
-Eid.df = arrange(Eid.df, bat_weight_g)
-Eid.df = arrange(Eid.df, bat_tibia_mm)
-Eid.df = arrange(Eid.df, ear_length_mm)
-head(Eid.df)
-tail(Eid.df)
-
-#  everything under 200 comes from that first week in January 2019. wasn't the caliper working incorrectly???
-#also look at the big forearms
 Eid.df = arrange(Eid.df, desc(bat_forearm_mm))
-#those over 150 are erroneous
 head(Eid.df)
 tail(Eid.df)
-
-#double-check tomorrow
-Eid.df$bat_forearm_mm[Eid.df$bat_forearm_mm==165.3] <- 105.3 #KEL246
-
 
 
 #and Pter
 Pter.df = subset(AllsppAdult_Mora, bat_species=="Pteropus rufus")
-Pter.df = arrange(Pter.df, bat_forearm_mm)
 Pter.df = arrange(Pter.df, desc(bat_forearm_mm))
-Pter.df = arrange(Pter.df, bat_tibia_mm)
-Pter.df = arrange(Pter.df, ear_length_mm)
 head(Pter.df) #116 is too low
+tail(Pter.df) #116 is too low
 
 
 
