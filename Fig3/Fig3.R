@@ -99,40 +99,17 @@ head(Pter.df) #116 is too low
 tail(Pter.df) #116 is too low
 
 
-
-Pter.df = subset(Pter.df, sampleid!="TSI058")
-
-Pter.df = arrange(Pter.df, desc(bat_weight_g))
-head(Pter.df)
-tail(Pter.df)
-#TSI058  weight too low
-
-
 Rou.df = subset(AllsppAdult_Mora, bat_species=="Rousettus madagascariensis")
-Rou.df = arrange(Rou.df, bat_forearm_mm)
-Rou.df = arrange(Rou.df, bat_tibia_mm)
-Rou.df = arrange(Rou.df, ear_length_mm)
-head(Rou.df) #first three <50 are way low and all from the same day
-tail(Rou.df)
-
-Rou.df = arrange(Rou.df, bat_weight_g)
+Rou.df = arrange(Rou.df, desc(bat_forearm_mm))
 head(Rou.df) 
 tail(Rou.df)
 
-Rou.df <- subset(Rou.df, sampleid!="MIZ544")
 
 AllsppAdult_Mora <- rbind(Rou.df, Pter.df, Eid.df)
 
-#AllsppAdult_Mora$keep =1 
-#AllsppAdult_Mora$keep[AllsppAdult_Mora$bat_species=="Eidolon dupreanum" & AllsppAdult_Mora$bat_forearm_mm>150] <-0
-#AllsppAdult_Mora$keep[AllsppAdult_Mora$bat_species=="Eidolon dupreanum" & AllsppAdult_Mora$bat_weight_g<200] <-0
-#AllsppAdult_Mora$keep[AllsppAdult_Mora$bat_species=="Pteropus rufus" & AllsppAdult_Mora$bat_forearm_mm<130] <-0
-#AllsppAdult_Mora$keep[AllsppAdult_Mora$bat_species=="Rousettus madagascariensis" & AllsppAdult_Mora$bat_forearm_mm<40] <-0
-#AllsppAdult_Mora = subset(AllsppAdult_Mora, keep==1)
 
 
-#now refit model and look again:
-#this time, though, refit it individual on each species and sex
+#now fit model by species and sex:
 Pter.dat.adultF = subset(AllsppAdult_Mora, bat_species=="Pteropus rufus" &  bat_sex=="female")
 Pter.dat.adultM = subset(AllsppAdult_Mora, bat_species=="Pteropus rufus"&  bat_sex=="male")
 Eid.dat.adultF = subset(AllsppAdult_Mora, bat_species=="Eidolon dupreanum" &  bat_sex=="female")
@@ -170,8 +147,39 @@ bRouM = modRouM$regression.results[3,2]
 
 #and do the same for confidence intervals too:
 
+#lci
+mPterF_lci = modPterF$confidence.intervals[3,4]
+bPterF_lci = modPterF$confidence.intervals[3,2]
+mPterM_lci = modPterM$confidence.intervals[3,4]
+bPterM_lci = modPterM$confidence.intervals[3,2]
 
-#Santino, Angelo fill in here
+
+mEidF_lci = modEidF$confidence.intervals[3,4]
+bEidF_lci = modEidF$confidence.intervals[3,2]
+mEidM_lci = modEidM$confidence.intervals[3,4]
+bEidM_lci = modEidM$confidence.intervals[3,2]
+
+mRouF_lci = modRouF$confidence.intervals[3,4]
+bRouF_lci = modRouF$confidence.intervals[3,2]
+mRouM_lci = modRouM$confidence.intervals[3,4]
+bRouM_lci = modRouM$confidence.intervals[3,2]
+
+#uci
+mPterF_uci = modPterF$confidence.intervals[3,5]
+bPterF_uci = modPterF$confidence.intervals[3,3]
+mPterM_uci = modPterM$confidence.intervals[3,5]
+bPterM_uci = modPterM$confidence.intervals[3,3]
+
+
+mEidF_uci = modEidF$confidence.intervals[3,5]
+bEidF_uci = modEidF$confidence.intervals[3,3]
+mEidM_uci = modEidM$confidence.intervals[3,5]
+bEidM_uci = modEidM$confidence.intervals[3,3]
+
+mRouF_uci = modRouF$confidence.intervals[3,5]
+bRouF_uci = modRouF$confidence.intervals[3,3]
+mRouM_uci = modRouM$confidence.intervals[3,5]
+bRouM_uci = modRouM$confidence.intervals[3,3]
 
 # predict function y = mx+b
 #but rewrite for log
@@ -195,44 +203,45 @@ Rou.dat.adultF$prediction <- regress.func(x= Rou.dat.adultF$bat_forearm_mm, m=mR
 Rou.dat.adultM$prediction <- regress.func(x= Rou.dat.adultM$bat_forearm_mm, m=mRouM, b=bRouM)
 
 
-#and the lower and upper CIs - you fill in
+#and the lower and upper CIs 
+Pter.dat.adultF$prediction_lci <- regress.func(x= Pter.dat.adultF$bat_forearm_mm, m=mPterF_lci, b=bPterF_lci)
+Pter.dat.adultM$prediction_lci <- regress.func(x= Pter.dat.adultM$bat_forearm_mm, m=mPterM_lci, b=bPterM_lci)
 
-#and join 
+Eid.dat.adultF$prediction_lci <- regress.func(x= Eid.dat.adultF$bat_forearm_mm, m=mEidF_lci, b=bEidF_lci)
+Eid.dat.adultM$prediction_lci <- regress.func(x= Eid.dat.adultM$bat_forearm_mm, m=mEidM_lci, b=bEidM_lci)
 
+Rou.dat.adultF$prediction_lci <- regress.func(x= Rou.dat.adultF$bat_forearm_mm, m=mRouF_lci, b=bRouF_lci)
+Rou.dat.adultM$prediction_lci <- regress.func(x= Rou.dat.adultM$bat_forearm_mm, m=mRouM_lci, b=bRouM_lci)
+
+
+Pter.dat.adultF$prediction_uci <- regress.func(x= Pter.dat.adultF$bat_forearm_mm, m=mPterF_uci, b=bPterF_uci)
+Pter.dat.adultM$prediction_uci <- regress.func(x= Pter.dat.adultM$bat_forearm_mm, m=mPterM_uci, b=bPterM_uci)
+
+Eid.dat.adultF$prediction_uci <- regress.func(x= Eid.dat.adultF$bat_forearm_mm, m=mEidF_uci, b=bEidF_uci)
+Eid.dat.adultM$prediction_uci <- regress.func(x= Eid.dat.adultM$bat_forearm_mm, m=mEidM_uci, b=bEidM_uci)
+
+Rou.dat.adultF$prediction_uci <- regress.func(x= Rou.dat.adultF$bat_forearm_mm, m=mRouF_uci, b=bRouF_uci)
+Rou.dat.adultM$prediction_uci <- regress.func(x= Rou.dat.adultM$bat_forearm_mm, m=mRouM_uci, b=bRouM_uci)
+
+
+#join back
 AllsppAdult_Mora <- rbind(Pter.dat.adultF, Eid.dat.adultF, Rou.dat.adultF,
                           Pter.dat.adultM, Eid.dat.adultM, Rou.dat.adultM)
 head(AllsppAdult_Mora )
 
 p3b <- ggplot(data = AllsppAdult_Mora) + 
   geom_point(aes(x=bat_forearm_mm,y=bat_weight_g, color=bat_age_class)) +
-  geom_line(aes(x=bat_forearm_mm, y= prediction), color="red") +
-  #geom_ribbon(aes(x=bat_forearm_mm, ymin= prediction_lci, ymax=prediction_uci), fill="red", alpha=.3) +
-  facet_grid(bat_species~bat_sex)
+  geom_line(aes(x=bat_forearm_mm, y= prediction), color="black", size=1) +
+  geom_ribbon(aes(x=bat_forearm_mm, ymin= prediction_lci, ymax=prediction_uci), fill="black", alpha=.3) +
+  facet_grid(bat_species~bat_sex) +
+  coord_cartesian(xlim=c(50,200), ylim=c(0,1000))
 
 print(p3b) #good!
 
 # Now can get residuals for all bat spp by sites
-#  
-
-#modAllspp$regression.results
-
-#intSMA <- modAllspp$regression.results[3, 2]
-#slopeSMA <- modAllspp$regression.results[3, 3]
-
-#AllsppAdult_Mora$PredictbatW <- intSMA + AllsppAdult_Mora$bat_forearm_mm * slopeSMA
-
-#previously, you had:
-#Resid <- AllsppAdult_Mora$bat_weight_g - AllsppAdult_Mora$PredictbatW 
-
-#I am not sure why you had the "PredictbatW" column. you can just use "prediction"
 AllsppAdult_Mora$resid <- AllsppAdult_Mora$bat_weight_g - AllsppAdult_Mora$prediction
 
 
-#attach to dataset
-
-####
-####GAMs
-###
 
 #Now repeat with individual GAMs by species to model the residuals
 
@@ -257,20 +266,14 @@ Rou.dat.adult= Rou.dat.adult[!is.na(Rou.dat.adult$resid),]
 
 
 library(mgcv)
-
-#previously, you used "cs"... since you want to model by month or by doy, you can use "cc"
-#this means that the end of one year is linked to the beginning of the next
-
-#you also previously specified that the data would drive the shape of the curve (fx=FALSE, k=-1)
-# to avoid overfitting here, I am changing to k=7
-# I also changed to day of year as a predictor instead of mont
-
+#k = 7 as suggested by package author Simon Wood
 gamPterplot <- gam(resid~ 
                      s(day, by=as.numeric(bat_sex=="male"),  k=7, bs = "cc") +
                      s(day, by=as.numeric(bat_sex=="female"), k=7, bs = "cc"), data = Pter.dat.adult)
 
+#save output
 sink("gam_Pruf.txt")
-summary(gamPterplot)
+summary(gamPterplot) #males significant
 sink()
 
 gamEidplot <- gam(resid~ 
@@ -280,7 +283,7 @@ gamEidplot <- gam(resid~
 
 
 sink("gam_Edup.txt")
-summary(gamEidplot)
+summary(gamEidplot) #males significant
 sink()
 
 
@@ -289,7 +292,7 @@ gamRouplot <- gam(resid~
                     s(day, by=as.numeric(bat_sex=="female"),   k=7, bs = "cc"),
                   data = Rou.dat.adult)
 sink("gam_Rmad.txt")
-summary(gamRouplot)
+summary(gamRouplot) #female slightly sig but mostly neither sex is sig.
 sink()
 
 #now add the predictions to each dataframe
@@ -320,6 +323,7 @@ ColM<- c("Pteropus rufus"="blue", "Eidolon dupreanum"="light green","Rousettus m
 
 class(new.All.dat$day)
 
+#visualize all together
 p4 <- ggplot(data = new.All.dat) + 
   geom_point(aes(x= as.numeric(day), y= resid, color=bat_species), alpha=.3)+ scale_color_manual(values=ColM)+ 
   geom_hline(aes(yintercept=0)) +
@@ -331,8 +335,31 @@ p4 <- ggplot(data = new.All.dat) +
   facet_grid(bat_species~bat_sex, scales = "free_y")+theme_bw() + theme(element_blank()) 
   
 
-ggsave(file = "MassVariationMora_bats_2.png",
-       plot = p4,
+#now, save just the males as the main plot
+new.All.dat$xlab = paste0(new.All.dat$bat_sex, " bats")
+
+p4_main <- ggplot(data = subset(new.All.dat, bat_sex=="male")) + 
+  geom_point(aes(x= as.numeric(day), y= resid, color=bat_species), alpha=.3, show.legend = F)+ 
+  scale_color_manual(values=ColM)+ 
+  geom_hline(aes(yintercept=0)) +
+  xlab ("Days of year")+ 
+  ylab("Mass residuals")+
+  geom_line(aes(x=day, y= prediction_resid_plot), col="red", size=1)+
+  geom_ribbon(aes(x= day, ymin=prediction_resid_plot_lci, ymax=prediction_resid_plot_uci),
+              fill="red",size=1, alpha=.3 ) +
+  facet_grid(bat_species~xlab, scales = "free_y")+theme_bw() + 
+  theme(strip.background= element_rect(fill="white"), 
+        strip.text.y = element_text(face="italic"),
+        panel.grid = element_blank(),
+        axis.title.x = element_blank()) +
+  scale_x_continuous(breaks=c(0,91,182, 274, 365), 
+                     labels = c("Jan-1", "Apr-1", "Jul-1", "Oct-1", "Dec-31"))
+
+p4_main
+
+
+ggsave(file = paste0(homewd, "final-figures/Fig4_male_seasonal_mass_residuals.png"),
+       plot = p4_main,
        units="mm",  
        width=90, 
        height=60, 
@@ -340,7 +367,32 @@ ggsave(file = "MassVariationMora_bats_2.png",
        dpi=300)
 
 
-################
+#and the supplementary figure with the females
+
+p4_supp <- ggplot(data = subset(new.All.dat, bat_sex=="female")) + 
+  geom_point(aes(x= as.numeric(day), y= resid, color=bat_species), alpha=.3, show.legend = F)+ 
+  scale_color_manual(values=ColM)+ 
+  geom_hline(aes(yintercept=0)) +
+  xlab ("Days of year")+ 
+  ylab("Mass residuals")+
+  geom_line(aes(x=day, y= prediction_resid_plot), col="red", size=1)+
+  geom_ribbon(aes(x= day, ymin=prediction_resid_plot_lci, ymax=prediction_resid_plot_uci),
+              fill="red",size=1, alpha=.3 ) +
+  facet_grid(bat_species~xlab, scales = "free_y")+theme_bw() + 
+  theme(strip.background= element_rect(fill="white"), 
+        strip.text.y = element_text(face="italic"),
+        panel.grid = element_blank(),
+        axis.title.x = element_blank()) +
+  scale_x_continuous(breaks=c(0,91,182, 274, 365), 
+                     labels = c("Jan-1", "Apr-1", "Jul-1", "Oct-1", "Dec-31"))
+
+p4_supp
 
 
-
+ggsave(file = paste0(homewd, "final-figures/FigS1_female_seasonal_mass_residuals.png"),
+       plot = p4_supp,
+       units="mm",  
+       width=90, 
+       height=60, 
+       scale=3, 
+       dpi=300)
