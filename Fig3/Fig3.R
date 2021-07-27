@@ -358,10 +358,10 @@ p4_main <- ggplot(data = subset(new.All.dat, bat_sex=="male")) +
 p4_main
 
 
-ggsave(file = paste0(homewd, "final-figures/Fig4_male_seasonal_mass_residuals.png"),
+ggsave(file = paste0(homewd, "final-figures/Fig3_male_seasonal_mass_residuals.png"),
        plot = p4_main,
        units="mm",  
-       width=90, 
+       width=50, 
        height=60, 
        scale=3, 
        dpi=300)
@@ -392,7 +392,7 @@ p4_supp
 ggsave(file = paste0(homewd, "final-figures/FigS1_female_seasonal_mass_residuals.png"),
        plot = p4_supp,
        units="mm",  
-       width=90, 
+       width=50, 
        height=60, 
        scale=3, 
        dpi=300)
