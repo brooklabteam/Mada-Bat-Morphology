@@ -5,6 +5,14 @@ library(ggplot2)
 library(lubridate)
 library(lmodel2)
 
+# Set wd to data on this computer. Also ID homewd, assuming that 
+# Mada-GIS is cloned to the same series of sub-folders
+homewd = "/Users/caraebrook/Documents/R/R_repositories/Mada-Bat-Morphology/" #should be wherever "Mada-Bat-Morphology" is stored on your home computer
+
+mapwd = paste0(basewd, "/", "Mada-GIS")
+setwd(paste0(homewd, "/", "Fig1B-map/"))
+
+
 #load the catching data
 dat <- read.csv(file = "morph_paper_dat_7_23_2021.csv", header=T, stringsAsFactors = F)
 head(dat)

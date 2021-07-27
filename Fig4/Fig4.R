@@ -1,4 +1,5 @@
 ###############ANALYSE TAONA#########################
+rm(list=ls())
 
 library(tidyverse)
 library(readr)
@@ -10,10 +11,15 @@ library(lubridate)
 library(cowplot)
 library(gratia)
 
+# first, set the working directory to this Fig4 subfolder
+homewd = "/Users/caraebrook/Documents/R/R_repositories/Mada-Bat-Morphology/"
+# above should be the parent directory for the entire project
+# for me, this is "/Users/caraebrook/Documents/R/R_repositories/Mada-Bat-Morphology/"
+
+setwd(paste0(homewd, "Fig4/"))
 
 
-#bat <- read.csv("catch_dat_5_1_2021.csv")
-bat<- read.csv(file = "morph_paper_dat_7_23_2021.csv", header=T, stringsAsFactors = F)
+bat<- read.csv(file = paste0(homewd, "morph_paper_dat_7_23_2021.csv"), header=T, stringsAsFactors = F)
 head(bat)
 
 bat$bat_forearm_mm[bat$bat_forearm_mm==165.3 & bat$sampleid=="KEL246"] <- 105.3 #KEL246
@@ -755,7 +761,7 @@ p<- plot_grid(C,A,B,
 print(p)
 
 
-ggsave(file = "Fig4_juvenile_growth_rates.png",
+ggsave(file = paste0(homewd, "final-figures/Fig4_juvenile_growth_rates.png"),
        units="mm",  
        width=120, 
        height=90, 
@@ -766,4 +772,5 @@ ggsave(file = "Fig4_juvenile_growth_rates.png",
           
 out.all <- rbind(out.Pter, out.Rou, out.Eid)
 
+#now save the derivative output here to this folder
 write.csv(out.all, file = "Fig4_GAM_derivatives.csv", row.names = F)
