@@ -1,0 +1,165 @@
+Order,Family,Genus,Species,Binomial,Sex,AdultBodyMass_g,Sample_size_bodyMass,reference_bodymass,MaxLongevity_m,Adult_tibia_length_m,Adult_tibia_length_CI_m,sample_size_tibia,reference.tibia,Adult_ear_length_mm,Adult_ear_length_CI_mm,sample_size_ear,reference.ear.length,Adult_forearm_length_mm,Adult_forearm_length_CI_mm,sample_size_forearm,reference.forearm
+Chiroptera,Pteropodidae,Balionycteris,maculata,Balionycteris maculata,M,12,5,"ibnu Maryanto, 2003
+",NA,12.65,NA,5,"ibnu Maryanto, 2003
+",7.29,NA,5,"ibnu Maryanto, 2003
+",40.15,NA,5,"ibnu Maryanto, 2003
+"
+Chiroptera,Pteropodidae,Balionycteris,maculata,Balionycteris maculata,F,12.21,7,"Ibnu Maryanto, 2003
+",NA,12.59,NA,7,"Ibnu Maryanto, 2003
+",7.13,NA,7,"ibnu Maryanto, 2003
+",39.21,NA,7,"Ibnu Maryanto, 2003
+"
+Chiroptera,Pteropodidae,Casinycteris,argynnis,Casinycteris argynnis,F,31.5,2,Van Cakenberghe et al 1995,NA,24.1,NA,2,Van Cakenberghe et al 1995,18.8,NA,2,Van Cakenberghe et al 1995,58.75,NA,2,Van Cakenberghe et al 1995
+Chiroptera,Pteropodidae,Dobsonia,beauforti,Dobsonia beauforti,M,156,1,Yohanita _et_al_2010,NA,45.32,NA,17,Yohanita _et_al_2010,25.45,NA,17,Yohanita _et_al_2010,106.4,NA,1,Bergmans&Sarbini_1985
+Chiroptera,Pteropodidae,Dobsonia,beauforti,Dobsonia beauforti,F,140,1,Yohanita _et_al_2010,NA,43.03,NA,28,Yohanita _et_al_2010,26.17,NA,28,Yohanita _et_al_2010,107.9,NA,1,Bergmans&Sarbini_1985
+Chiroptera,Pteropodidae,Dobsonia,chapmani,Dobsonia chapmani,F,140.5,2,,NA,NA,NA,NA,NA,265.5,NA,2,Pangutalan_et_al_2004,128.4,NA,2,Pangutalan_et_al_2004
+Chiroptera,Pteropodidae,Dobsonia,emersa,Dobsonia emersa,M,195.25,4,Yohanita _et_al_2010,NA,49.25,NA,4,Yohanita _et_al_2010,28.75,NA,4,Yohanita _et_al_2010,115.5,NA,4,Yohanita _et_al_2010
+Chiroptera,Pteropodidae,Dobsonia,inermis,Dobsonia inermis,M,150,3,Bhatnagar_et_al_1989,NA,NA,NA,NA,NA,NA,NA,NA,NA,107.4,NA,4,Bergmans_1975
+Chiroptera,Pteropodidae,Dobsonia,inermis,Dobsonia inermis,F,NA,NA,NA,NA,NA,NA,NA,NA,NA,AN,NA,NA,105.7,NA,3,Bergmans_1975
+Chiroptera,Pteropodidae,Dobsonia,magna,Dobsonia magna,M,352.78,23,Yohanita _et_al_2010,NA,63.42,NA,23,Yohanita _et_al_2010,29.47,NA,23,Yohanita _et_al_2010,146.65,NA,23,Yohanita _et_al_2010
+Chiroptera,Pteropodidae,Dobsonia,magna,Dobsonia magna,F,344.86,28,Yohanita _et_al_2010,NA,64.44,NA,28,Yohanita _et_al_2010,30.31,NA,28,Yohanita _et_al_2010,147.04,NA,28,Yohanita _et_al_2010
+Chiroptera,Pteropodidae,Dobsonia,minor,Dobsonia minor,M,63.73,34,Yohanita _et_al_2010,NA,28.91,NA,34,Yohanita _et_al_2010,20.68,NA,34,Yohanita _et_al_2010,77.45,NA,34,Yohanita _et_al_2010
+Chiroptera,Pteropodidae,Dobsonia,minor,Dobsonia minor,F,74.95,33,Yohanita _et_al_2010,NA,30.96,NA,33,Yohanita _et_al_2010,20.02,NA,33,Yohanita _et_al_2010,82.59,NA,33,Yohanita _et_al_2010
+Chiroptera,Pteropodidae,Dobsonia,moluccensis,Dobsonia moluccensis,M,465,1,Bhatnagar_et_al_1989,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Chiroptera,Pteropodidae,Dobsonia,pannietensis,Dobsonia pannietensis,M,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,118.8,NA,3,Bergmans_1979
+Chiroptera,Pteropodidae,Dobsonia,pannietensis,Dobsonia pannietensis,F,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,117.8,NA,5,Bergmans_1979
+Chiroptera,Pteropodidae,Dobsonia,praedatrix,Dobsonia praedatrix,M,198,2,Bhatnagar_et_al_1989,NA,26.25,NA,2,Bhatnagar_et_al_1989,25,NA,2,Bhatnagar_et_al_1989,113.5,NA,2,Bhatnagar_et_al_1989
+Chiroptera,Pteropodidae,Dobsonia,praedatrix,Dobsonia praedatrix,F,169.6,5,Bhatnagar_et_al_1989,NA,24.9,NA,5,Bhatnagar_et_al_1989,24.5,NA,5,Bhatnagar_et_al_1989,111.1,NA,5,Bhatnagar_et_al_1989
+Chiroptera,Pteropodidae,Eidolon,dupreanum,Eidolon dupreanum,M,320.1,,Brook et al 2019,NA,62.11,,,Brook et al 2019,28.9,,,Brook et al 2019,129.1,,,Brook et al 202
+Chiroptera,Pteropodidae,Eidolon,dupreanum,Eidolon dupreanum,F,308.8,,Brook et al 2019,NA,61.47,,,Brook et al 2019,28.24,,,Brook et al 2019,129.3,,,Brook et al 202
+Chiroptera,Pteropodidae,Epomophorus,angolensis,Epomophorus angolensis,M,NA,,,NA,,,,,,,,,88.42,,,Bergmans 1988
+Chiroptera,Pteropodidae,Epomophorus,angolensis,Epomophorus angolensis,F,NA,,,NA,,,,,,,,,83.34,,,Bergmans 1988
+Chiroptera,Pteropodidae,Epomophorus,gambianus,Epomophorus gambianus,M,134.59,,,NA,37,,,,,,,,90,,,Boulay and Robbins 1989
+Chiroptera,Pteropodidae,Epomophorus,gambianus,Epomophorus gambianus,F,134.59,,,NA,34.5,,,,,,,,84.9,,,Boulay and Robbins 1989
+Chiroptera,Pteropodidae,Epomophorus,grandis,Epomophorus grandis,M,49.42,,,NA,28,,,Bergmans 1988,17.4,,Bergmans 1988,,62.55,,,Boulay and Robbins 1989
+Chiroptera,Pteropodidae,Epomophorus,grandis,Epomophorus grandis,F,49.42,,,NA,28.2,,,Bergmans 1988,16,,Bergmans 1988,,65.8,,,Boulay and Robbins 1989
+Chiroptera,Pteropodidae,Epomophorus,labiatus,Epomophorus labiatus,M,69.65,,,NA,,,,,,,,,67.49090909,range: 66.7-80.3,145,Bergmans 1988
+Chiroptera,Pteropodidae,Epomophorus,labiatus,Epomophorus labiatus,F,69.65,,,NA,,,,,,,,,70.4875,range: 64.8-78.3,108,Bergmans 1988
+Chiroptera,Pteropodidae,Epomophorus,minimus,Epomophorus minimus,F,37,2,Benda et al 2019,NA,,,,,17.5,range: 16-19,2,Benda et al 2019,62.5,range: 60-65,2,Benda et al 2019
+Chiroptera,Pteropodidae,Epomophorus,minor,Epomophorus minor,M,44.76,,,NA,,,,,,,,,61.71666667,range: 57-66.4,36,Bergmans 1988
+Chiroptera,Pteropodidae,Epomophorus,minor,Epomophorus minor,F,44.76,,,NA,,,,,,,,,60.79444444,range: 58.3-64.2,18,Bergmans 1988
+Chiroptera,Pteropodidae,Epomophorus,wahlbergi,Epomophorus wahlbergi,M,116.7,3,Rollinson_etal_2013,NA,,,,,22.3,NA,1,Bergmans 1978,83,SD: 0.0,3,Rollinson_etal_2013
+Chiroptera,Pteropodidae,Epomophorus,wahlbergi,Epomophorus wahlbergi,F,92.6,5,Rollinson_etal_2013,NA,34.3,range: 34.1-34.5,2,Bergmans 1978,22.9,range: 22.8-23.1,4,Bergmans 1978,80.3,SD: 4.0,5,Rollinson_etal_2013
+Chiroptera,Pteropodidae,Epomophorus,wahlbergi,Epomophorus wahlbergi,M,100.2,6,Rollinson_etal_2013,NA,,,,,,,,,79.8,SD: 2.1,6,Rollinson_etal_2013
+Chiroptera,Pteropodidae,Epomophorus,wahlbergi,Epomophorus wahlbergi,F,92.8,4,Rollinson_etal_2013,NA,,,,,,,,,79.6,SD: 3.3,4,Rollinson_etal_2013
+Chiroptera,Pteropodidae,Epomops,buettikoferi,Epomops buettikoferi,M,170,3,Bergmans 1975,NA,,,,,,,,,97.6,range: 92.9-102.2,51,Bergmans 1975
+Chiroptera,Pteropodidae,Epomops,buettikoferi,Epomops buettikoferi,F,NA,,Bergmans 1975,NA,,,,,,,,,91.55,range: 84.4-96.2,49,Bergmans 1975
+Chiroptera,Pteropodidae,Harpyionycteris,celebensis,Harpyionycteris celebensis,F,116.77,,,NA,30,,1,Tate 1951,,,,,90,,1,Tate 1951
+Chiroptera,Pteropodidae,Latidens,salimalii,Latidens salimalii,M,77.5,16,Agoramoorthy & Hsu 2005,NA,,,,,,,,,69.38,1.54,16,Agoramoorthy & Hsu 2005
+Chiroptera,Pteropodidae,Latidens,salimalii,Latidens salimalii,F,69.58,19,Agoramoorthy & Hsu 2005,NA,,,,,,,,,68.95,2.2,19,Agoramoorthy & Hsu 2005
+Chiroptera,Pteropodidae,Hypsignathus,monstrosus,Hypsignathus monstrosus,M,339,,Langevin & Barclay 1990,NA,57,range: 54.0-60.0,,Langevin & Barclay 1990,32,,,Langevin & Barclay 1990,130,range: 120-140,,Langevin & Barclay 1990
+Chiroptera,Pteropodidae,Hypsignathus,monstrosus,Hypsignathus monstrosus,F,297.5,,Langevin & Barclay 1990,NA,53.5,range: 52.0-55.0,,Langevin & Barclay 1990,27,,,Langevin & Barclay 1990,123,range: 118-128,,Langevin & Barclay 1990
+Chiroptera,Pteropodidae,Megaerops,niphanae,Megaerops niphanae,M,32.59,,,NA,23.9,,1,Islam et al 2015,16,,1,Islam et al 2015,58.3,,1,Islam et al 2015
+Chiroptera,Pteropodidae,Melonycteris,fardoulisi,Melonycteris fardoulisi,M,NA,,,NA,,,,,,,,,61.2,SD: 3.35,3,Flannery 1993
+Chiroptera,Pteropodidae,Melonycteris,fardoulisi,Melonycteris fardoulisi,F,NA,,,NA,,,,,,,,,57.8,SD: 1.11,5,Flannery 1993
+Chiroptera,Pteropodidae,Melonycteris,fardoulisi,Melonycteris fardoulisi,M,NA,,,NA,,,,,,,,,60.7,SD: 0.07,2,Flannery 1993
+Chiroptera,Pteropodidae,Melonycteris,fardoulisi,Melonycteris fardoulisi,F,NA,,,NA,,,,,,,,,57.4,SD: 0.45,3,Flannery 1993
+Chiroptera,Pteropodidae,Melonycteris,fardoulisi,Melonycteris fardoulisi,M,NA,,,NA,,,,,,,,,55.1,SD: 1.43,6,Flannery 1993
+Chiroptera,Pteropodidae,Melonycteris,fardoulisi,Melonycteris fardoulisi,F,NA,,,NA,,,,,,,,,53.5,SD: 1.42,4,Flannery 1993
+Chiroptera,Pteropodidae,Melonycteris,fardoulisi,Melonycteris fardoulisi,M,NA,,,NA,,,,,,,,,56.9,SD: 1.60,6,Flannery 1993
+Chiroptera,Pteropodidae,Melonycteris,fardoulisi,Melonycteris fardoulisi,F,NA,,,NA,,,,,,,,,55.6,SD: 2.51,3,Flannery 1993
+Chiroptera,Pteropodidae,Melonycteris,melanops,Melonycteris melanops,M,47.59,,,NA,,,,,,,,,61.34,range: 54.7-63.6,5,Flannery 1993
+Chiroptera,Pteropodidae,Melonycteris,melanops,Melonycteris melanops,F,47.59,,,NA,,,,,,,,,61.32,range: 59-63,5,Flannery 1993
+Chiroptera,Pteropodidae,Micropteropus,intermedius,Micropteropus intermedius,M,NA,,,NA,23.7,NA,1,Bergmans 1989,14.8,NA,1,Bergmans 1989,58.1,NA,1,Bergmans 1989
+Chiroptera,Pteropodidae,Micropteropus,intermedius,Micropteropus intermedius,F,NA,,,NA,26,NA,1,Bergmans 1989,17.4,NA,1,Bergmans 1989,63.6,NA,1,Bergmans 1989
+Chiroptera,Pteropodidae,Micropteropus,intermedius,Micropteropus intermedius,F,NA,,,NA,25,NA,1,Kock 1987 (as reported in Bergmans 1989),14.3,NA,1,Kock 1987 (as reported in Bergmans 1989),58.3,NA,1,Kock 1987 (as reported in Bergmans 1989)
+Chiroptera,Pteropodidae,Myonycteris,relicta,Myonycteris relicta,M,53.32,,,NA,26.7,NA,1,"Bergmans, 1980",22,NA,1,"Bergmans, 1980",69.3,NA,1,"Bergmans, 1980"
+Chiroptera,Pteropodidae,Myonycteris,relicta,Myonycteris relicta,F,53.32,,,NA,29.3,NA,1,"Bergmans, 1980",20,NA,1,"Bergmans, 1980",75.1,NA,1,"Bergmans, 1980"
+Chiroptera,Pteropodidae,Myonycteris,torquata,Myonycteris torquata,M,44.92,,,NA,22.7,NA,3,"Bergmans, 1976",16.3,NA,4,"Bergmans, 1976",60.2,NA,15,"Bergmans, 1976"
+Chiroptera,Pteropodidae,Myonycteris,torquata,Myonycteris torquata,F,44.92,,,NA,NA,NA,NA,"Bergmans, 1976",18.3,NA,8,"Bergmans, 1976",60.7,NA,38,"Bergmans, 1976"
+Chiroptera,Pteropodidae,Nanonycteris,veldkampii,Nanonycteris veldkampii,M,21.89,,,NA,67.3,NA,8,"Kangoye et al., 2015",16.3,NA,8,"Kangoye et al., 2015",46.7,NA,42,"Kangoye et al., 2012"
+Chiroptera,Pteropodidae,Nanonycteris,veldkampii,Nanonycteris veldkampii,F,21.89,,,NA,72,NA,2,"Kangoye et al., 2015",16.6,NA,2,"Kangoye et al., 2015",52.65,NA,2,"Kangoye et al., 2012"
+Chiroptera,Pteropodidae,Neopteryx,frosti,Neopteryx frosti,F,230,NA,Ransaleleh et al 2020,NA,45,NA,1,"Bergmans & Rozendaal, 1988",19.3,NA,2,"Bergmans & Rozendaal, 1988",110,NA,NA,Ransaleleh et al 2020
+Chiroptera,Pteropodidae,Neopteryx,frosti,Neopteryx frosti,M,230,NA,Ransaleleh et al 2020,NA,40.7,NA,2,"Bergmans & Rozendaal, 1988",18.6,NA,2,"Bergmans & Rozendaal, 1988",100.5,NA,2,"Bergmans & Rozendaal, 1988"
+Chiroptera,Pteropodidae,Notopteris,macdonaldi,Notopteris macdonaldi,M,68.17,,,NA,35,NA,NA,"Trouessart, 1908",14,NA,NA,"Trouessart, 1908",67.1,NA,76,"Scanlon, Petit,& Bottroff, 2012"
+Chiroptera,Pteropodidae,Notopteris,macdonaldi,Notopteris macdonaldi,F,68.17,,,NA,35,NA,NA,"Trouessart, 1908",14,NA,NA,"Trouessart, 1908",64.9,NA,48,"Scanlon, Petit,& Bottroff, 2012"
+Chiroptera,Pteropodidae,Nyctimene,malaitensis,Nyctimene malaitensis,F,78.39,,,NA,,,,,14,NA,1,Curnow et al. 1968,65,NA,1,Curnow et al. 1968
+Chiroptera,Pteropodidae,Nyctimene,rabori,Nyctimene rabori,M,68.25,,,NA,,,,,19.5,0.5,13,"Heaney & Peterson, 1984",75.5,1.7,13,"Heaney & Peterson, 1984"
+Chiroptera,Pteropodidae,Nyctimene,rabori,Nyctimene rabori,F,68.25,,,NA,,,,,20,0.7,9,"Heaney & Peterson, 1984",76.7,2.8,9,"Heaney & Peterson, 1984"
+Chiroptera,Pteropodidae,Paranyctimene,raptor,Paranyctimene raptor,M,24.94,,,NA,18.6,NA,1,"Bergmans, 2001",11,NA,1,"Bergmans, 2001",53.4,NA,1,"Bergmans, 2001"
+Chiroptera,Pteropodidae,Paranyctimene,raptor,Paranyctimene raptor,F,24.94,,,NA,19,NA,2,"Bergmans, 2001",12.15,NA,2,"Bergmans, 2001",48.75,NA,2,"Bergmans, 2001"
+Chiroptera,Pteropodidae,Paranyctimene,tenax,Paranyctimene tenax,M,25.5,1,"Bergmans, 2001",NA,19.9,NA,6,"Bergmans, 2001",12.2,NA,6,"Bergmans, 2001",52.9,NA,6,"Bergmans, 2001"
+Chiroptera,Pteropodidae,Paranyctimene,tenax,Paranyctimene tenax,F,NA,,,NA,22.6,NA,2,"Bergmans, 2001",11.35,NA,2,"Bergmans, 2001",54.15,NA,2,"Bergmans, 2001"
+Chiroptera,Pteropodidae,Penthetor,lucasi,Penthetor lucasi,M,35.39,,,NA,29,NA,32,"Rahman & Abdullah, 2010",14.72,NA,32,"Rahman & Abdullah, 2010",60.64333333,NA,32,"Rahman & Abdullah, 2010"
+Chiroptera,Pteropodidae,Penthetor,lucasi,Penthetor lucasi,F,35.39,,,NA,28.55666667,NA,38,"Rahman & Abdullah, 2010",14.75333333,NA,38,"Rahman & Abdullah, 2010",60.72,NA,38,"Rahman & Abdullah, 2010"
+Chiroptera,Pteropodidae,Pteropus,admiralitatum,Pteropus admiralitatum,M,306.46,,,NA,,,,,,,,,108,NA,1,"Tate, 1934"
+Chiroptera,Pteropodidae,Pteropus,admiralitatum,Pteropus admiralitatum,F,306.46,,,NA,,,,,,,,,110.5,NA,2,"Tate, 1934"
+Chiroptera,Pteropodidae,Pteropus,aldabrensis,Pteropus aldabrensis,M,310.29,,,NA,,,,,,,,,137.3,NA,7,Bergmans 1990
+Chiroptera,Pteropodidae,Pteropus,aldabrensis,Pteropus aldabrensis,F,310.29,,,NA,,,,,32.5,NA,not_specified,Hill et al. 1971,133.75,NA,2,Bergmans 1990
+Chiroptera,Pteropodidae,Pteropus,aruensis,Pteropus aruensis,M,NA,,,NA,,,,,,,,,190,,1,Bergmans 2001
+Chiroptera,Pteropodidae,Pteropus,banakrisi,Pteropus banakrisi,F,234,6,"Richards & Hall, 2002",NA,66.7,66.8±1.7,5,"Richards & Hall, 2002",28.3,28.2±0.4,6,"Richards & Hall, 2002",135.2,128-141,6,"Richards & Hall, 2002"
+Chiroptera,Pteropodidae,Pteropus,lylei,Pteropus lylei,M,490.4,13,Choden et al 2019,NA,,,,,,,,,152.3,,12,Choden et al 2019
+Chiroptera,Pteropodidae,Pteropus,lylei,Pteropus lylei,F,430,1,Choden et al 2019,NA,,,,,,,,,149.4,,1,Choden et al 2019
+Chiroptera,Pteropodidae,Pteropus,mariannus,Pteropus mariannus,M,513.2,8,Perez 1972,NA,,,,,,,,,146.7,,8,Perez 1972
+Chiroptera,Pteropodidae,Pteropus,mariannus,Pteropus mariannus,F,412.5,10,Perez 1972,NA,,,,,,,,,141.3,,10,Perez 1972
+Chiroptera,Pteropodidae,Pteropus,melanopogon,Pteropus melanopogon,M,764,3 (range=510-900),Tsang 2015,NA,NA,NA,,NA,NA,NA,NA,NA,196.5,188-205,6,Tsang 2015
+Chiroptera,Pteropodidae,Pteropus,melanotus,Pteropus melanotus,M,395.6,12,Hall et al 2014,NA,,,,,,,,,NA,,,
+Chiroptera,Pteropodidae,Pteropus,niger,Pteropus niger,F,474.43,4 (range=380-520),"Cheke & Dahl,1981",NA,NA,NA,NA,NA,NA,NA,NA,NA,152,143-155,4,Cheke & Dahl 1981
+Chiroptera,Pteropodidae,Pteropus,ocularis,Pteropus ocularis,M,400,1,https://academicworks.cuny.edu/gc_etds/1161/,NA,68.89,,1,https://academicworks.cuny.edu/gc_etds/1161/,26.29,,1,https://academicworks.cuny.edu/gc_etds/1161/,144,,1,https://academicworks.cuny.edu/gc_etds/1161/
+Chiroptera,Pteropodidae,Pteropus,pelewensis,Pteropus pelewensis,M,268.1,31,Wiles et al 1997,NA,,,,,23.9,,66,Wiles et al 1997,120.5,,66,Wiles et al 1997
+Chiroptera,Pteropodidae,Pteropus,pelewensis,Pteropus pelewensis,F,246.2,18,Wiles et al 1997,NA,,,,,23.6,,60,Wiles et al 1997,119.7,,60,Wiles et al 1997
+Chiroptera,Pteropodidae,Pteropus,personatus,Pteropus personatus,M,114.88,12,Wiantoro&IbnuMaryanto 2016,NA,42.78,,12,Wiantoro&IbnuMaryanto 2016,21.25,,12,Wiantoro&IbnuMaryanto 2016,91.3,,12,Wiantoro&IbnuMaryanto 2016
+Chiroptera,Pteropodidae,Pteropus,personatus,Pteropus personatus,F,141,12,Wiantoro&IbnuMaryanto 2016,NA,45.07,,12,Wiantoro&IbnuMaryanto 2016,24.41,,12,Wiantoro&IbnuMaryanto 2016,94.22,,12,Wiantoro&IbnuMaryanto 2016
+Chiroptera,Pteropodidae,Pteropus,pselaphon,Pteropus pselaphon,M,491.88,17 (SE=34.11; Range=400-616),"Sugita & Ueda,2014",NA,NA,,,,,,,,137.76,"SE=1.68, range132.1-145.1",17,"Sugita & Ueda,2014"
+Chiroptera,Pteropodidae,Pteropus,pselaphon,Pteropus pselaphon,F,485.66,6 (SE=75.71; Range=363-580),"Sugita & Ueda,2014",NA,NA,,,,,,,,138.4,"SE=2.28, range135.8-139.8",6,"Sugita & Ueda,2014"
+Chiroptera,Pteropodidae,Pteropus,rufus,Pteropus rufus,M,669.3,131,Brook et al 2019,NA,80.93,NA,131,Brook et al 202,28.89,,131,Brook et al 2019,167.3,,131,Brook et al 2019
+Chiroptera,Pteropodidae,Pteropus,rufus,Pteropus rufus,F,557.9,121,Brook et al 2019,NA,78.46,NA,121,Brook et al 202,29.11,,121,Brook et al 2019,161.9,,121,Brook et al 2019
+Chiroptera,Pteropodidae,Pteropus,ualanus,Pteropus ualanus,M,NA,,,NA,NA,NA,NA,NA,23.4,NA,1,"Bulletin of the Museum of Comparative Zoology at Harvard College, Volume 52. https://books.google.com/books?id=sdvwAAAAMAAJ&pg=PA29&lpg=PA29&dq=%22Pteropus+ualanus%22+and+forearm+length&source=bl&ots=MXT82uGF0J&sig=ACfU3U1Y01ST9RLrlLNe1HMsS-MWmbtBTQ&hl=en&sa=X&ved=2ahUKEwjmvPnLy-_tAhUJs54KHWhhDdYQ6AEwBnoECAgQAg#v=onepage&q=%22Pteropus%20ualanus%22%20and%20forearm%20length&f=false",130,NA,1,"Bulletin of the Museum of Comparative Zoology at Harvard College, Volume 52. https://books.google.com/books?id=sdvwAAAAMAAJ&pg=PA29&lpg=PA29&dq=%22Pteropus+ualanus%22+and+forearm+length&source=bl&ots=MXT82uGF0J&sig=ACfU3U1Y01ST9RLrlLNe1HMsS-MWmbtBTQ&hl=en&sa=X&ved=2ahUKEwjmvPnLy-_tAhUJs54KHWhhDdYQ6AEwBnoECAgQAg#v=onepage&q=%22Pteropus%20ualanus%22%20and%20forearm%20length&f=false"
+Chiroptera,Pteropodidae,Pteropus,ualanus,Pteropus ualanus,M,NA,,,NA,NA,NA,NA,NA,24,NA,1,"Bulletin of the Museum of Comparative Zoology at Harvard College, Volume 52. https://books.google.com/books?id=sdvwAAAAMAAJ&pg=PA29&lpg=PA29&dq=%22Pteropus+ualanus%22+and+forearm+length&source=bl&ots=MXT82uGF0J&sig=ACfU3U1Y01ST9RLrlLNe1HMsS-MWmbtBTQ&hl=en&sa=X&ved=2ahUKEwjmvPnLy-_tAhUJs54KHWhhDdYQ6AEwBnoECAgQAg#v=onepage&q=%22Pteropus%20ualanus%22%20and%20forearm%20length&f=false",126,NA,1,"Bulletin of the Museum of Comparative Zoology at Harvard College, Volume 52. https://books.google.com/books?id=sdvwAAAAMAAJ&pg=PA29&lpg=PA29&dq=%22Pteropus+ualanus%22+and+forearm+length&source=bl&ots=MXT82uGF0J&sig=ACfU3U1Y01ST9RLrlLNe1HMsS-MWmbtBTQ&hl=en&sa=X&ved=2ahUKEwjmvPnLy-_tAhUJs54KHWhhDdYQ6AEwBnoECAgQAg#v=onepage&q=%22Pteropus%20ualanus%22%20and%20forearm%20length&f=false"
+Chiroptera,Pteropodidae,Pteropus,vampyrus,Pteropus vampyrus,M,1027.54,,,NA,103.556667,NA,3,Tsang 2015,39.9366667,NA,3,Tsang 2015,238.666667,NA,3,Tsang 2015
+Chiroptera,Pteropodidae,Pteropus,vampyrus,Pteropus vampyrus,F,1027.54,,,NA,92.575,NA,2,Tsang 2015,28.5566667,NA,2,Tsang 2015,190,NA,2,Tsang 2015
+Chiroptera,Pteropodidae,Pteropus,voeltzkowi,Pteropus voeltzkowi,M,542.4,,,NA,NA,NA,NA,NA,26.6666667,NA,3,Bergmans 1990,156.05,NA,6,Bergmans 1990
+Chiroptera,Pteropodidae,Pteropus,voeltzkowi,Pteropus voeltzkowi,F,542.4,,,NA,NA,NA,NA,NA,27,NA,3,Bergmans 1990,152,NA,5,Bergmans 1990
+Chiroptera,Pteropodidae,Pteropus,woodfordi,Pteropus woodfordi,M,122.67,,,NA,NA,NA,NA,NA,NA,NA,NA,NA,93.2,92.7-99,1,"Bergmans 2001, Sanborn 1947"
+Chiroptera,Pteropodidae,Rousettus,bidens,Rousettus bidens,M,NA,,,NA,50,NA,1,Jentinks 1879,23,NA,1,Jentinks 1879,97.9,NA,5,Bergmans and Rozendaal 1988
+Chiroptera,Pteropodidae,Rousettus,bidens,Rousettus bidens,F,NA,,,NA,NA,NA,NA,NA,NA,NA,NA,NA,99.4,NA,6,Bergmans and Rozendaal 1988
+Chiroptera,Pteropodidae,Rousettus,lanosus,Rousettus lanosus,F,104.78,,,NA,NA,NA,NA,NA,23,NA,2,Thorn and Peterhans 2009,88.5,NA,2,Thorn and Peterhans 2009
+Chiroptera,Pteropodidae,Rousettus,leschenaultii,Rousettus leschenaultii,M,84.88,,,NA,38.9,4.448,9,Shahbaz et al. 2020,19.77,2.991,9,Shahbaz et al. 2020,79.14,5.767,9,Shahbaz et al. 2020
+Chiroptera,Pteropodidae,Rousettus,leschenaultii,Rousettus leschenaultii,F,84.88,,,NA,35.08,4.779,6,Shahbaz et al. 2020,16,3.098,6,Shahbaz et al. 2020,75.33,7.062,6,Shahbaz et al. 2020
+Chiroptera,Pteropodidae,Rousettus,spinalatus,Rousettus spinalatus,M,92.32,,,NA,NA,NA,NA,NA,NA,NA,NA,NA,88.7,NA,1,Maryanto 2003
+Chiroptera,Pteropodidae,Rousettus,spinalatus,Rousettus spinalatus,F,92.32,,,NA,NA,NA,NA,NA,NA,NA,NA,NA,84.95,NA,3,Maryanto 2003
+Chiroptera,Pteropodidae,Scotonycteris,ophiodon,Scotonycteris ophiodon,M,69.42,,,NA,,,,Bergmans 1990,21.8,NA,4,Bergmans 1990,76.4166667,NA,6,Bergmans 1990
+Chiroptera,Pteropodidae,Scotonycteris,ophiodon,Scotonycteris ophiodon,F,69.42,,,NA,,,,Bergmans 1990,22.4333333,NA,6,Bergmans 1990,78.4714286,NA,7,Bergmans 1990
+Chiroptera,Pteropodidae,Scotonycteris,zenkeri,Scotonycteris zenkeri,M,21.3,,,NA,NA,NA,NA,NA,NA,NA,NA,NA,51.1,NA,13,Bergmans 1990
+Chiroptera,Pteropodidae,Scotonycteris,zenkeri,Scotonycteris zenkeri,F,21.3,,,NA,NA,NA,NA,NA,NA,NA,NA,NA,52.2,NA,10,Bergmans 1990
+Chiroptera,Pteropodidae,Aethalops,aequalis,Aethalops aequalis,M,NA,,,NA,16.48,NA,7,Tingga and Abdullah 2012,10.4,NA,7,Tingga and Abdullah 2012,43.68,NA,7,Tingga and Abdullah 2012
+Chiroptera,Pteropodidae,Aethalops,aequalis,Aethalops aequalis,F,NA,,,NA,14.66,NA,4,Tingga and Abdullah 2012,10.87,NA,4,Tingga and Abdullah 2012,43.15,NA,4,Tingga and Abdullah 2012
+Chiroptera,Pteropodidae,Aethalops,aequalis,Aethalops aequalis,F,NA,,,NA,15.28,NA,2,Tingga and Abdullah 2012,10.36,NA,2,Tingga and Abdullah 2012,38.11,NA,2,Tingga and Abdullah 2012
+Chiroptera,Pteropodidae,Aethalops,aequalis,Aethalops aequalis,M,NA,,,NA,15.57,NA,3,Tingga and Abdullah 2012,NA,NA,NA,Tingga and Abdullah 2012,43.53,NA,3,Tingga and Abdullah 2012
+Chiroptera,Pteropodidae,Aethalops,aequalis,Aethalops aequalis,F,NA,,,NA,15.48,NA,6,Tingga and Abdullah 2012,NA,NA,NA,Tingga and Abdullah 2012,42.92,NA,6,Tingga and Abdullah 2012
+Chiroptera,Pteropodidae,Aethalops,aequalis,Aethalops aequalis,M,NA,,,NA,15.12,NA,7,Tingga and Abdullah 2012,10.26,NA,7,Tingga and Abdullah 2012,44.05,NA,7,Tingga and Abdullah 2012
+Chiroptera,Pteropodidae,Aethalops,aequalis,Aethalops aequalis,F,NA,,,NA,15.82,NA,16,Tingga and Abdullah 2012,10.72,NA,16,Tingga and Abdullah 2012,43.76,NA,16,Tingga and Abdullah 2012
+Chiroptera,Pteropodidae,Aethalops,aequalis,Aethalops aequalis,M,NA,,,NA,16,NA,1,Tingga and Abdullah 2012,12,NA,1,Tingga and Abdullah 2012,44,NA,1,Tingga and Abdullah 2012
+Chiroptera,Pteropodidae,Aethalops,aequalis,Aethalops aequalis,F,NA,,,NA,16.1,NA,2,Tingga and Abdullah 2012,10.5,NA,2,Tingga and Abdullah 2012,45.85,NA,2,Tingga and Abdullah 2012
+Chiroptera,Pteropodidae,Aethalops,aequalis,Aethalops aequalis,M,NA,,,NA,13.79,NA,4,Tingga and Abdullah 2012,10.74,NA,4,Tingga and Abdullah 2012,44.37,NA,4,Tingga and Abdullah 2012
+Chiroptera,Pteropodidae,Aethalops,aequalis,Aethalops aequalis,F,NA,,,NA,14.77,NA,8,Tingga and Abdullah 2012,11.24,NA,8,Tingga and Abdullah 2012,44.12,NA,8,Tingga and Abdullah 2012
+Chiroptera,Pteropodidae,Aethalops,aequalis,Aethalops aequalis,F,NA,,,NA,7.49,NA,6,Tingga and Abdullah 2012,9.74,NA,6,Tingga and Abdullah 2012,43.86,NA,6,Tingga and Abdullah 2012
+Chiroptera,Pteropodidae,Syconycteris,carolinae,Syconycteris carolinae,M,39.67,,,NA,23,NA,23,"Boeadi and Flannery 1992. A second record of Synconycteris carolinae Rozendaal, 1984 with notes on habitat and biology. https://books.google.com/books?id=fTldaf9siaUC&pg=PA139&lpg=PA139&dq=Syconycteris+carolinae+and+%22ear+length%22&source=bl&ots=5tslT-HE_x&sig=ACfU3U0Ui1t3y7WJFg2AxBYGzdbvqeTvCA&hl=en&sa=X&ved=2ahUKEwjtyNaZ_P3tAhU0FTQIHd2eAaQQ6AEwAHoECAEQAg#v=onepage&q=Syconycteris%20carolinae%20and%20%22ear%20length%22&f=false",15.2,NA,23,"Boeadi and Flannery 1992. A second record of Synconycteris carolinae Rozendaal, 1984 with notes on habitat and biology. https://books.google.com/books?id=fTldaf9siaUC&pg=PA139&lpg=PA139&dq=Syconycteris+carolinae+and+%22ear+length%22&source=bl&ots=5tslT-HE_x&sig=ACfU3U0Ui1t3y7WJFg2AxBYGzdbvqeTvCA&hl=en&sa=X&ved=2ahUKEwjtyNaZ_P3tAhU0FTQIHd2eAaQQ6AEwAHoECAEQAg#v=onepage&q=Syconycteris%20carolinae%20and%20%22ear%20length%22&f=false",58.4,NA,22,"Boeadi and Flannery 1992. A second record of Synconycteris carolinae Rozendaal, 1984 with notes on habitat and biology. https://books.google.com/books?id=fTldaf9siaUC&pg=PA139&lpg=PA139&dq=Syconycteris+carolinae+and+%22ear+length%22&source=bl&ots=5tslT-HE_x&sig=ACfU3U0Ui1t3y7WJFg2AxBYGzdbvqeTvCA&hl=en&sa=X&ved=2ahUKEwjtyNaZ_P3tAhU0FTQIHd2eAaQQ6AEwAHoECAEQAg#v=onepage&q=Syconycteris%20carolinae%20and%20%22ear%20length%22&f=false"
+Chiroptera,Pteropodidae,Syconycteris,carolinae,Syconycteris carolinae,F,39.67,,,NA,22.6,NA,22,"Boeadi and Flannery 1992. A second record of Synconycteris carolinae Rozendaal, 1984 with notes on habitat and biology. https://books.google.com/books?id=fTldaf9siaUC&pg=PA139&lpg=PA139&dq=Syconycteris+carolinae+and+%22ear+length%22&source=bl&ots=5tslT-HE_x&sig=ACfU3U0Ui1t3y7WJFg2AxBYGzdbvqeTvCA&hl=en&sa=X&ved=2ahUKEwjtyNaZ_P3tAhU0FTQIHd2eAaQQ6AEwAHoECAEQAg#v=onepage&q=Syconycteris%20carolinae%20and%20%22ear%20length%22&f=false",15.1,NA,22,"Boeadi and Flannery 1992. A second record of Synconycteris carolinae Rozendaal, 1984 with notes on habitat and biology. https://books.google.com/books?id=fTldaf9siaUC&pg=PA139&lpg=PA139&dq=Syconycteris+carolinae+and+%22ear+length%22&source=bl&ots=5tslT-HE_x&sig=ACfU3U0Ui1t3y7WJFg2AxBYGzdbvqeTvCA&hl=en&sa=X&ved=2ahUKEwjtyNaZ_P3tAhU0FTQIHd2eAaQQ6AEwAHoECAEQAg#v=onepage&q=Syconycteris%20carolinae%20and%20%22ear%20length%22&f=false",58.4,NA,23,"Boeadi and Flannery 1992. A second record of Synconycteris carolinae Rozendaal, 1984 with notes on habitat and biology. https://books.google.com/books?id=fTldaf9siaUC&pg=PA139&lpg=PA139&dq=Syconycteris+carolinae+and+%22ear+length%22&source=bl&ots=5tslT-HE_x&sig=ACfU3U0Ui1t3y7WJFg2AxBYGzdbvqeTvCA&hl=en&sa=X&ved=2ahUKEwjtyNaZ_P3tAhU0FTQIHd2eAaQQ6AEwAHoECAEQAg#v=onepage&q=Syconycteris%20carolinae%20and%20%22ear%20length%22&f=false"
+Chiroptera,Pteropodidae,Syconycteris,hobbit,Syconycteris hobbit,F,20.06,,,NA,NA,NA,NA,NA,12,NA,1,Ziegler 1982,50,NA,1,Ziegler 1982
+Chiroptera,Pteropodidae,Acerodon,celebensis,Acerodon celebensis,M,384.84,,,NA,58.9,NA,1,Tsang 2015,33.34,NA,1,Tsang 2015,143,NA,1,Tsang 2015
+Chiroptera,Pteropodidae,Acerodon,celebensis,Acerodon celebensis,F,384.84,,,NA,58.005,NA,2,Tsang 2015,30.575,NA,2,Tsang 2015,135,NA,2,Tsang 2015
+Chiroptera,Pteropodidae,Acerodon,jubatus,Acerodon jubatus,M,1087.04,,,NA,NA,NA,NA,NA,33,NA,1,Mudar and Allen1986,190,NA,1,Mudar and Allen1986
+Chiroptera,Pteropodidae,Thoopterus,nigrescens,Thoopterus nigrescens,F,66.12,,,NA,30.5,0.8,3,Wiantoro et al. 2016,15.9,2.5,3,Wiantoro et al. 2016,73.7,3.3,3,Wiantoro et al. 2016
+Chiroptera,Pteropodidae,Pteropus,brunneus,Pteropus brunneus,M,200,,,NA,NA,NA,,,NA,NA,,,118,NA,NA,"Condor, 2008"
+Chiroptera,Pteropodidae,Pteropus,caniceps,Pteropus caniceps,M,525.12,,,NA,NA,NA,,,NA,NA,,,138.3,NA,NA,"Bergmans, 2001"
+Chiroptera,Pteropodidae,Pteropus,caniceps,Pteropus caniceps,F,525.12,,,NA,NA,NA,,,NA,NA,,,129.5,NA,NA,"Bergmans, 2001"
+Chiroptera,Pteropodidae,Pteralopex,acrodonta,Pteralopex acrodonta,M,258,,,NA,NA,NA,,,18.3,NA,16,"Parnaby, 2002",127.2,NA,14,"Parnaby, 2002"
+Chiroptera,Pteropodidae,Pteralopex,acrodonta,Pteralopex acrodonta,F,222,,,NA,NA,NA,,,18.2,NA,16,"Parnaby, 2002",111.2,NA,14,"Parnaby, 2002"
+Chiroptera,Pteropodidae,Pteralopex,pulchra,Pteralopex pulchra,F,280,,,NA,NA,NA,NA,,NA,NA,NA,"Parnaby, 2002",117.9,NA,NA,"Parnaby, 2002"
+Chiroptera,Pteropodidae,Pteralopex,taki,Pteralopex taki,F,NA,,,NA,NA,NA,NA,,15.67,3.33,NA,"Parnaby, 2002",118.8,12.11,NA,"Parnaby, 2002"
+Chiroptera,Pteropodidae,Pteropus,chrysoproctus,Pteropus chrysoproctus,M,730.19,,,NA,NA,NA,,,,,,,166,NA,NA,"Bergmans, 2001"
+Chiroptera,Pteropodidae,Pteropus,chrysoproctus,Pteropus chrysoproctus,F,730.19,,,NA,NA,NA,,,,,,,170,NA,NA,"Bergmans, 2001"
+Chiroptera,Pteropodidae,Pteropus,conspicillatus,Pteropus conspicillatus,M,760.71,,,NA,NA,NA,,,29,NA,NA,"Bergmans, 2001",NA,NA,NA,"Bergmans, 2001"
+Chiroptera,Pteropodidae,Pteropus,conspicillatus,Pteropus conspicillatus,F,760.71,,,NA,NA,NA,,,29,NA,NA,"Bergmans, 2001",NA,NA,NA,"Bergmans, 2001"
+Chiroptera,Pteropodidae,Pteropus,giganteus,Pteropus giganteus,M,NA,,,376.8,69.65,18.5,4,Kumar et al. 2016,35.1,5.09,4,Kumar et al. 2016,150.66,12.07,4,Kumar et al. 2016
+Chiroptera,Pteropodidae,Pteropus,griseus,Pteropus griseus,M,311.15,,,NA,NA,NA,,,24.13,12.17,13,"Sheherazade and Tsang, 2018",126.6,17.32,13,"Sheherazade and Tsang, 2018"
+Chiroptera,Pteropodidae,Pteropus,griseus,Pteropus griseus,F,269.75,,,NA,NA,NA,,,23.5,1.99,4,"Sheherazade and Tsang, 2019",125.63,12.72,4,"Sheherazade and Tsang, 2018"
+Chiroptera,Pteropodidae,Rousettus,amplexicaudatus,Rousettus amplexicaudatus,M,80,,,NA,NA,NA,,,NA,NA,,,81.55,NA,12,"Bergmans and Rozendaal, 1988"
+Chiroptera,Pteropodidae,Rousettus,amplexicaudatus,Rousettus amplexicaudatus,F,NA,,,NA,NA,NA,,,NA,NA,,,79.35,NA,9,"Bergmans and Rozendaal, 1988"
+Chiroptera,Pteropodidae,Plerotes,anchietae,Plerotes anchietae,F,NA,,,NA,NA,NA,,,NA,NA,,,53,NA,1,"Harrison, 1960"
+Chiroptera,Pteropodidae,Plerotes,anchietae,Plerotes anchietae,M,NA,,,NA,20.2,NA,NA,Kock et al. 1998,17.8,NA,NA,Kock et al. 1998,50.6,NA,NA,Kock et al. 1998
+Chiroptera,Pteropodidae,Pteropus,leucopterus,Pteropus leucopterus,M,343.81,,,NA,,,,,26.58,NA,4,Van Weerd et al. 2002,139.48,NA,4,Van Weerd et al. 2002
+Chiroptera,Pteropodidae,Pteropus,leucopterus,Pteropus leucopterus,F,343.81,,,NA,,,,,23,NA,1,Van Weerd et al. 2002,157,NA,1,Van Weerd et al. 2002
+Chiroptera,Pteropodidae,Pteropus,livingstonii,Pteropus livingstonii,M,576.3,21,,NA,NA,NA,,,NA,NA,,,170.8,NA,21,Smith and Leslie Jr. 2006; Clark et al 1997
+Chiroptera,Pteropodidae,Pteropus,livingstonii,Pteropus livingstonii,F,601.5,2,,NA,NA,NA,,,NA,NA,,,168.3,NA,2,Smith and Leslie Jr. 2006; Clark et al 1997

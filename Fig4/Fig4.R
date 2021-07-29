@@ -22,9 +22,6 @@ setwd(paste0(homewd, "Fig4/"))
 bat<- read.csv(file = paste0(homewd, "morph_paper_dat_7_23_2021.csv"), header=T, stringsAsFactors = F)
 head(bat)
 
-bat$bat_forearm_mm[bat$bat_forearm_mm==165.3 & bat$sampleid=="KEL246"] <- 105.3 #KEL246
-bat = subset(bat, sampleid!="TSI058")
-bat <- subset(bat, sampleid!="MIZ544")
 
 
 ###FIGURE_4

@@ -40,14 +40,9 @@ data1$day= yday(data1$collection_date)
 head(data1)
 
 
-### sub-select to just our 3 spp. of interest
-Allspp <- filter(select(data1, sampleid,bat_species, roost_site, collection_date,month,day, bat_sex, 
-                        bat_age_class, bat_weight_g, bat_forearm_mm, bat_tibia_mm, ear_length_mm, body_length_cm), 
-                 bat_species %in% c("Eidolon dupreanum","Pteropus rufus","Rousettus madagascariensis")) 
-
 #sub-select to only the Adults (no "J" and no "NA")
-unique(Allspp$bat_age_class)
-AllsppAdults1 <- filter(select(Allspp, sampleid,bat_species, roost_site, collection_date,month,day, bat_sex,                              
+unique(data1$bat_age_class)
+AllsppAdults1 <- filter(select(data1, sampleid,bat_species, roost_site, collection_date,month,day, bat_sex,                              
                                bat_age_class, bat_weight_g, bat_forearm_mm, bat_tibia_mm, ear_length_mm, body_length_cm), 
                         bat_age_class %in% c("A","NL","L", "P")) 
 
@@ -95,8 +90,8 @@ tail(Eid.df)
 #and Pter
 Pter.df = subset(AllsppAdult_Mora, bat_species=="Pteropus rufus")
 Pter.df = arrange(Pter.df, desc(bat_forearm_mm))
-head(Pter.df) #116 is too low
-tail(Pter.df) #116 is too low
+head(Pter.df) 
+tail(Pter.df) 
 
 
 Rou.df = subset(AllsppAdult_Mora, bat_species=="Rousettus madagascariensis")
