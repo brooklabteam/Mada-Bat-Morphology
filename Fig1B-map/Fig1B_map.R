@@ -69,7 +69,7 @@ p1<-ggplot() +
 
 
 #import data
-dat <- read.csv(file = paste0(homewd,"morph_paper_dat_7_23_2021.csv"), header = T, stringsAsFactors = F )
+dat <- read.csv(file = paste0(homewd,"morph_paper_dat_7_29_2021.csv"), header = T, stringsAsFactors = F )
 head(dat)
 names(dat)
 

@@ -19,7 +19,7 @@ homewd = "/Users/caraebrook/Documents/R/R_repositories/Mada-Bat-Morphology/"
 setwd(paste0(homewd, "Fig4/"))
 
 
-bat<- read.csv(file = paste0(homewd, "morph_paper_dat_7_23_2021.csv"), header=T, stringsAsFactors = F)
+bat<- read.csv(file = paste0(homewd, "morph_paper_dat_7_29_2021.csv"), header=T, stringsAsFactors = F)
 head(bat)
 
 
