@@ -12,7 +12,7 @@ library(cowplot)
 homewd = "/Users/caraebrook/Documents/R/R_repositories/Mada-Bat-Morphology/" #should be wherever "Mada-Bat-Morphology" is stored on your home computer
 setwd(paste0(homewd, "/", "Fig2/"))
 
-#load the data from the literature
+#load the data from the literature.
 comp.dat <- read.csv(file = paste0(homewd, "fruit-bat-morphology-literature.csv"), header=T, stringsAsFactors = F)
 head(comp.dat)
 
