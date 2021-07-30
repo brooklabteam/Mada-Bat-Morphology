@@ -6,6 +6,7 @@ library(dplyr)
 library(ggnewscale)
 library(gridExtra)
 library(cowplot)
+library(ggbeeswarm)
 
 # Set wd to data on this computer. Also ID homewd, assuming that 
 # Mada-GIS is cloned to the same series of sub-folders
@@ -210,15 +211,18 @@ pall_2 <- ggplot(data=all.dat) +
   scale_color_manual(values=colz) +
   geom_line(aes(x=bat_forearm_mm , y=predicted_mass)) +
   geom_ribbon(aes(x=bat_forearm_mm , ymin=predicted_mass_lci, ymax=predicted_mass_uci),alpha=.3) +
-  facet_grid(bat_sex~origin)+theme_bw()+
+  facet_grid(bat_sex~origin, switch= "x")+theme_bw()+
+  geom_point(aes( x=bat_forearm_mm , y=bat_weight_g, color=Genus), size=3)+ 
   geom_point(data=subset(all.dat, bat_species=="Pteropus rufus" & origin=="All Bats" | bat_species=="Eidolon dupreanum" & origin=="All Bats"  | bat_species=="Rousettus madagascariensis" & origin=="All Bats" ),
              aes( x=bat_forearm_mm , y=bat_weight_g), color="black", size=5) +
-  geom_point(aes( x=bat_forearm_mm , y=bat_weight_g, color=Genus), size=3)+ 
-  theme(strip.text.x = element_blank(), 
-        strip.background = element_rect(fill="white"), 
+  geom_point(data=subset(all.dat, bat_species=="Pteropus rufus" & origin=="All Bats" | bat_species=="Eidolon dupreanum" & origin=="All Bats"  | bat_species=="Rousettus madagascariensis" & origin=="All Bats" ),
+             aes( x=bat_forearm_mm , y=bat_weight_g, color=Genus),  size=3) +
+  theme( strip.background.y =  element_rect(fill="white"), 
+         strip.background.x = element_blank(), strip.placement = "outside",
         legend.position = "right", legend.text = element_text(size=8),
         legend.key.height = unit(.5,"cm"))+
-  theme(element_blank(), legend.text = element_text(face = "italic"),
+  theme( legend.text = element_text(face = "italic"),
+         panel.grid = element_blank(),
         legend.title = element_text(size=10))+labs(x="Forearm Length (mm)", y="Body weight (g)")+
   labs(color="Malagasy spp. + All bat genera")
 
