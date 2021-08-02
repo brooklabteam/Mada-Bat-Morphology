@@ -41,7 +41,7 @@ setwd(paste0(homewd, "/", "Fig1B-map/"))
 name<- paste0(mapwd, "/", "MDG-3/MDG_adm3.shp")
 otl_file <- paste(name, sep="") 
 orotl_shp <- st_read(otl_file)
-View(orotl_shp)  # Open attribute table
+#View(orotl_shp)  # Open attribute table
 class(orotl_shp)
 
 ###import and configuration
@@ -57,14 +57,14 @@ p1<-ggplot() +
   theme_bw()+
   xlab("Longitude") + ylab("Latitude") 
 #print(p1)
-
-# ggsave(file = "tmp_map_1.pdf",
-#        plot = p1,
-#        units="mm",  
-#        width=40, 
-#        height=60, 
-#        scale=3, 
-#        dpi=300)
+# 
+#  ggsave(file = "tmp_map_1.pdf",
+#         plot = p1,
+#         units="mm",  
+#         width=40, 
+#         height=60, 
+#         scale=3, 
+#         dpi=300)
 # 
 
 
@@ -116,13 +116,13 @@ p2<-p1+geom_point(aes(x=x,y=y),color="#97B5CC",size=1,data=coordinate)+
                          style = north_arrow_fancy_orienteering)
 #print(p2)
 
-# ggsave(file = "tmp_map_2.pdf",
-#        plot = p2,
-#        units="mm",  
-#        width=40, 
-#        height=60, 
-#        scale=3, 
-#        dpi=300)
+ # ggsave(file = "tmp_map_2.pdf",
+ #        plot = p2,
+ #        units="mm",  
+ #        width=40, 
+ #        height=60, 
+ #        scale=3, 
+ #        dpi=300)
 # 
 
 #load GPS point and label
@@ -130,6 +130,8 @@ p2b<-p1+geom_point(aes(x=x,y=y),color="#651441",size=1,data=coordinate)+
   geom_text(data= coordinate,                       #### Labeling
             aes(x=x, y=y, label=roost_site), 
             color = "#1B262C", size=3.5,
+            nudge_x = c(-1.5,-2,0,-1.4,-2,-1.5),
+            nudge_y = c(0,0,.5,0,.3,0),
             check_overlap = T)+
   annotation_scale(location = "bl", width_hint = 0.05) +    #scale
   annotation_north_arrow(location = "tl", which_north = "true",#north arrow     
@@ -147,14 +149,14 @@ p2b<-p1+geom_point(aes(x=x,y=y),color="#651441",size=1,data=coordinate)+
                     legend.background = element_rect(color="gray",size = .1),
                     legend.text = element_text(size = 9,face = "italic"))
 #print(p2b)
-# 
-#  ggsave(file = "tmp_map_2b.pdf",
-#         plot = p2b,
-#         units="mm",  
-#         width=40, 
-#         height=60, 
-#         scale=3, 
-#         dpi=300)
+# # 
+#   ggsave(file = "tmp_map_2b.pdf",
+#          plot = p2b,
+#          units="mm",  
+#          width=40, 
+#          height=60, 
+#          scale=3, 
+#          dpi=300)
 # # 
 
 
@@ -187,7 +189,7 @@ dat1<-dat%>%
   group_by(roost_site) %>% 
   mutate(somme = sum(nombre))
 
-View(dat1)
+#View(dat1)
 
 ############################################################################################
 ##Sum of bats captured for all sites
@@ -214,7 +216,7 @@ pies <- dat %>%
             radius = mean(radius)) %>% 
   distinct()
 
-View(pies)
+#View(pies)
 
 
 #pie calcul
@@ -227,14 +229,14 @@ pies$rehetra<-dat1$rehetra
 #now give the pies xy coordinates by mergeing with the "coordinate" dataset
 pies <- merge(pies, coordinate, by = "roost_site", all.x=T, sort =F)
 names(pies)
-View(pies)
+#View(pies)
 
 head(pies)
 
 
 # Calculation of proportion and new radius
 pies$proportion<-pies$value/pies$rehetra*100 #Proportion
-View(pies)
+#View(pies)
 pies$propt<-pies$value/pies$nombre
 
 pies$rayon<-pies$nombre/pies$rehetra
@@ -245,15 +247,15 @@ p3<-ggplot(data=pies) +
                   data = pies, cols = "bat_species", long_format=TRUE, color = NA)
 
 #print(p3)
-# 
-#  ggsave(file = "tmp_map_3.pdf",
-#         plot = p3,
-#         units="mm",  
-#         width=40, 
-#         height=60, 
-#         scale=3, 
-#         dpi=300)
- 
+# # 
+#   ggsave(file = "tmp_map_3.pdf",
+#          plot = p3,
+#          units="mm",  
+#          width=40, 
+#          height=60, 
+#          scale=3, 
+#          dpi=300)
+#  
 
 # copie of latitude (x.) and longitude (y.)
 pies$x. <- pies$x
@@ -280,7 +282,7 @@ head(pies)
 #plot pie chart 
 loko<-c("Rousettus madagascariensis"="#B200ED","Eidolon dupreanum"="#7FFF00","Pteropus rufus"="#0000FF")
 
-p4 <- p1+geom_path(data = pies, mapping = aes(x = x, y = y, group = roost_site), size = 0.25) + #tsy misy haiko aloha ny tena ilaina azy
+p4 <- p2b+geom_path(data = pies, mapping = aes(x = x, y = y, group = roost_site), size = 0.25) + #tsy misy haiko aloha ny tena ilaina azy
   scale_size_identity() +
   theme_bw() +theme(panel.grid = element_blank(),
                     plot.title = element_text(color="black", size=12, face="bold"),
