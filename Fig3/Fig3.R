@@ -342,12 +342,13 @@ p4_main <- ggplot(data = subset(new.All.dat, bat_sex=="male")) +
   geom_rect(aes(xmin=304, xmax=365, ymin=-Inf, ymax=Inf),fill="gray90", alpha=0.5)+
   geom_point(aes(x= as.numeric(day), y= resid, color=bat_species), alpha=.3, show.legend = F)+ 
   scale_color_manual(values=ColM)+ 
+  scale_fill_manual(values=ColM)+ 
   geom_hline(aes(yintercept=0)) +
   xlab ("Days of year")+ 
   ylab("Mass residuals")+
-  geom_line(aes(x=day, y= prediction_resid_plot), col="red", size=1)+
-  geom_ribbon(aes(x= day, ymin=prediction_resid_plot_lci, ymax=prediction_resid_plot_uci),
-              fill="red",size=1, alpha=.3 ) +
+  geom_ribbon(aes(x= day, ymin=prediction_resid_plot_lci, ymax=prediction_resid_plot_uci), fill="black",
+              size=1, alpha=.3 ) +
+  geom_line(aes(x=day, y= prediction_resid_plot, color=bat_species), size=1, show.legend = F)+
   facet_grid(bat_species~xlab, scales = "free_y")+theme_bw() + 
   theme(strip.background= element_rect(fill="white"), 
         strip.text.y = element_text(face="italic"),
@@ -379,9 +380,9 @@ p4_supp <- ggplot(data = subset(new.All.dat, bat_sex=="female")) +
   geom_hline(aes(yintercept=0)) +
   xlab ("Days of year")+ 
   ylab("Mass residuals")+
-  geom_line(aes(x=day, y= prediction_resid_plot), col="red", size=1)+
-  geom_ribbon(aes(x= day, ymin=prediction_resid_plot_lci, ymax=prediction_resid_plot_uci),
-              fill="red",size=1, alpha=.3 ) +
+  geom_ribbon(aes(x= day, ymin=prediction_resid_plot_lci, ymax=prediction_resid_plot_uci), fill="black",
+              size=1, alpha=.3 ) +
+  geom_line(aes(x=day, y= prediction_resid_plot, color=bat_species), size=1, show.legend = F)+
   facet_grid(bat_species~xlab, scales = "free_y")+theme_bw() + 
   theme(strip.background= element_rect(fill="white"), 
         strip.text.y = element_text(face="italic"),
