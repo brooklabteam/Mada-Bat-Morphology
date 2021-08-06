@@ -3,18 +3,20 @@ Family: gaussian
 Link function: identity 
 
 Formula:
-resid ~ s(day, by = as.numeric(bat_sex == "male"), k = 4, bs = "cc") + 
-    s(day, by = as.numeric(bat_sex == "female"), k = 4, bs = "cc")
+resid ~ s(day, by = as.numeric(bat_sex == "male"), k = 7, bs = "cc") + 
+    s(day, by = as.numeric(bat_sex == "female"), k = 7, bs = "cc")
 
 Parametric coefficients:
             Estimate Std. Error t value Pr(>|t|)
-(Intercept)  0.04018    0.44271   0.091    0.928
+(Intercept)   0.1807     0.4866   0.371     0.71
 
 Approximate significance of smooth terms:
-                                          edf Ref.df     F p-value
-s(day):as.numeric(bat_sex == "male")   0.5714 0.5714 0.001   0.983
-s(day):as.numeric(bat_sex == "female") 2.0389 2.4286 1.974   0.129
+                                          edf Ref.df     F p-value  
+s(day):as.numeric(bat_sex == "male")   0.5385 0.5385 0.159  0.7697  
+s(day):as.numeric(bat_sex == "female") 3.7377 4.4301 1.874  0.0983 .
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Rank: 6/7
-R-sq.(adj) =  0.00684   Deviance explained = 1.15%
-GCV = 128.78  Scale est. = 127.93    n = 530
+Rank: 12/13
+R-sq.(adj) =  0.0119   Deviance explained = 1.98%
+GCV = 128.71  Scale est. = 127.44    n = 528

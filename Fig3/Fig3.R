@@ -320,6 +320,9 @@ class(new.All.dat$day)
 
 #visualize all together
 p4 <- ggplot(data = new.All.dat) + 
+  geom_rect(aes(xmin=111, xmax=304, ymin=-Inf, ymax=Inf),fill="#FEEEAA", alpha=0.5)+
+  geom_rect(aes(xmin=0, xmax=111, ymin=-Inf, ymax=Inf),fill="gray90", alpha=0.5)+
+  geom_rect(aes(xmin=304, xmax=365, ymin=-Inf, ymax=Inf),fill="gray90", alpha=0.5)+
   geom_point(aes(x= as.numeric(day), y= resid, color=bat_species), alpha=.3)+ scale_color_manual(values=ColM)+ 
   geom_hline(aes(yintercept=0)) +
   xlab ("Days of year")+ 
@@ -334,6 +337,9 @@ p4 <- ggplot(data = new.All.dat) +
 new.All.dat$xlab = paste0(new.All.dat$bat_sex, " bats")
 
 p4_main <- ggplot(data = subset(new.All.dat, bat_sex=="male")) + 
+  geom_rect(aes(xmin=111, xmax=304, ymin=-Inf, ymax=Inf),fill="#FEEEAA", alpha=0.5)+
+  geom_rect(aes(xmin=0, xmax=111, ymin=-Inf, ymax=Inf),fill="gray90", alpha=0.5)+
+  geom_rect(aes(xmin=304, xmax=365, ymin=-Inf, ymax=Inf),fill="gray90", alpha=0.5)+
   geom_point(aes(x= as.numeric(day), y= resid, color=bat_species), alpha=.3, show.legend = F)+ 
   scale_color_manual(values=ColM)+ 
   geom_hline(aes(yintercept=0)) +
@@ -365,6 +371,9 @@ ggsave(file = paste0(homewd, "final-figures/Fig3_male_seasonal_mass_residuals.pn
 #and the supplementary figure with the females
 
 p4_supp <- ggplot(data = subset(new.All.dat, bat_sex=="female")) + 
+  geom_rect(aes(xmin=111, xmax=304, ymin=-Inf, ymax=Inf),fill="#FEEEAA", alpha=0.5)+
+  geom_rect(aes(xmin=0, xmax=111, ymin=-Inf, ymax=Inf),fill="gray90", alpha=0.5)+
+  geom_rect(aes(xmin=304, xmax=365, ymin=-Inf, ymax=Inf),fill="gray90", alpha=0.5)+
   geom_point(aes(x= as.numeric(day), y= resid, color=bat_species), alpha=.3, show.legend = F)+ 
   scale_color_manual(values=ColM)+ 
   geom_hline(aes(yintercept=0)) +
