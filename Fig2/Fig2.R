@@ -88,11 +88,11 @@ names(mad.mean)
 #and join
 
 all.dat <- rbind(mad.sub, lit.dat, mad.mean)
-all.dat$origin = factor(all.dat$origin, levels = c("Malagasy Bats", "All Bats"))
+all.dat$origin = factor(all.dat$origin, levels = c( "All Bats", "Malagasy Bats"))
 
 #make a color bar and specify madagascar bats
-length(unique(all.dat$Genus))#30, with mada bats classed by specis
-colz <- scales::hue_pal()(30) #makes a color bar the length of each species
+length(unique(all.dat$Genus))#34, with mada bats classed by specis
+colz <- scales::hue_pal()(length(unique(all.dat$Genus))) #makes a color bar the length of each species
 names(colz) <- unique(all.dat$Genus)
 colz #look at it. gives a color for each Genus
 #now overwrite the mada bats
@@ -206,6 +206,7 @@ all.dat$predicted_mass_uci[all.dat$bat_sex=="M" & all.dat$origin=="All Bats"] <-
 
 
 #here plot with data:
+#all.dat$origin
 
 pall_2 <- ggplot(data=all.dat) + 
   scale_color_manual(values=colz) +
@@ -220,11 +221,13 @@ pall_2 <- ggplot(data=all.dat) +
   theme( strip.background.y =  element_rect(fill="white"), 
          strip.background.x = element_blank(), strip.placement = "outside",
         legend.position = "right", legend.text = element_text(size=8),
-        legend.key.height = unit(.5,"cm"))+
+        legend.key.height = unit(.45,"cm"))+
   theme( legend.text = element_text(face = "italic"),
+         plot.margin = unit(c(1,.3,.3,.3), "lines"),
+         legend.background = element_rect(fill=NA),
          panel.grid = element_blank(),
-        legend.title = element_text(size=10))+labs(x="Forearm Length (mm)", y="Body weight (g)")+
-  labs(color="Malagasy spp. + All bat genera")
+        legend.title = element_text(size=8))+labs(x="Forearm Length (mm)", y="Body weight (g)")+
+  labs(color="\n\n\n\nMalagasy spp. + All bat genera")
 
 print(pall_2)
 
@@ -248,7 +251,9 @@ p2T_6_1<- ggplot() +
   geom_point(data=subset(all.dat, bat_species=="Pteropus rufus" & origin=="All Bats" | bat_species=="Eidolon dupreanum" & origin=="All Bats"  | bat_species=="Rousettus madagascariensis" & origin=="All Bats"),
              aes(x= origin, y= bat_tibia_mm, color=Genus), size=2) +
   facet_grid(bat_sex~.)+theme_bw()+theme(legend.position = "none")+
-  theme(element_blank(), axis.title.x = element_blank(), strip.background = element_rect(fill="white"))+scale_y_continuous(name = "Tibia length (mm)") 
+  theme(element_blank(), axis.title.x = element_blank(), 
+        plot.margin = unit(c(.3,.3,.3,.5), "lines"),
+        strip.background = element_rect(fill="white"))+scale_y_continuous(name = "Tibia length (mm)") 
 
 print(p2T_6_1)
 
@@ -267,7 +272,9 @@ p2E_6_1<- ggplot() +
   geom_point(data=subset(all.dat, bat_species=="Pteropus rufus" & origin=="All Bats" | bat_species=="Eidolon dupreanum" & origin=="All Bats"  | bat_species=="Rousettus madagascariensis" & origin=="All Bats"),
              aes(x= origin, y= ear_length_mm, color=Genus), size=2) +
   facet_grid(bat_sex~.)+theme_bw()+theme(legend.position = "none")+
-  theme(element_blank(), axis.title.x = element_blank(), strip.background = element_rect(fill="white"))+scale_y_continuous(name = "Ear length (mm)") 
+  theme(element_blank(), axis.title.x = element_blank(), 
+        plot.margin = unit(c(.3,.3,.3,.5), "lines"),
+        strip.background = element_rect(fill="white"))+scale_y_continuous(name = "Ear length (mm)") 
 
 print(p2E_6_1)
 

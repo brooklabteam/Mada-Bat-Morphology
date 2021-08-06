@@ -336,6 +336,9 @@ p4 <- ggplot(data = new.All.dat) +
 #now, save just the males as the main plot
 new.All.dat$xlab = paste0(new.All.dat$bat_sex, " bats")
 
+#arrange plots by size:
+new.All.dat$bat_species <- factor(new.All.dat$bat_species, levels = c("Pteropus rufus", "Eidolon dupreanum", "Rousettus madagascariensis"))
+
 p4_main <- ggplot(data = subset(new.All.dat, bat_sex=="male")) + 
   geom_rect(aes(xmin=111, xmax=304, ymin=-Inf, ymax=Inf),fill="#FEEEAA", alpha=0.5)+
   geom_rect(aes(xmin=0, xmax=111, ymin=-Inf, ymax=Inf),fill="gray90", alpha=0.5)+
