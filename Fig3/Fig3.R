@@ -391,15 +391,32 @@ p4 <- ggplot(data = new.All.dat) +
   
 
 #now, save just the males as the main plot
-new.All.dat$xlab = paste0(new.All.dat$bat_sex, " bats")
+#new.All.dat$xlab = paste0(new.All.dat$bat_sex, " bats")
+new.All.dat$xlab = new.All.dat$bat_sex
+new.All.dat$xlab[new.All.dat$xlab=="male"] <- "M"
+new.All.dat$xlab[new.All.dat$xlab=="female"] <- "F"
 
 #arrange plots by size:
 new.All.dat$bat_species <- factor(new.All.dat$bat_species, levels = c("Pteropus rufus", "Eidolon dupreanum", "Rousettus madagascariensis"))
 
+#winter for the males
+seas.dat = cbind.data.frame(x=c(111, 304), xlab=rep("M", 2))
+
+#observed gestation for the females
+library(lubridate)
+preg.dat <- cbind.data.frame(x = c(yday("2019-07-07"),yday("2019-09-29"),
+                                   yday("2019-08-06"), yday("2019-11-16"),
+                                   yday("2019-09-08"), yday("2019-12-10")), bat_species= rep(c("Pteropus rufus", "Eidolon dupreanum", "Rousettus madagascariensis"), each=2))
+preg.dat$xlab = "F"
+
+preg.dat$bat_species <- factor(preg.dat$bat_species, levels=c("Pteropus rufus", "Eidolon dupreanum", "Rousettus madagascariensis"))
+
 p4_main <- ggplot(data = new.All.dat) + 
-  geom_rect(aes(xmin=111, xmax=304, ymin=-Inf, ymax=Inf),fill="#FEEEAA", alpha=0.5)+
-  geom_rect(aes(xmin=0, xmax=111, ymin=-Inf, ymax=Inf),fill="gray90", alpha=0.5)+
-  geom_rect(aes(xmin=304, xmax=365, ymin=-Inf, ymax=Inf),fill="gray90", alpha=0.5)+
+  geom_ribbon(data = seas.dat, aes(x=x, ymin=-Inf, ymax=Inf),fill="cornflowerblue", alpha=0.3)+
+  geom_ribbon(data = preg.dat, aes(x=x, ymin=-Inf, ymax=Inf),fill="hotpink3", alpha=0.3)+
+            #aes(xmin=111, xmax=304, ymin=-Inf, ymax=Inf),fill="#FEEEAA", alpha=0.5)+
+  #geom_rect(aes(xmin=0, xmax=111, ymin=-Inf, ymax=Inf),fill="gray90", alpha=0.5)+
+  #geom_rect(aes(xmin=304, xmax=365, ymin=-Inf, ymax=Inf),fill="gray90", alpha=0.5)+
   geom_point(aes(x= as.numeric(day), y= resid, color=bat_species), alpha=.3, show.legend = F)+ 
   scale_color_manual(values=ColM)+ 
   scale_fill_manual(values=ColM)+ 
