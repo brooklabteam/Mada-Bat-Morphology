@@ -17,10 +17,31 @@ setwd(paste0(homewd, "/", "Fig2/"))
 comp.dat <- read.csv(file = paste0(homewd, "fruit-bat-morphology-literature.csv"), header=T, stringsAsFactors = F)
 head(comp.dat)
 
-
 #check as numeric
 comp.dat$Adult_forearm_length_mm <- as.numeric(comp.dat$Adult_forearm_length_mm)
 comp.dat$AdultBodyMass_g <- as.numeric(comp.dat$AdultBodyMass_g)
+comp.dat$Adult_tibia_length_m <- as.numeric(comp.dat$Adult_tibia_length_m)
+comp.dat$Adult_ear_length_mm <- as.numeric(comp.dat$Adult_ear_length_mm)
+
+
+#check the totals for the methods of the paper
+#mass
+length(comp.dat$AdultBodyMass_g[!is.na(comp.dat$AdultBodyMass_g) & comp.dat$Sex=="M"]) #106
+length(comp.dat$AdultBodyMass_g[!is.na(comp.dat$AdultBodyMass_g) & comp.dat$Sex=="F"]) #103
+
+#forearm
+length(comp.dat$Adult_forearm_length_mm[!is.na(comp.dat$Adult_forearm_length_mm) & comp.dat$Sex=="M"]) #140
+length(comp.dat$Adult_forearm_length_mm[!is.na(comp.dat$Adult_forearm_length_mm) & comp.dat$Sex=="F"]) #146
+
+#tibia
+length(comp.dat$Adult_tibia_length_m[!is.na(comp.dat$Adult_tibia_length_m) & comp.dat$Sex=="M"]) #64
+length(comp.dat$Adult_tibia_length_m[!is.na(comp.dat$Adult_tibia_length_m) & comp.dat$Sex=="F"]) #64
+
+#ear
+length(comp.dat$Adult_ear_length_mm[!is.na(comp.dat$Adult_ear_length_mm) & comp.dat$Sex=="M"]) #99
+length(comp.dat$Adult_ear_length_mm[!is.na(comp.dat$Adult_ear_length_mm) & comp.dat$Sex=="F"]) #101
+
+
 
 #slim to columns of interest
 forearm.dat1 <- dplyr::select(comp.dat,Genus, Binomial, Sex,AdultBodyMass_g,Adult_forearm_length_mm, Adult_ear_length_mm, Adult_tibia_length_m)
@@ -91,8 +112,12 @@ all.dat <- rbind(mad.sub, lit.dat, mad.mean)
 all.dat$origin = factor(all.dat$origin, levels = c( "All Bats", "Malagasy Bats"))
 
 #make a color bar and specify madagascar bats
-length(unique(all.dat$Genus))#34, with mada bats classed by specis
-colz <- scales::hue_pal()(length(unique(all.dat$Genus))) #makes a color bar the length of each species
+library(randomcoloR)
+n <- length(unique(all.dat$Genus))#48, with mada bats classed by species
+colz <- distinctColorPalette(n)
+#length(unique(all.dat$Genus))
+#colz <- scales::hue_pal()(length(unique(all.dat$Genus))) #makes a color bar the length of each species
+
 names(colz) <- unique(all.dat$Genus)
 colz #look at it. gives a color for each Genus
 #now overwrite the mada bats
@@ -115,7 +140,7 @@ p.all <- ggplot(data=all.dat) +
   scale_color_manual(values=colz) +
   facet_grid(bat_sex~origin)+theme_bw()+
   theme(strip.text.x = element_blank(), legend.position = "bottom")+
-  theme(element_blank())+labs(x="Forearm Length (mm)", y="Body weight (g)")
+  theme(element_blank())+labs(x="Forearm Length (mm)", y="Body mass (g)")
 
 print(p.all)
 
@@ -226,7 +251,7 @@ pall_2 <- ggplot(data=all.dat) +
          plot.margin = unit(c(1,.3,.3,.3), "lines"),
          legend.background = element_rect(fill=NA),
          panel.grid = element_blank(),
-        legend.title = element_text(size=8))+labs(x="Forearm Length (mm)", y="Body weight (g)")+
+        legend.title = element_text(size=8))+labs(x="Forearm Length (mm)", y="Body mass (g)")+
   labs(color="\n\n\n\nMalagasy spp. + All bat genera")
 
 print(pall_2)
