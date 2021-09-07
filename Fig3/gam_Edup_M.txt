@@ -1,0 +1,19 @@
+
+Family: gaussian 
+Link function: identity 
+
+Formula:
+resid ~ s(day, k = 7, bs = "cc")
+
+Parametric coefficients:
+            Estimate Std. Error t value Pr(>|t|)
+(Intercept)  -0.4985     4.2884  -0.116    0.908
+
+Approximate significance of smooth terms:
+         edf Ref.df    F  p-value    
+s(day) 3.727      5 4.87 3.32e-05 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+R-sq.(adj) =  0.0771   Deviance explained = 8.94%
+GCV = 5256.2  Scale est. = 5167.8    n = 281

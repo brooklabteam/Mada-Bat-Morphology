@@ -262,48 +262,105 @@ Rou.dat.adult= Rou.dat.adult[!is.na(Rou.dat.adult$resid),]
 
 library(mgcv)
 #k = 7 as suggested by package author Simon Wood
-gamPterplot <- gam(resid~ 
-                     s(day, by=as.numeric(bat_sex=="male"),  k=7, bs = "cc") +
-                     s(day, by=as.numeric(bat_sex=="female"), k=7, bs = "cc"), data = Pter.dat.adult)
+
+#diived up by each male/female subset
+#gamPterplot <- gam(resid~ 
+#                     s(day, by=as.numeric(bat_sex=="male"),  k=7, bs = "cc") +
+#                     s(day, by=as.numeric(bat_sex=="female"), k=7, bs = "cc"), data = Pter.dat.adult)
+
+
+gamPterF <- gam(resid~ s(day, k=7, bs = "cc"), data = subset(Pter.dat.adult, bat_sex=="female"))
+gamPterM <- gam(resid~ s(day, k=7, bs = "cc"), data = subset(Pter.dat.adult, bat_sex=="male"))
+summary(gamPterF)
+summary(gamPterM)
+
 
 #save output
-sink("gam_Pruf.txt")
-summary(gamPterplot) #males significant
+sink("gam_Pruf_F.txt")
+summary(gamPterF) #sig
 sink()
 
-gamEidplot <- gam(resid~ 
-                    s(day, by=as.numeric(bat_sex=="male"), k=7, bs = "cc") +
-                    s(day, by=as.numeric(bat_sex=="female"), k=7, bs = "cc"),
-                  data = Eid.dat.adult)
+#save output
+sink("gam_Pruf_M.txt")
+summary(gamPterM) #sig
+sink()
+
+#gamEidplot <- gam(resid~ 
+#                    s(day, by=as.numeric(bat_sex=="male"), k=7, bs = "cc") +
+#                    s(day, by=as.numeric(bat_sex=="female"), k=7, bs = "cc"),
+#                  data = Eid.dat.adult)
 
 
-sink("gam_Edup.txt")
-summary(gamEidplot) #males significant
+gamEidF <- gam(resid~ s(day, k=7, bs = "cc"), data = subset(Eid.dat.adult, bat_sex=="female"))
+gamEidM <- gam(resid~ s(day, k=7, bs = "cc"), data = subset(Eid.dat.adult, bat_sex=="male"))
+summary(gamEidF)
+summary(gamEidM)
+
+
+sink("gam_Edup_F.txt")
+summary(gamEidF) #sig
 sink()
 
 
-gamRouplot <- gam(resid~ 
-                    s(day, by=as.numeric(bat_sex=="male"),    k=7, bs = "cc") +
-                    s(day, by=as.numeric(bat_sex=="female"),   k=7, bs = "cc"),
-                  data = Rou.dat.adult)
-sink("gam_Rmad.txt")
-summary(gamRouplot) #female slightly sig but mostly neither sex is sig.
+sink("gam_Edup_M.txt")
+summary(gamEidM) #sig
+sink()
+
+
+#gamRouplot <- gam(resid~ 
+#                    s(day, by=as.numeric(bat_sex=="male"),    k=7, bs = "cc") +
+#                    s(day, by=as.numeric(bat_sex=="female"),   k=7, bs = "cc"),
+#                  data = Rou.dat.adult)
+
+
+gamRouF <- gam(resid~ s(day, k=7, bs = "cc"), data = subset(Rou.dat.adult, bat_sex=="female"))
+gamRouM <- gam(resid~ s(day, k=7, bs = "cc"), data = subset(Rou.dat.adult, bat_sex=="male"))
+summary(gamRouF)
+summary(gamRouM)
+
+
+sink("gam_Rmad_F.txt")
+summary(gamRouF) 
+sink()
+
+
+sink("gam_Rmad_M.txt")
+summary(gamRouM) #only females sig
 sink()
 
 #now add the predictions to each dataframe
+Pter.dat.adult$prediction_resid_plot <- NA
+Pter.dat.adult$prediction_resid_plot_lci <- NA
+Pter.dat.adult$prediction_resid_plot_uci <- NA
+Pter.dat.adult$prediction_resid_plot[Pter.dat.adult$bat_sex=="female"] = predict.gam(gamPterF, type="response", se.fit=T)$fit
+Pter.dat.adult$prediction_resid_plot_lci[Pter.dat.adult$bat_sex=="female"] = predict.gam(gamPterF, type="response", se.fit=T)$fit -1.96*(predict.gam(gamPterF, type="response", se.fit=T)$se)
+Pter.dat.adult$prediction_resid_plot_uci[Pter.dat.adult$bat_sex=="female"] = predict.gam(gamPterF, type="response", se.fit=T)$fit +1.96*(predict.gam(gamPterF, type="response", se.fit=T)$se)
+Pter.dat.adult$prediction_resid_plot[Pter.dat.adult$bat_sex=="male"] = predict.gam(gamPterM, type="response", se.fit=T)$fit
+Pter.dat.adult$prediction_resid_plot_lci[Pter.dat.adult$bat_sex=="male"] = predict.gam(gamPterM, type="response", se.fit=T)$fit -1.96*(predict.gam(gamPterM, type="response", se.fit=T)$se)
+Pter.dat.adult$prediction_resid_plot_uci[Pter.dat.adult$bat_sex=="male"] = predict.gam(gamPterM, type="response", se.fit=T)$fit +1.96*(predict.gam(gamPterM, type="response", se.fit=T)$se)
 
-Pter.dat.adult$prediction_resid_plot = predict.gam(gamPterplot, type="response", se.fit=T)$fit
-Pter.dat.adult$prediction_resid_plot_lci = predict.gam(gamPterplot, type="response", se.fit=T)$fit -1.96*(predict.gam(gamPterplot, type="response", se.fit=T)$se)
-Pter.dat.adult$prediction_resid_plot_uci = predict.gam(gamPterplot, type="response", se.fit=T)$fit +1.96*(predict.gam(gamPterplot, type="response", se.fit=T)$se)
 
-Eid.dat.adult$prediction_resid_plot = predict.gam(gamEidplot, type="response", se.fit=T)$fit
-Eid.dat.adult$prediction_resid_plot_lci = predict.gam(gamEidplot, type="response", se.fit=T)$fit -1.96*(predict.gam(gamEidplot, type="response", se.fit=T)$se)
-Eid.dat.adult$prediction_resid_plot_uci = predict.gam(gamEidplot, type="response", se.fit=T)$fit +1.96*(predict.gam(gamEidplot, type="response", se.fit=T)$se)
+Eid.dat.adult$prediction_resid_plot <- NA
+Eid.dat.adult$prediction_resid_plot_lci <- NA
+Eid.dat.adult$prediction_resid_plot_uci <- NA
+Eid.dat.adult$prediction_resid_plot[Eid.dat.adult$bat_sex=="female"] = predict.gam(gamEidF, type="response", se.fit=T)$fit
+Eid.dat.adult$prediction_resid_plot_lci[Eid.dat.adult$bat_sex=="female"] = predict.gam(gamEidF, type="response", se.fit=T)$fit -1.96*(predict.gam(gamEidF, type="response", se.fit=T)$se)
+Eid.dat.adult$prediction_resid_plot_uci[Eid.dat.adult$bat_sex=="female"] = predict.gam(gamEidF, type="response", se.fit=T)$fit +1.96*(predict.gam(gamEidF, type="response", se.fit=T)$se)
+Eid.dat.adult$prediction_resid_plot[Eid.dat.adult$bat_sex=="male"] = predict.gam(gamEidM, type="response", se.fit=T)$fit
+Eid.dat.adult$prediction_resid_plot_lci[Eid.dat.adult$bat_sex=="male"] = predict.gam(gamEidM, type="response", se.fit=T)$fit -1.96*(predict.gam(gamEidM, type="response", se.fit=T)$se)
+Eid.dat.adult$prediction_resid_plot_uci[Eid.dat.adult$bat_sex=="male"] = predict.gam(gamEidM, type="response", se.fit=T)$fit +1.96*(predict.gam(gamEidM, type="response", se.fit=T)$se)
 
 
-Rou.dat.adult$prediction_resid_plot = predict.gam(gamRouplot, type="response", se.fit=T)$fit
-Rou.dat.adult$prediction_resid_plot_lci = predict.gam(gamRouplot, type="response", se.fit=T)$fit -1.96*(predict.gam(gamRouplot, type="response", se.fit=T)$se)
-Rou.dat.adult$prediction_resid_plot_uci = predict.gam(gamRouplot, type="response", se.fit=T)$fit +1.96*(predict.gam(gamRouplot, type="response", se.fit=T)$se)
+Rou.dat.adult$prediction_resid_plot <- NA
+Rou.dat.adult$prediction_resid_plot_lci <- NA
+Rou.dat.adult$prediction_resid_plot_uci <- NA
+Rou.dat.adult$prediction_resid_plot[Rou.dat.adult$bat_sex=="female"] = predict.gam(gamRouF, type="response", se.fit=T)$fit
+Rou.dat.adult$prediction_resid_plot_lci[Rou.dat.adult$bat_sex=="female"] = predict.gam(gamRouF, type="response", se.fit=T)$fit -1.96*(predict.gam(gamRouF, type="response", se.fit=T)$se)
+Rou.dat.adult$prediction_resid_plot_uci[Rou.dat.adult$bat_sex=="female"] = predict.gam(gamRouF, type="response", se.fit=T)$fit +1.96*(predict.gam(gamRouF, type="response", se.fit=T)$se)
+Rou.dat.adult$prediction_resid_plot[Rou.dat.adult$bat_sex=="male"] = predict.gam(gamRouM, type="response", se.fit=T)$fit
+Rou.dat.adult$prediction_resid_plot_lci[Rou.dat.adult$bat_sex=="male"] = predict.gam(gamRouM, type="response", se.fit=T)$fit -1.96*(predict.gam(gamRouM, type="response", se.fit=T)$se)
+Rou.dat.adult$prediction_resid_plot_uci[Rou.dat.adult$bat_sex=="male"] = predict.gam(gamRouM, type="response", se.fit=T)$fit +1.96*(predict.gam(gamRouM, type="response", se.fit=T)$se)
+
 
 
 
@@ -339,7 +396,7 @@ new.All.dat$xlab = paste0(new.All.dat$bat_sex, " bats")
 #arrange plots by size:
 new.All.dat$bat_species <- factor(new.All.dat$bat_species, levels = c("Pteropus rufus", "Eidolon dupreanum", "Rousettus madagascariensis"))
 
-p4_main <- ggplot(data = subset(new.All.dat, bat_sex=="male")) + 
+p4_main <- ggplot(data = new.All.dat) + 
   geom_rect(aes(xmin=111, xmax=304, ymin=-Inf, ymax=Inf),fill="#FEEEAA", alpha=0.5)+
   geom_rect(aes(xmin=0, xmax=111, ymin=-Inf, ymax=Inf),fill="gray90", alpha=0.5)+
   geom_rect(aes(xmin=304, xmax=365, ymin=-Inf, ymax=Inf),fill="gray90", alpha=0.5)+
@@ -363,44 +420,44 @@ p4_main <- ggplot(data = subset(new.All.dat, bat_sex=="male")) +
 p4_main
 
 
-ggsave(file = paste0(homewd, "final-figures/Fig3_male_seasonal_mass_residuals.png"),
+ggsave(file = paste0(homewd, "final-figures/Fig3.png"),
        plot = p4_main,
        units="mm",  
-       width=50, 
+       width=80, 
        height=60, 
        scale=3, 
        dpi=300)
 
 
-#and the supplementary figure with the females
-
-p4_supp <- ggplot(data = subset(new.All.dat, bat_sex=="female")) + 
-  geom_rect(aes(xmin=111, xmax=304, ymin=-Inf, ymax=Inf),fill="#FEEEAA", alpha=0.5)+
-  geom_rect(aes(xmin=0, xmax=111, ymin=-Inf, ymax=Inf),fill="gray90", alpha=0.5)+
-  geom_rect(aes(xmin=304, xmax=365, ymin=-Inf, ymax=Inf),fill="gray90", alpha=0.5)+
-  geom_point(aes(x= as.numeric(day), y= resid, color=bat_species), alpha=.3, show.legend = F)+ 
-  scale_color_manual(values=ColM)+ 
-  geom_hline(aes(yintercept=0)) +
-  xlab ("Days of year")+ 
-  ylab("Mass residuals")+
-  geom_ribbon(aes(x= day, ymin=prediction_resid_plot_lci, ymax=prediction_resid_plot_uci), fill="black",
-              size=1, alpha=.3 ) +
-  geom_line(aes(x=day, y= prediction_resid_plot, color=bat_species), size=1, show.legend = F)+
-  facet_grid(bat_species~xlab, scales = "free_y")+theme_bw() + 
-  theme(strip.background= element_rect(fill="white"), 
-        strip.text.y = element_text(face="italic"),
-        panel.grid = element_blank(),
-        axis.title.x = element_blank()) +
-  scale_x_continuous(breaks=c(0,91,182, 274, 365), 
-                     labels = c("Jan-1", "Apr-1", "Jul-1", "Oct-1", "Dec-31"))
-
-p4_supp
-
-
-ggsave(file = paste0(homewd, "final-figures/FigS1_female_seasonal_mass_residuals.png"),
-       plot = p4_supp,
-       units="mm",  
-       width=50, 
-       height=60, 
-       scale=3, 
-       dpi=300)
+# #and the supplementary figure with the females
+# 
+# p4_supp <- ggplot(data = subset(new.All.dat, bat_sex=="female")) + 
+#   geom_rect(aes(xmin=111, xmax=304, ymin=-Inf, ymax=Inf),fill="#FEEEAA", alpha=0.5)+
+#   geom_rect(aes(xmin=0, xmax=111, ymin=-Inf, ymax=Inf),fill="gray90", alpha=0.5)+
+#   geom_rect(aes(xmin=304, xmax=365, ymin=-Inf, ymax=Inf),fill="gray90", alpha=0.5)+
+#   geom_point(aes(x= as.numeric(day), y= resid, color=bat_species), alpha=.3, show.legend = F)+ 
+#   scale_color_manual(values=ColM)+ 
+#   geom_hline(aes(yintercept=0)) +
+#   xlab ("Days of year")+ 
+#   ylab("Mass residuals")+
+#   geom_ribbon(aes(x= day, ymin=prediction_resid_plot_lci, ymax=prediction_resid_plot_uci), fill="black",
+#               size=1, alpha=.3 ) +
+#   geom_line(aes(x=day, y= prediction_resid_plot, color=bat_species), size=1, show.legend = F)+
+#   facet_grid(bat_species~xlab, scales = "free_y")+theme_bw() + 
+#   theme(strip.background= element_rect(fill="white"), 
+#         strip.text.y = element_text(face="italic"),
+#         panel.grid = element_blank(),
+#         axis.title.x = element_blank()) +
+#   scale_x_continuous(breaks=c(0,91,182, 274, 365), 
+#                      labels = c("Jan-1", "Apr-1", "Jul-1", "Oct-1", "Dec-31"))
+# 
+# p4_supp
+# 
+# 
+# ggsave(file = paste0(homewd, "final-figures/FigS1_female_seasonal_mass_residuals.png"),
+#        plot = p4_supp,
+#        units="mm",  
+#        width=50, 
+#        height=60, 
+#        scale=3, 
+#        dpi=300)
