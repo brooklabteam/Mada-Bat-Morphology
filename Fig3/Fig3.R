@@ -404,9 +404,9 @@ seas.dat = cbind.data.frame(x=c(111, 304), xlab=rep("M", 2))
 
 #observed gestation for the females
 library(lubridate)
-preg.dat <- cbind.data.frame(x = c(yday("2019-07-07"),yday("2019-09-29"),
-                                   yday("2019-08-06"), yday("2019-11-16"),
-                                   yday("2019-09-08"), yday("2019-12-10")), bat_species= rep(c("Pteropus rufus", "Eidolon dupreanum", "Rousettus madagascariensis"), each=2))
+preg.dat <- cbind.data.frame(x = c(yday("2015-07-10"),yday("2019-09-29"),
+                                   yday("2014-08-03"), yday("2019-11-16"),
+                                   yday("2018-09-11"), yday("2014-12-12")), bat_species= rep(c("Pteropus rufus", "Eidolon dupreanum", "Rousettus madagascariensis"), each=2))
 preg.dat$xlab = "F"
 
 preg.dat$bat_species <- factor(preg.dat$bat_species, levels=c("Pteropus rufus", "Eidolon dupreanum", "Rousettus madagascariensis"))
@@ -420,7 +420,7 @@ p4_main <- ggplot(data = new.All.dat) +
   geom_point(aes(x= as.numeric(day), y= resid, color=bat_species), alpha=.3, show.legend = F)+ 
   scale_color_manual(values=ColM)+ 
   scale_fill_manual(values=ColM)+ 
-  geom_hline(aes(yintercept=0)) +
+  geom_hline(aes(yintercept=0), color="gray50") +
   xlab ("Days of year")+ 
   ylab("Mass residuals")+
   geom_ribbon(aes(x= day, ymin=prediction_resid_plot_lci, ymax=prediction_resid_plot_uci), fill="black",
