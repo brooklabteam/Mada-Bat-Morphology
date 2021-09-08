@@ -33,7 +33,7 @@ homewd = "/Users/caraebrook/Documents/R/R_repositories/Mada-Bat-Morphology/"
 #should be wherever "Mada-Bat-Morphology" is stored on your home computer
 basewd = paste(strsplit(homewd, "/")[[1]][1:6], collapse = "/")
 mapwd = paste0(basewd, "/", "Mada-GIS")
-setwd(paste0(homewd, "/", "Fig1B-map/"))
+setwd(paste0(homewd, "/", "Fig1A/"))
 
 
 
@@ -80,9 +80,9 @@ data1 <- dplyr::select(dat,roost_site,latitude_s, longitude_e,
                        collection_date,
                        bat_species, sampleid)
 
-#and just the three fruit bat species
+#and check just the three fruit bat species
 unique(dat$bat_species)
-dat <- subset(dat, bat_species!="Hipposideros commersoni" & bat_species!="Mormopterus jugularis" & bat_species!="Asio madagascariensis")
+
 head(dat)
 
 #group all the ankarana sites together (and Moramanga)
@@ -306,7 +306,7 @@ p4 <- p2b+geom_path(data = pies, mapping = aes(x = x, y = y, group = roost_site)
 
 #print(p4)
 
-ggsave(file = paste0(homewd, "final-figures/Fig1B_final_map.pdf"),
+ggsave(file = paste0(homewd, "final-figures/Fig1A_final_map.pdf"),
        plot=p4,
        units="mm",  
        width=40, 
