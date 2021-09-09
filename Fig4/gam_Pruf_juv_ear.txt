@@ -3,19 +3,19 @@ Family: gaussian
 Link function: identity 
 
 Formula:
-resid ~ s(day, k = 7, bs = "cc")
+ear_length_mm ~ s(new_yday, k = 7, bs = "tp")
 
 Parametric coefficients:
             Estimate Std. Error t value Pr(>|t|)    
-(Intercept)   -27.30       6.81  -4.009 0.000116 ***
+(Intercept)  24.8727     0.3796   65.52   <2e-16 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 Approximate significance of smooth terms:
-         edf Ref.df     F p-value   
-s(day) 4.504      5 2.951 0.00926 **
+              edf Ref.df     F p-value    
+s(new_yday) 2.415  2.964 14.43  <2e-16 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-R-sq.(adj) =  0.0969   Deviance explained = 13.5%
-GCV = 5277.8  Scale est. = 5008.8    n = 108
+R-sq.(adj) =  0.356   Deviance explained = 37.6%
+GCV = 11.898  Scale est. = 11.383    n = 79

@@ -123,7 +123,11 @@ pter_dat_juv=subset(pter_dat_juv,sampleid!="TSI039"&sampleid!="TSI040")
 
 ### ANALYSE Forarm BATS
 mod_FF <- gam(bat_forearm_mm~s(new_yday,k=7, bs="tp"), data=pter_dat_juv)
+
+#save output
+sink("gam_Pruf_juv_forearm.txt")
 summary(mod_FF)
+sink()
 plot(mod_FF)
 
 pter_dat_juv$predicted_mod_FF<- predict(mod_FF, type="response", se.fit = T)$fit
@@ -166,11 +170,11 @@ get.gam.deriv <- function(orig_dat, orig_gam, days_to_calc, bat_spp, measurement
 
 out.FF <- get.gam.deriv(orig_dat = pter_dat_juv, 
                         orig_gam = mod_FF, 
-                        days_to_calc = c(1:100),
+                        days_to_calc = c(1:365),
                         bat_spp = "Pteropus_rufus", 
                         measurement ="forearm")
 
-formula_text = paste0("slope at day 60=\n", signif(out.FF$slope[out.FF$day_of_year==60], 3), " [", signif(out.FF$lci[out.FF$day_of_year==60], 3), "-", signif(out.FF$uci[out.FF$day_of_year==60], 3), "]")
+formula_text = paste0("slope at day 30=\n", signif(out.FF$slope[out.FF$day_of_year==30], 3), " [", signif(out.FF$lci[out.FF$day_of_year==30], 3), "-", signif(out.FF$uci[out.FF$day_of_year==30], 3), "]")
 
 
 sexforma<-c("male"=16,"female"=17)
@@ -188,8 +192,9 @@ FFP<-ggplot() +
                     plot.title = element_text(color="black", size=12, face="italic"),
                     legend.position = "none")+
   annotate("text" ,x=300, y = 60, label = formula_text,size=3)+
-  scale_x_continuous(breaks = seq(0,361,100),
-                     labels = c("","", "",""))+
+  coord_cartesian(xlim=c(0,365))+
+  #scale_x_continuous(breaks = seq(0,361,100),
+   #                 labels = c("","", "",""))+
   geom_line(aes(x=new_yday, y=predicted_mod_FF), color="blue", size=1,data = pter_dat_juv)+
   geom_ribbon(aes(x=new_yday, ymin=predicted_FF_lci, ymax=predicted_FF_uci), fill="blue", size=1, alpha=.3,data = pter_dat_juv)
 FFP
@@ -202,7 +207,11 @@ FFP
 # Generalized Additive Model  (GAM) for Female
 
 mod_TF <- gam(bat_tibia_mm~s(new_yday,k=7, bs="tp"), data=pter_dat_juv)
+
+#save output
+sink("gam_Pruf_juv_tibia.txt")
 summary(mod_TF)
+sink()
 plot(mod_TF)
 
 pter_dat_juv$predicted_mod_TF<- predict(mod_TF, type="response", se.fit = T)$fit
@@ -214,11 +223,11 @@ pter_dat_juv$predicted_TF_lci[pter_dat_juv$predicted_TF_lci<0] <- 0
 
 out.TFP <- get.gam.deriv(orig_dat = pter_dat_juv, 
                          orig_gam = mod_TF, 
-                         days_to_calc = c(1:100),
+                         days_to_calc = c(1:365),
                          bat_spp = "Pteropus_rufus", 
                          measurement ="tibia")
 
-formula_text = paste0("slope at day 60=\n", signif(out.TFP$slope[out.TFP$day_of_year==60], 3), " [", signif(out.TFP$lci[out.TFP$day_of_year==60], 3), "-", signif(out.TFP$uci[out.TFP$day_of_year==60], 3), "]")
+formula_text = paste0("slope at day 30=\n", signif(out.TFP$slope[out.TFP$day_of_year==30], 3), " [", signif(out.TFP$lci[out.TFP$day_of_year==30], 3), "-", signif(out.TFP$uci[out.TFP$day_of_year==30], 3), "]")
 
 TFP<-ggplot() +
   geom_point(aes(x=new_yday, y=bat_tibia_mm,shape=bat_sex),color="grey",size=3,data=pter_dat_juv) +
@@ -230,9 +239,10 @@ TFP<-ggplot() +
     axis.title.x = element_blank(),
     axis.text.x = element_blank(),
     legend.position = "none")+
-  scale_x_continuous(breaks = seq(0,361,100),
-                     labels = c("","", "",""))+
+  #scale_x_continuous(breaks = seq(0,361,100),
+   #                  labels = c("","", "",""))+
   annotate("text" ,x=300, y = 37, label = formula_text,size=3)+
+  coord_cartesian(xlim=c(0,365))+
   geom_line(aes(x=new_yday, y=predicted_mod_TF), color="blue", size=1,data = pter_dat_juv)+
   geom_ribbon(aes(x=new_yday, ymin=predicted_TF_lci, ymax=predicted_TF_uci), fill="blue", size=1, alpha=.3,data = pter_dat_juv)
 
@@ -246,7 +256,13 @@ TFP
 # GGeneralized Additive Model  (GAM) for Female
 
 mod_EF <- gam(ear_length_mm~s(new_yday,k=7, bs="tp"), data=pter_dat_juv)
+
+#save output
+sink("gam_Pruf_juv_ear.txt")
 summary(mod_EF)
+sink()
+
+
 
 plot(mod_EF)
 pter_dat_juv$predicted_mod_EF<- predict(mod_EF, type="response", se.fit = T)$fit
@@ -258,23 +274,24 @@ pter_dat_juv$predicted_EF_lci[pter_dat_juv$predicted_EF_lci<0] <- 0
 
 out.EF <- get.gam.deriv(orig_dat = pter_dat_juv, 
                         orig_gam = mod_EF, 
-                        days_to_calc = c(1:100),
+                        days_to_calc = c(1:365),
                         bat_spp = "Pteropus_rufus", 
                         measurement ="ear_length")
 
-formula_text = paste0("slope at day 60=\n", signif(out.EF$slope[out.EF$day_of_year==60], 3), " [", signif(out.EF$lci[out.EF$day_of_year==60], 3), "-", signif(out.EF$uci[out.EF$day_of_year==60], 3), "]")
+formula_text = paste0("slope at day 30=\n", signif(out.EF$slope[out.EF$day_of_year==30], 3), " [", signif(out.EF$lci[out.EF$day_of_year==30], 3), "-", signif(out.EF$uci[out.EF$day_of_year==30], 3), "]")
 
 
 EFP <- ggplot() +
   geom_point(aes(x=new_yday, y=ear_length_mm,shape=bat_sex),color="grey",size=3,data=pter_dat_juv) +
   ylab("Ear length (mm)") +
-  xlab("Day of year")+
+  xlab("Days since birth")+
   theme_bw()+ theme(panel.grid = element_blank(),
                     axis.title = element_text(color="black", size=12),
                     legend.position = "none")+
   annotate("text" ,x=300, y = 18, label = formula_text ,size=3)+
-  scale_x_continuous(breaks = seq(0,361,100),
-                     labels = c("Sep-29","Jan-05", "Apr-06","Jul-05"))+
+  coord_cartesian(xlim=c(0,365))+
+  #scale_x_continuous(breaks = seq(0,361,100),
+   #                  labels = c("Sep-29","Jan-05", "Apr-06","Jul-05"))+
   geom_line(aes(x=new_yday, y=predicted_mod_EF), color="blue", size=1,data = pter_dat_juv)+
   geom_ribbon(aes(x=new_yday, ymin=predicted_EF_lci, ymax=predicted_EF_uci),fill="blue", size=1, alpha=.3,data = pter_dat_juv)
 EFP
@@ -282,6 +299,7 @@ EFP
 
 #and save the data
 out.Pter <- rbind(out.FF,out.TFP,out.EF)
+rm(out.FF, out.TFP, out.EF)
 ########################################################################################################################
 ############################### ROUSETTUS MADAGASCARIENSIS ######################################################################
 #####################################################################################################
@@ -342,7 +360,13 @@ rou_dat_juv$new_yday<-jour
 
 # Generalized Additive Model  (GAM) for Female
 mod_FF <- gam(bat_forearm_mm~s(new_yday,k=7, bs="tp"), data=rou_dat_juv)
+
+
+#save output
+sink("gam_Roumad_juv_forearm.txt")
 summary(mod_FF)
+sink()
+
 plot(mod_FF)
 
 
@@ -356,11 +380,11 @@ rou_dat_juv$predicted_FF_lci[rou_dat_juv$predicted_FF_lci<0] <- 0
 
 out.FF <- get.gam.deriv(orig_dat = rou_dat_juv, 
                         orig_gam = mod_FF, 
-                        days_to_calc = c(1:100),
+                        days_to_calc = c(1:365),
                         bat_spp = "Rousettus_madagascariensis", 
                         measurement ="forearm")
 
-formula_text = paste0("slope at day 60=\n", signif(out.FF$slope[out.FF$day_of_year==60], 3), " [", signif(out.FF$lci[out.FF$day_of_year==60], 3), "-", signif(out.FF$uci[out.FF$day_of_year==60], 3), "]")
+formula_text = paste0("slope at day 30=\n", signif(out.FF$slope[out.FF$day_of_year==30], 3), " [", signif(out.FF$lci[out.FF$day_of_year==30], 3), "-", signif(out.FF$uci[out.FF$day_of_year==30], 3), "]")
 
 
 
@@ -376,9 +400,10 @@ FFR<-ggplot() +
                     axis.text.x = element_blank(),
                     axis.ticks.x = element_blank(),
                     legend.position = "none")+
-  annotate("text" ,x=253, y = 28, label = formula_text,size=3)+
-  scale_x_continuous(breaks = seq(0,361,100),
-                     labels = c("","", "",""))+
+  annotate("text" ,x=300, y = 27, label = formula_text,size=3)+
+  coord_cartesian(xlim=c(0,365))+
+  #scale_x_continuous(breaks = seq(0,361,100),
+   #                  labels = c("","", "",""))+
   geom_line(aes(x=new_yday, y=predicted_mod_FF), color="purple", size=1,data = rou_dat_juv)+
   geom_ribbon(aes(x=new_yday, ymin=predicted_FF_lci, ymax=predicted_FF_uci), fill="purple", size=1, alpha=.3,data = rou_dat_juv)
 FFR
@@ -392,7 +417,11 @@ FFR
 # Generalized Additive Model  (GAM) for Female
 
 mod_TF <- gam(bat_tibia_mm~s(new_yday,k=7, bs="tp"), data=rou_dat_juv)
+
+sink("gam_Roumad_juv_tibia.txt")
 summary(mod_TF)
+sink()
+
 plot(mod_TF)
 
 rou_dat_juv$predicted_mod_TF<- predict(mod_TF, type="response", se.fit = T)$fit
@@ -406,11 +435,11 @@ rou_dat_juv$predicted_TF_lci[rou_dat_juv$predicted_TF_lci<0] <- 0
 
 out.TFP <- get.gam.deriv(orig_dat = rou_dat_juv, 
                          orig_gam = mod_TF, 
-                         days_to_calc = c(1:100),
+                         days_to_calc = c(1:365),
                          bat_spp = "Rousettus_madagascariensis", 
                          measurement ="tibia")
 
-formula_text = paste0("slope at day 60=\n", signif(out.TFP$slope[out.TFP$day_of_year==60], 3), " [", signif(out.TFP$lci[out.TFP$day_of_year==60], 3), "-", signif(out.TFP$uci[out.TFP$day_of_year==60], 3), "]")
+formula_text = paste0("slope at day 30=\n", signif(out.TFP$slope[out.TFP$day_of_year==30], 3), " [", signif(out.TFP$lci[out.TFP$day_of_year==30], 3), "-", signif(out.TFP$uci[out.TFP$day_of_year==30], 3), "]")
 
 ########PLOT
 TFR<-ggplot() +
@@ -421,9 +450,10 @@ TFR<-ggplot() +
                     axis.text.x = element_blank(),
                     axis.ticks.x = element_blank(),
                     legend.position = "none")+
-  scale_x_continuous(breaks = seq(0,361,100),
-                     labels = c("","", "",""))+
-  annotate("text" ,x=253, y = 14, label = formula_text,size=3)+
+  #scale_x_continuous(breaks = seq(0,361,100),
+   #                  labels = c("","", "",""))+
+  annotate("text" ,x=300, y = 14, label = formula_text,size=3)+
+  coord_cartesian(xlim=c(0,365))+
   geom_line(aes(x=new_yday, y=predicted_mod_TF), color="purple", size=1,data = rou_dat_juv)+
   geom_ribbon(aes(x=new_yday, ymin=predicted_TF_lci, ymax=predicted_TF_uci), fill="purple", size=1, alpha=.3,data = rou_dat_juv)
 TFR
@@ -434,7 +464,13 @@ TFR
 
 # Generalized Additive Model  (GAM) for Female
 mod_EF <- gam(ear_length_mm~s(new_yday,k=7, bs="tp"), data=rou_dat_juv)
+
+
+sink("gam_Roumad_juv_ear.txt")
 summary(mod_EF)
+sink()
+
+
 
 plot(mod_EF)
 rou_dat_juv$predicted_mod_EF<- predict(mod_EF, type="response", se.fit = T)$fit
@@ -446,11 +482,11 @@ rou_dat_juv$predicted_EF_lci[rou_dat_juv$predicted_EF_lci<0] <- 0
 
 out.EF <- get.gam.deriv(orig_dat = rou_dat_juv, 
                         orig_gam = mod_EF, 
-                        days_to_calc = c(1:100),
+                        days_to_calc = c(1:365),
                         bat_spp = "Rousettus_madagascariensis", 
                         measurement ="ear_length")
 
-formula_text = paste0("slope at day 60=\n", signif(out.EF$slope[out.EF$day_of_year==60], 3), " [", signif(out.EF$lci[out.EF$day_of_year==60], 3), "-", signif(out.EF$uci[out.EF$day_of_year==60], 3), "]")
+formula_text = paste0("slope at day 30=\n", signif(out.EF$slope[out.EF$day_of_year==30], 3), " [", signif(out.EF$lci[out.EF$day_of_year==30], 3), "-", signif(out.EF$uci[out.EF$day_of_year==30], 3), "]")
 
 
 
@@ -459,19 +495,21 @@ formula_text = paste0("slope at day 60=\n", signif(out.EF$slope[out.EF$day_of_ye
 EFR <- ggplot() +
   geom_point(aes(x=new_yday, y=ear_length_mm,shape=bat_sex),color="grey",size=3,data=rou_dat_juv) +
   ylab("") +
-  xlab("Day of year")+
+  xlab("Days since birth")+
   theme_bw()+ theme(panel.grid = element_blank(),
                     axis.title.y = element_blank(),
                     axis.title.x = element_text(size=12),
                     legend.position = "none")+
-  annotate("text" ,x=253, y = 4.5, label = formula_text,size=3)+
-  scale_x_continuous(breaks = seq(0,361,100),
-                     labels = c("Dec-12","Mar-25", "Jun-03","Sep-10"))+
+  annotate("text" ,x=300, y = 4.5, label = formula_text,size=3)+
+  coord_cartesian(xlim=c(0,365))+
+  #scale_x_continuous(breaks = seq(0,361,100),
+   #                  labels = c("Dec-12","Mar-25", "Jun-03","Sep-10"))+
   geom_line(aes(x=new_yday, y=predicted_mod_EF), color="purple", size=1,data = rou_dat_juv)+
   geom_ribbon(aes(x=new_yday, ymin=predicted_EF_lci, ymax=predicted_EF_uci),fill="purple", size=1, alpha=.3,data = rou_dat_juv)
 EFR
 
 out.Rou<- rbind(out.FF,out.TFP,out.EF)
+rm(out.FF, out.TFP, out.EF)
 ###############################################################################################################################################
 ##########################  EIDOLON DUPREANUM  ################################################################################################
 ###############################################################################################################################################
@@ -550,9 +588,15 @@ eid_dat_juv[eid_dat_juv$month==3,]
 #eid_dat_juv[eid_dat_juv$bat_forearm_mm<40,]
 #eid_dat_juv=subset(eid_dat_juv,bat_forearm_mm<140&bat_forearm_mm>40)
 
-mod_FF <- gam(bat_forearm_mm~s(new_yday,k=7, bs="tp")+bat_sex, data=eid_dat_juv)
+mod_FF <- gam(bat_forearm_mm~s(new_yday,k=7, bs="tp"), data=eid_dat_juv)
 
+
+sink("gam_Eid_juv_forearm.txt")
 summary(mod_FF)
+sink()
+
+
+
 
 eid_dat_juv$predicted_mod_FF<- predict(mod_FF, type="response", se.fit = T)$fit
 eid_dat_juv$predicted_FF_SE <- predict(mod_FF, type="response", se.fit = T)$se.fit
@@ -563,11 +607,11 @@ eid_dat_juv$predicted_FF_lci[eid_dat_juv$predicted_TF_lci<0] <- 0
 
 out.FF <- get.gam.deriv(orig_dat = eid_dat_juv, 
                         orig_gam = mod_FF, 
-                        days_to_calc = c(1:100),
+                        days_to_calc = c(1:365),
                         bat_spp = "Eidolon_dupreanum", 
                         measurement ="forearm")
 
-formula_text = paste0("slope at day 60=\n", signif(out.FF$slope[out.FF$day_of_year==60], 3), " [", signif(out.FF$lci[out.FF$day_of_year==60], 3), "-", signif(out.FF$uci[out.FF$day_of_year==60], 3), "]")
+formula_text = paste0("slope at day 30=\n", signif(out.FF$slope[out.FF$day_of_year==30], 3), " [", signif(out.FF$lci[out.FF$day_of_year==30], 3), "-", signif(out.FF$uci[out.FF$day_of_year==30], 3), "]")
 
 
 
@@ -581,9 +625,10 @@ FFE<-ggplot() +
                     axis.ticks.x = element_blank(),
                     axis.text.x = element_blank(),
                     legend.position = "none")+
-  annotate("text" ,x=263, y = 75, label = formula_text,size=3)+
-  scale_x_continuous(breaks = seq(0,361,100),
-                     labels = c("","", "",""))+
+  annotate("text" ,x=300, y = 71, label = formula_text,size=3)+
+  coord_cartesian(xlim=c(0,365))+
+  #scale_x_continuous(breaks = seq(0,361,100),
+   #                  labels = c("","", "",""))+
   geom_line(aes(x=new_yday, y=predicted_mod_FF), color="light green", size=1,data = eid_dat_juv)+
   geom_ribbon(aes(x=new_yday, ymin=predicted_FF_lci, ymax=predicted_FF_uci), fill="light green", size=1, alpha=.3,data = eid_dat_juv)
 FFE
@@ -595,8 +640,14 @@ FFE
 
 # GAM ny Femelle
 
-mod_TF <- gam(bat_tibia_mm~s(new_yday,k=7, bs="cr")+bat_sex, data=eid_dat_juv)
+mod_TF <- gam(bat_tibia_mm~s(new_yday,k=7, bs="tp"), data=eid_dat_juv)
+
+
+sink("gam_Eid_juv_tibia.txt")
 summary(mod_TF)
+sink()
+
+
 plot(mod_TF)
 
 eid_dat_juv$predicted_mod_TF<- predict(mod_TF, type="response", se.fit = T)$fit
@@ -611,11 +662,11 @@ eid_dat_juv$predicted_TF_lci[eid_dat_juv$predicted_TF_lci<0] <- 0
 #linear model with tibia Female
 out.TFP <- get.gam.deriv(orig_dat = eid_dat_juv, 
                          orig_gam = mod_TF, 
-                         days_to_calc = c(1:100),
+                         days_to_calc = c(1:365),
                          bat_spp = "Eidolon_dupreanum", 
                          measurement ="tibia")
 
-formula_text = paste0("slope at day 60=\n", signif(out.TFP$slope[out.TFP$day_of_year==60], 3), " [", signif(out.TFP$lci[out.TFP$day_of_year==60], 3), "-", signif(out.TFP$uci[out.TFP$day_of_year==60], 3), "]")
+formula_text = paste0("slope at day 30=\n", signif(out.TFP$slope[out.TFP$day_of_year==30], 3), " [", signif(out.TFP$lci[out.TFP$day_of_year==30], 3), "-", signif(out.TFP$uci[out.TFP$day_of_year==30], 3), "]")
 
 
 
@@ -627,9 +678,10 @@ TFE<-ggplot() +
                     axis.ticks.x = element_blank(),
                     axis.text.x = element_blank(),
                     legend.position="none")+
-  scale_x_continuous(breaks = seq(0,361,100),
-                     labels = c("","", "",""))+
-  annotate("text" ,x=253, y = 32, label = formula_text,size=3)+
+  #scale_x_continuous(breaks = seq(0,361,100),
+   #                  labels = c("","", "",""))+
+  annotate("text" ,x=300, y = 32, label = formula_text,size=3)+
+  coord_cartesian(xlim=c(0,365))+
   geom_line(aes(x=new_yday, y=predicted_mod_TF), color="light green", size=1,data = eid_dat_juv)+
   geom_ribbon(aes(x=new_yday, ymin=predicted_TF_lci, ymax=predicted_TF_uci), fill="light green", size=1, alpha=.3,data = eid_dat_juv)
 TFE
@@ -638,8 +690,14 @@ TFE
 #'    (c) ear 
 
 # GAM ny Femelle
-mod_EF <- gam(ear_length_mm~s(new_yday,k=5, bs="cr"), data=eid_dat_juv)
+mod_EF <- gam(ear_length_mm~s(new_yday,k=5, bs="tp"), data=eid_dat_juv)
+
+
+sink("gam_Eid_juv_ear.txt")
 summary(mod_EF)
+sink()
+
+
 
 plot(mod_EF)
 eid_dat_juv$predicted_mod_EF<- predict(mod_EF, type="response", se.fit = T)$fit
@@ -652,24 +710,25 @@ eid_dat_juv$predicted_EF_lci[eid_dat_juv$predicted_EF_lci<0] <- 0
 
 out.EF <- get.gam.deriv(orig_dat = eid_dat_juv, 
                         orig_gam = mod_EF, 
-                        days_to_calc = c(1:100),
+                        days_to_calc = c(1:365),
                         bat_spp = "Eidolon_dupreanum", 
                         measurement ="ear_length")
 
-formula_text = paste0("slope at day 60=\n", signif(out.EF$slope[out.EF$day_of_year==60], 3), " [", signif(out.EF$lci[out.EF$day_of_year==60], 3), "-", signif(out.EF$uci[out.EF$day_of_year==60], 3), "]")
+formula_text = paste0("slope at day 30=\n", signif(out.EF$slope[out.EF$day_of_year==30], 3), " [", signif(out.EF$lci[out.EF$day_of_year==30], 3), "-", signif(out.EF$uci[out.EF$day_of_year==30], 3), "]")
 
 
 EFE <- ggplot() +
   geom_point(aes(x=new_yday, y=ear_length_mm,shape=bat_sex),color="grey",size=3,data=eid_dat_juv) +
-  xlab("Day of year")+
+  xlab("Days since birth")+
   theme_bw()+ theme(panel.grid = element_blank(),
                     axis.title.x = element_text(color="black", size=12),
                     axis.title.y = element_blank(),
                     legend.background = element_rect(color="gray",size = .1),
                     legend.text = element_text(size = 12))+
-  annotate("text" ,x=253, y = 15, label = formula_text,size=3)+
-  scale_x_continuous(breaks = seq(0,361,100),
-                     labels = c("Nov-16","Feb-24", "Jun-03","Sept-11"))+
+  annotate("text" ,x=300, y = 15, label = formula_text,size=3)+
+  coord_cartesian(xlim=c(0,365))+
+  #scale_x_continuous(breaks = seq(0,361,100),
+   #                  labels = c("Nov-16","Feb-24", "Jun-03","Sept-11"))+
   geom_line(aes(x=new_yday, y=predicted_mod_EF), color="light green", size=1,data = eid_dat_juv)+
   geom_ribbon(aes(x=new_yday, ymin=predicted_EF_lci, ymax=predicted_EF_uci),fill="light green", size=1, alpha=.3,data = eid_dat_juv)
 EFE
@@ -700,6 +759,34 @@ ggsave(file = paste0(homewd, "final-figures/Fig4.png"),
 
 out.all <- rbind(out.Pter, out.Rou, out.Eid)
 
+#and calculate first date of slope below .1 for forearm 
+get.moving.avg.slope <- function(df, lts){
+  df$mv_avg_slope = NA
+  for (i in 11:nrow(df)){
+    tmp.df = subset(df, day_of_year>=i & day_of_year< (i+lts))
+    df$mv_avg_slope[i] = mean(tmp.df$slope)  
+  }
+  return(df)
+  
+  
+}
+
+out.split <- dlply(out.all, .(bat_species, measurement))
+
+out.split <- lapply(out.split, get.moving.avg.slope, lts=10)
+
+out.all <- do.call("rbind", out.split)
+
+head(out.all)
+
+low.dat = subset(out.all, mv_avg_slope<.1 & measurement=="forearm" | 
+                          mv_avg_slope<.1 & measurement=="tibia" | 
+                          mv_avg_slope<.01 & measurement=="ear_length" )
+dat.min <- ddply(low.dat, .(bat_species, measurement), summarise, flip_date = min(day_of_year))
+
+#dat.min = rbind(dat.min, dat.min.ear)
 #now save the derivative output here to this folder
 write.csv(out.all, file = "Fig4_GAM_derivatives.csv", row.names = F)
+head(out.all)
+
 

@@ -46,6 +46,46 @@ AllsppAdults1 <- filter(select(data1, sampleid,bat_species, roost_site, collecti
                                bat_age_class, bat_weight_g, bat_forearm_mm, bat_tibia_mm, ear_length_mm, body_length_cm), 
                         bat_age_class %in% c("A","NL","L", "P")) 
 
+AllsppAdults1$bat_weight_g= as.numeric(AllsppAdults1$bat_weight_g)
+
+AllsppAdults1$bat_forearm_mm= as.numeric(AllsppAdults1$bat_forearm_mm)
+
+
+#first, refit GAM from Fig 2:
+modAllF <- lmodel2(log10(bat_weight_g)~log10(bat_forearm_mm), data=subset(AllsppAdults1, bat_sex=="female"),nperm= 99)
+modAllM <- lmodel2(log10(bat_weight_g)~log10(bat_forearm_mm), data=subset(AllsppAdults1, bat_sex=="male"),nperm= 99)
+
+
+#save them as "m" and "b" as in y=mx+b
+mfemMad <- modAllF$regression.results[3,3]
+bfemMad <- modAllF$regression.results[3,2]
+mmalMad <- modAllM$regression.results[3,3]
+bmalMad <- modAllM$regression.results[3,2]
+
+#and lci and uci
+mfemMad_lci <- modAllF$confidence.intervals[3,4]
+bfemMad_lci <- modAllF$confidence.intervals[3,2]
+mmalMad_lci <- modAllM$confidence.intervals[3,4]
+bmalMad_lci <- modAllM$confidence.intervals[3,2]
+
+mfemMad_uci <- modAllF$confidence.intervals[3,5]
+bfemMad_uci <- modAllF$confidence.intervals[3,3]
+mmalMad_uci <- modAllM$confidence.intervals[3,5]
+bmalMad_uci <- modAllM$confidence.intervals[3,3]
+
+# Save R-squar for all of the model (already saved in csv from Fig2)
+RsqF<- modAllF[["rsquare"]]
+RsqM<-modAllM[["rsquare"]]
+
+
+#write a function to predict y = mx+b
+regress.func <- function(x,m,b){
+  log10y = m*log10(x)+b
+  y=10^(log10y)
+  return(y)
+  
+}
+
 #sub-select only the Moramanga sites
 unique(AllsppAdults1$roost_site)
 AllsppAdult_Mora <- filter(select(AllsppAdults1, sampleid,bat_species, roost_site,day, collection_date,month, bat_sex, 
@@ -69,7 +109,6 @@ AllsppAdult_Mora$bat_forearm_mm= as.numeric(AllsppAdult_Mora$bat_forearm_mm)
 
 
 
-
 #first, plot it to visualize
 p1 <- ggplot(data = AllsppAdult_Mora) + geom_point(aes(x=bat_forearm_mm,y=bat_weight_g, color=bat_species))
 
@@ -80,148 +119,21 @@ p2 <- ggplot(data = AllsppAdult_Mora) + geom_point(aes(x=bat_forearm_mm,y=bat_we
       scale_y_log10() + scale_x_log10()
 print(p2)
 
-#now divide up by species
-Eid.df = subset(AllsppAdult_Mora, bat_species=="Eidolon dupreanum")
-Eid.df = arrange(Eid.df, desc(bat_forearm_mm))
-head(Eid.df)
-tail(Eid.df)
 
+#and predict
+AllsppAdult_Mora$prediction<- NA
+AllsppAdult_Mora$prediction_lci<- NA
+AllsppAdult_Mora$prediction_uci<- NA
 
-#and Pter
-Pter.df = subset(AllsppAdult_Mora, bat_species=="Pteropus rufus")
-Pter.df = arrange(Pter.df, desc(bat_forearm_mm))
-head(Pter.df) 
-tail(Pter.df) 
+AllsppAdult_Mora$prediction[AllsppAdult_Mora$bat_sex=="female"] <- regress.func(x= AllsppAdult_Mora$bat_forearm_mm[AllsppAdult_Mora$bat_sex=="female"], m=mfemMad, b=bfemMad)
+AllsppAdult_Mora$prediction[AllsppAdult_Mora$bat_sex=="male"] <- regress.func(x= AllsppAdult_Mora$bat_forearm_mm[AllsppAdult_Mora$bat_sex=="male"], m=mmalMad, b=bmalMad)
 
+AllsppAdult_Mora$prediction_lci[AllsppAdult_Mora$bat_sex=="female"] <- regress.func(x= AllsppAdult_Mora$bat_forearm_mm[AllsppAdult_Mora$bat_sex=="female"], m=mfemMad_lci, b=bfemMad_lci)
+AllsppAdult_Mora$prediction_lci[AllsppAdult_Mora$bat_sex=="male"] <- regress.func(x= AllsppAdult_Mora$bat_forearm_mm[AllsppAdult_Mora$bat_sex=="male"], m=mmalMad_lci, b=bmalMad_lci)
 
-Rou.df = subset(AllsppAdult_Mora, bat_species=="Rousettus madagascariensis")
-Rou.df = arrange(Rou.df, desc(bat_forearm_mm))
-head(Rou.df) 
-tail(Rou.df)
-
-
-AllsppAdult_Mora <- rbind(Rou.df, Pter.df, Eid.df)
-
-
-
-#now fit model by species and sex:
-Pter.dat.adultF = subset(AllsppAdult_Mora, bat_species=="Pteropus rufus" &  bat_sex=="female")
-Pter.dat.adultM = subset(AllsppAdult_Mora, bat_species=="Pteropus rufus"&  bat_sex=="male")
-Eid.dat.adultF = subset(AllsppAdult_Mora, bat_species=="Eidolon dupreanum" &  bat_sex=="female")
-Eid.dat.adultM = subset(AllsppAdult_Mora, bat_species=="Eidolon dupreanum" &  bat_sex=="male")
-Rou.dat.adultF = subset(AllsppAdult_Mora, bat_species=="Rousettus madagascariensis" &  bat_sex=="female")
-Rou.dat.adultM = subset(AllsppAdult_Mora, bat_species=="Rousettus madagascariensis" &  bat_sex=="male")
-
-
-modPterF <- lmodel2(log10(bat_weight_g)~log10(bat_forearm_mm), data=Pter.dat.adultF,nperm= 99)
-modPterM <- lmodel2(log10(bat_weight_g)~log10(bat_forearm_mm), data=Pter.dat.adultM,nperm= 99)
-
-modEidF <- lmodel2(log10(bat_weight_g)~log10(bat_forearm_mm), data=Eid.dat.adultF,nperm= 99)
-modEidM <- lmodel2(log10(bat_weight_g)~log10(bat_forearm_mm), data=Eid.dat.adultM,nperm= 99)
-
-modRouF <- lmodel2(log10(bat_weight_g)~log10(bat_forearm_mm), data=Rou.dat.adultF,nperm= 99)
-modRouM <- lmodel2(log10(bat_weight_g)~log10(bat_forearm_mm), data=Rou.dat.adultM,nperm= 99)
-
-#save function y=mx+b
-
-mPterF = modPterF$regression.results[3,3]
-bPterF = modPterF$regression.results[3,2]
-mPterM = modPterM$regression.results[3,3]
-bPterM = modPterM$regression.results[3,2]
-
-
-mEidF = modEidF$regression.results[3,3]
-bEidF = modEidF$regression.results[3,2]
-mEidM = modEidM$regression.results[3,3]
-bEidM = modEidM$regression.results[3,2]
-
-mRouF = modRouF$regression.results[3,3]
-bRouF = modRouF$regression.results[3,2]
-mRouM = modRouM$regression.results[3,3]
-bRouM = modRouM$regression.results[3,2]
-
-#and do the same for confidence intervals too:
-
-#lci
-mPterF_lci = modPterF$confidence.intervals[3,4]
-bPterF_lci = modPterF$confidence.intervals[3,2]
-mPterM_lci = modPterM$confidence.intervals[3,4]
-bPterM_lci = modPterM$confidence.intervals[3,2]
-
-
-mEidF_lci = modEidF$confidence.intervals[3,4]
-bEidF_lci = modEidF$confidence.intervals[3,2]
-mEidM_lci = modEidM$confidence.intervals[3,4]
-bEidM_lci = modEidM$confidence.intervals[3,2]
-
-mRouF_lci = modRouF$confidence.intervals[3,4]
-bRouF_lci = modRouF$confidence.intervals[3,2]
-mRouM_lci = modRouM$confidence.intervals[3,4]
-bRouM_lci = modRouM$confidence.intervals[3,2]
-
-#uci
-mPterF_uci = modPterF$confidence.intervals[3,5]
-bPterF_uci = modPterF$confidence.intervals[3,3]
-mPterM_uci = modPterM$confidence.intervals[3,5]
-bPterM_uci = modPterM$confidence.intervals[3,3]
-
-
-mEidF_uci = modEidF$confidence.intervals[3,5]
-bEidF_uci = modEidF$confidence.intervals[3,3]
-mEidM_uci = modEidM$confidence.intervals[3,5]
-bEidM_uci = modEidM$confidence.intervals[3,3]
-
-mRouF_uci = modRouF$confidence.intervals[3,5]
-bRouF_uci = modRouF$confidence.intervals[3,3]
-mRouM_uci = modRouM$confidence.intervals[3,5]
-bRouM_uci = modRouM$confidence.intervals[3,3]
-
-# predict function y = mx+b
-#but rewrite for log
-regress.func <- function(x,m,b){
-  log10y = m*log10(x)+b
-  y=10^(log10y)
-  return(y)
+AllsppAdult_Mora$prediction_uci[AllsppAdult_Mora$bat_sex=="female"] <- regress.func(x= AllsppAdult_Mora$bat_forearm_mm[AllsppAdult_Mora$bat_sex=="female"], m=mfemMad_uci, b=bfemMad_uci)
+AllsppAdult_Mora$prediction_uci[AllsppAdult_Mora$bat_sex=="male"] <- regress.func(x= AllsppAdult_Mora$bat_forearm_mm[AllsppAdult_Mora$bat_sex=="male"], m=mmalMad_uci, b=bmalMad_uci)
   
-}
-
-
-#and now predict across your dataset
-
-Pter.dat.adultF$prediction <- regress.func(x= Pter.dat.adultF$bat_forearm_mm, m=mPterF, b=bPterF)
-Pter.dat.adultM$prediction <- regress.func(x= Pter.dat.adultM$bat_forearm_mm, m=mPterM, b=bPterM)
-
-Eid.dat.adultF$prediction <- regress.func(x= Eid.dat.adultF$bat_forearm_mm, m=mEidF, b=bEidF)
-Eid.dat.adultM$prediction <- regress.func(x= Eid.dat.adultM$bat_forearm_mm, m=mEidM, b=bEidM)
-
-Rou.dat.adultF$prediction <- regress.func(x= Rou.dat.adultF$bat_forearm_mm, m=mRouF, b=bRouF)
-Rou.dat.adultM$prediction <- regress.func(x= Rou.dat.adultM$bat_forearm_mm, m=mRouM, b=bRouM)
-
-
-#and the lower and upper CIs 
-Pter.dat.adultF$prediction_lci <- regress.func(x= Pter.dat.adultF$bat_forearm_mm, m=mPterF_lci, b=bPterF_lci)
-Pter.dat.adultM$prediction_lci <- regress.func(x= Pter.dat.adultM$bat_forearm_mm, m=mPterM_lci, b=bPterM_lci)
-
-Eid.dat.adultF$prediction_lci <- regress.func(x= Eid.dat.adultF$bat_forearm_mm, m=mEidF_lci, b=bEidF_lci)
-Eid.dat.adultM$prediction_lci <- regress.func(x= Eid.dat.adultM$bat_forearm_mm, m=mEidM_lci, b=bEidM_lci)
-
-Rou.dat.adultF$prediction_lci <- regress.func(x= Rou.dat.adultF$bat_forearm_mm, m=mRouF_lci, b=bRouF_lci)
-Rou.dat.adultM$prediction_lci <- regress.func(x= Rou.dat.adultM$bat_forearm_mm, m=mRouM_lci, b=bRouM_lci)
-
-
-Pter.dat.adultF$prediction_uci <- regress.func(x= Pter.dat.adultF$bat_forearm_mm, m=mPterF_uci, b=bPterF_uci)
-Pter.dat.adultM$prediction_uci <- regress.func(x= Pter.dat.adultM$bat_forearm_mm, m=mPterM_uci, b=bPterM_uci)
-
-Eid.dat.adultF$prediction_uci <- regress.func(x= Eid.dat.adultF$bat_forearm_mm, m=mEidF_uci, b=bEidF_uci)
-Eid.dat.adultM$prediction_uci <- regress.func(x= Eid.dat.adultM$bat_forearm_mm, m=mEidM_uci, b=bEidM_uci)
-
-Rou.dat.adultF$prediction_uci <- regress.func(x= Rou.dat.adultF$bat_forearm_mm, m=mRouF_uci, b=bRouF_uci)
-Rou.dat.adultM$prediction_uci <- regress.func(x= Rou.dat.adultM$bat_forearm_mm, m=mRouM_uci, b=bRouM_uci)
-
-
-#join back
-AllsppAdult_Mora <- rbind(Pter.dat.adultF, Eid.dat.adultF, Rou.dat.adultF,
-                          Pter.dat.adultM, Eid.dat.adultM, Rou.dat.adultM)
 head(AllsppAdult_Mora )
 
 p3b <- ggplot(data = AllsppAdult_Mora) + 
@@ -320,7 +232,7 @@ summary(gamRouM)
 
 
 sink("gam_Rmad_F.txt")
-summary(gamRouF) 
+summary(gamRouF) #weak sig
 sink()
 
 
