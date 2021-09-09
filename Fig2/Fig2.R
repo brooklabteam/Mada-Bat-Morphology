@@ -86,17 +86,17 @@ unique(sub.dat1$bat_sex)
 #summarise to just points of interest
 mad.dat1 <- ddply(sub.dat1, .(Genus, bat_species, bat_sex, bat_weight_g, bat_forearm_mm, bat_tibia_mm, ear_length_mm))
 head(mad.dat1)
-mad.dat1$origin = "Malagasy Bats"
+mad.dat1$origin = "Malagasy Pteropodids"
 
 
 #and summarize means of everything
 mad.mean <- ddply(mad.dat1, .(Genus, bat_sex, bat_species), summarise, bat_weight_g = mean(bat_weight_g, na.rm = T), bat_forearm_mm = mean(bat_forearm_mm, na.rm = T), ear_length_mm = mean(ear_length_mm, na.rm = T), bat_tibia_mm=mean(bat_tibia_mm, na.rm = T))
-mad.mean$origin <- "All Bats" 
+mad.mean$origin <- "All Pteropodids" 
 
 
 #remove mada species from lit
 lit.dat = subset(forearm.dat1, Binomial!="Pteropus rufus" & Binomial!="Eidolon dupreanum" & Binomial!= "Rousettus madagascariensis")
-lit.dat$origin = "All Bats"
+lit.dat$origin = "All Pteropodids"
 
 #now join all datasets together
 
@@ -110,7 +110,7 @@ names(mad.mean)
 #and join
 
 all.dat <- rbind(mad.sub, lit.dat, mad.mean)
-all.dat$origin = factor(all.dat$origin, levels = c( "All Bats", "Malagasy Bats"))
+all.dat$origin = factor(all.dat$origin, levels = c( "All Pteropodids", "Malagasy Pteropodids"))
 
 #make a color bar and specify madagascar bats
 library(randomcoloR)
@@ -135,7 +135,7 @@ all.dat$Genus <- factor(all.dat$Genus, levels = c(all.genera))
 
 #test plot
 p.all <- ggplot(data=all.dat) + 
-  geom_point(data=subset(all.dat, bat_species=="Pteropus rufus" & origin=="All Bats" | bat_species=="Eidolon dupreanum" & origin=="All Bats" | bat_species=="Rousettus madagascariensis" & origin=="All Bats"), 
+  geom_point(data=subset(all.dat, bat_species=="Pteropus rufus" & origin=="All Pteropodids" | bat_species=="Eidolon dupreanum" & origin=="All Pteropodids" | bat_species=="Rousettus madagascariensis" & origin=="All Pteropodids"), 
              aes( x=bat_forearm_mm , y=bat_weight_g), color="black", size=5) +
   geom_point(aes( x=bat_forearm_mm , y=bat_weight_g, color=Genus), size=3)+ facet_grid(Sex~.)+
   scale_color_manual(values=colz) +
@@ -150,13 +150,13 @@ print(p.all)
 
 library(lmodel2)
 
-female.mod.mada <- lmodel2(log10(bat_weight_g)~ log10(bat_forearm_mm), data=subset(all.dat, bat_sex=="F" & origin=="Malagasy Bats"), nperm = 99)
-male.mod.mada <- lmodel2(log10(bat_weight_g)~ log10(bat_forearm_mm), data=subset(all.dat, bat_sex=="M" & origin=="Malagasy Bats"), nperm = 99)
+female.mod.mada <- lmodel2(log10(bat_weight_g)~ log10(bat_forearm_mm), data=subset(all.dat, bat_sex=="F" & origin=="Malagasy Pteropodids"), nperm = 99)
+male.mod.mada <- lmodel2(log10(bat_weight_g)~ log10(bat_forearm_mm), data=subset(all.dat, bat_sex=="M" & origin=="Malagasy Pteropodids"), nperm = 99)
 
 
 #and the non-mada
-female.mod.nonmada <- lmodel2(log10(bat_weight_g)~ log10(bat_forearm_mm), data=subset(all.dat, bat_sex=="F" & origin=="All Bats"), nperm = 99)
-male.mod.nonmada <- lmodel2(log10(bat_weight_g)~ log10(bat_forearm_mm), data=subset(all.dat, bat_sex=="M" & origin=="All Bats"), nperm = 99)
+female.mod.nonmada <- lmodel2(log10(bat_weight_g)~ log10(bat_forearm_mm), data=subset(all.dat, bat_sex=="F" & origin=="All Pteropodids"), nperm = 99)
+male.mod.nonmada <- lmodel2(log10(bat_weight_g)~ log10(bat_forearm_mm), data=subset(all.dat, bat_sex=="M" & origin=="All Pteropodids"), nperm = 99)
 
 #save them as "m" and "b" as in y=mx+b
 mfemMad <- female.mod.mada$regression.results[3,3]
@@ -252,24 +252,24 @@ regress.func <- function(x,m,b){
 
 #and predict across your dataset
 all.dat$predicted_mass <- NA
-all.dat$predicted_mass[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats"] <- 10^(regress.func(x=log10(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats"]), m=mfemMad, b=bfemMad))
-all.dat$predicted_mass[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats"] <- 10^(regress.func(x=log10(all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats"]), m=mmalMad, b=bmalMad))
-all.dat$predicted_mass[all.dat$bat_sex=="F" & all.dat$origin=="All Bats"] <- 10^(regress.func(x=log10(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="All Bats"]), m=mfemMad, b=bfemMad))
-all.dat$predicted_mass[all.dat$bat_sex=="M" & all.dat$origin=="All Bats"] <- 10^(regress.func(x=log10(all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="All Bats"]), m=mmalMad, b=bmalMad))
+all.dat$predicted_mass[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids"] <- 10^(regress.func(x=log10(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids"]), m=mfemMad, b=bfemMad))
+all.dat$predicted_mass[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids"] <- 10^(regress.func(x=log10(all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids"]), m=mmalMad, b=bmalMad))
+all.dat$predicted_mass[all.dat$bat_sex=="F" & all.dat$origin=="All Pteropodids"] <- 10^(regress.func(x=log10(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="All Pteropodids"]), m=mfemMad, b=bfemMad))
+all.dat$predicted_mass[all.dat$bat_sex=="M" & all.dat$origin=="All Pteropodids"] <- 10^(regress.func(x=log10(all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="All Pteropodids"]), m=mmalMad, b=bmalMad))
 
 
 #do CIs later
 all.dat$predicted_mass_lci <- NA
-all.dat$predicted_mass_lci[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats"] <- 10^(regress.func(x=log10(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats"]), m=mfemMad_lci, b=bfemMad_lci))
-all.dat$predicted_mass_lci[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats"] <- 10^(regress.func(x=log10(all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats"]), m=mmalMad_lci, b=bmalMad_lci))
-all.dat$predicted_mass_lci[all.dat$bat_sex=="F" & all.dat$origin=="All Bats"] <- 10^(regress.func(x=log10(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="All Bats"]), m=mfemMad_lci, b=bfemMad_lci))
-all.dat$predicted_mass_lci[all.dat$bat_sex=="M" & all.dat$origin=="All Bats"] <- 10^(regress.func(x=log10(all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="All Bats"]), m=mmalMad_lci, b=bmalMad_lci))
+all.dat$predicted_mass_lci[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids"] <- 10^(regress.func(x=log10(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids"]), m=mfemMad_lci, b=bfemMad_lci))
+all.dat$predicted_mass_lci[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids"] <- 10^(regress.func(x=log10(all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids"]), m=mmalMad_lci, b=bmalMad_lci))
+all.dat$predicted_mass_lci[all.dat$bat_sex=="F" & all.dat$origin=="All Pteropodids"] <- 10^(regress.func(x=log10(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="All Pteropodids"]), m=mfemMad_lci, b=bfemMad_lci))
+all.dat$predicted_mass_lci[all.dat$bat_sex=="M" & all.dat$origin=="All Pteropodids"] <- 10^(regress.func(x=log10(all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="All Pteropodids"]), m=mmalMad_lci, b=bmalMad_lci))
 
 all.dat$predicted_mass_uci <- NA
-all.dat$predicted_mass_uci[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats"] <- 10^(regress.func(x=log10(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats"]), m=mfemMad_uci, b=bfemMad_uci))
-all.dat$predicted_mass_uci[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats"] <- 10^(regress.func(x=log10(all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats"]), m=mmalMad_uci, b=bmalMad_uci))
-all.dat$predicted_mass_uci[all.dat$bat_sex=="F" & all.dat$origin=="All Bats"] <- 10^(regress.func(x=log10(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="All Bats"]), m=mfemMad_uci, b=bfemMad_uci))
-all.dat$predicted_mass_uci[all.dat$bat_sex=="M" & all.dat$origin=="All Bats"] <- 10^(regress.func(x=log10(all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="All Bats"]), m=mmalMad_uci, b=bmalMad_uci))
+all.dat$predicted_mass_uci[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids"] <- 10^(regress.func(x=log10(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids"]), m=mfemMad_uci, b=bfemMad_uci))
+all.dat$predicted_mass_uci[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids"] <- 10^(regress.func(x=log10(all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids"]), m=mmalMad_uci, b=bmalMad_uci))
+all.dat$predicted_mass_uci[all.dat$bat_sex=="F" & all.dat$origin=="All Pteropodids"] <- 10^(regress.func(x=log10(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="All Pteropodids"]), m=mfemMad_uci, b=bfemMad_uci))
+all.dat$predicted_mass_uci[all.dat$bat_sex=="M" & all.dat$origin=="All Pteropodids"] <- 10^(regress.func(x=log10(all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="All Pteropodids"]), m=mmalMad_uci, b=bmalMad_uci))
 
 
 
@@ -282,9 +282,9 @@ pall_2 <- ggplot(data=all.dat) +
   geom_ribbon(aes(x=bat_forearm_mm , ymin=predicted_mass_lci, ymax=predicted_mass_uci),alpha=.3) +
   facet_grid(bat_sex~origin, switch= "x")+theme_bw()+
   geom_point(aes( x=bat_forearm_mm , y=bat_weight_g, color=Genus), size=3)+ 
-  geom_point(data=subset(all.dat, bat_species=="Pteropus rufus" & origin=="All Bats" | bat_species=="Eidolon dupreanum" & origin=="All Bats"  | bat_species=="Rousettus madagascariensis" & origin=="All Bats" ),
+  geom_point(data=subset(all.dat, bat_species=="Pteropus rufus" & origin=="All Pteropodids" | bat_species=="Eidolon dupreanum" & origin=="All Pteropodids"  | bat_species=="Rousettus madagascariensis" & origin=="All Pteropodids" ),
              aes( x=bat_forearm_mm , y=bat_weight_g), color="black", size=5) +
-  geom_point(data=subset(all.dat, bat_species=="Pteropus rufus" & origin=="All Bats" | bat_species=="Eidolon dupreanum" & origin=="All Bats"  | bat_species=="Rousettus madagascariensis" & origin=="All Bats" ),
+  geom_point(data=subset(all.dat, bat_species=="Pteropus rufus" & origin=="All Pteropodids" | bat_species=="Eidolon dupreanum" & origin=="All Pteropodids"  | bat_species=="Rousettus madagascariensis" & origin=="All Pteropodids" ),
              aes( x=bat_forearm_mm , y=bat_weight_g, color=Genus),  size=3) +
   theme( strip.background.y =  element_rect(fill="white"), 
          strip.background.x = element_blank(), strip.placement = "outside",
@@ -295,7 +295,7 @@ pall_2 <- ggplot(data=all.dat) +
          legend.background = element_rect(fill=NA),
          panel.grid = element_blank(),
         legend.title = element_text(size=8))+labs(x="Forearm Length (mm)", y="Body mass (g)")+
-  labs(color="\n\n\n\nMalagasy spp. + All bat genera")
+  labs(color="\n\n\n\nMalagasy spp. + All pteropodid genera")
 
 print(pall_2)
 
@@ -307,16 +307,16 @@ print(pall_2)
 ##########Ear
 
 p2T_6_1<- ggplot() +
-  geom_violin(data= subset(all.dat, origin=="All Bats"), 
+  geom_violin(data= subset(all.dat, origin=="All Pteropodids"), 
               aes(x=origin, y=bat_tibia_mm),scale="width",fill="white",draw_quantiles=c(0.025,0.5,0.975), width=.3) +
-  geom_beeswarm(dat=subset(all.dat, origin=="Malagasy Bats"),
+  geom_beeswarm(dat=subset(all.dat, origin=="Malagasy Pteropodids"),
                 aes(x= origin, y= bat_tibia_mm, color=Genus))+
   scale_color_manual(values = colz)+
-  geom_jitter(data=subset(all.dat, origin=="All Bats"),
+  geom_jitter(data=subset(all.dat, origin=="All Pteropodids"),
               aes(x= origin, y= bat_tibia_mm, color=Genus),size=2,width=.1,height=0)+
-  geom_point(data=subset(all.dat, bat_species=="Pteropus rufus" & origin=="All Bats" | bat_species=="Eidolon dupreanum" & origin=="All Bats"  | bat_species=="Rousettus madagascariensis" & origin=="All Bats"),
+  geom_point(data=subset(all.dat, bat_species=="Pteropus rufus" & origin=="All Pteropodids" | bat_species=="Eidolon dupreanum" & origin=="All Pteropodids"  | bat_species=="Rousettus madagascariensis" & origin=="All Pteropodids"),
              aes(x= origin, y= bat_tibia_mm), color="black", size=4,) +
-  geom_point(data=subset(all.dat, bat_species=="Pteropus rufus" & origin=="All Bats" | bat_species=="Eidolon dupreanum" & origin=="All Bats"  | bat_species=="Rousettus madagascariensis" & origin=="All Bats"),
+  geom_point(data=subset(all.dat, bat_species=="Pteropus rufus" & origin=="All Pteropodids" | bat_species=="Eidolon dupreanum" & origin=="All Pteropodids"  | bat_species=="Rousettus madagascariensis" & origin=="All Pteropodids"),
              aes(x= origin, y= bat_tibia_mm, color=Genus), size=2) +
   facet_grid(bat_sex~.)+theme_bw()+theme(legend.position = "none")+
   theme(element_blank(), axis.title.x = element_blank(), 
@@ -328,16 +328,16 @@ print(p2T_6_1)
 #########Ear
 
 p2E_6_1<- ggplot() +
-  geom_violin(data= subset(all.dat, origin=="All Bats"), 
+  geom_violin(data= subset(all.dat, origin=="All Pteropodids"), 
               aes(x=origin, y=ear_length_mm),scale="width",fill="white",draw_quantiles=c(0.025,0.5,0.975), width=.3) +
-  geom_beeswarm(dat=subset(all.dat, origin=="Malagasy Bats"),
+  geom_beeswarm(dat=subset(all.dat, origin=="Malagasy Pteropodids"),
                 aes(x= origin, y= ear_length_mm, color=Genus))+
   scale_color_manual(values = colz)+
-  geom_jitter(data=subset(all.dat, origin=="All Bats"),
+  geom_jitter(data=subset(all.dat, origin=="All Pteropodids"),
               aes(x= origin, y= ear_length_mm, color=Genus),size=2,width=.1,height=0)+
-  geom_point(data=subset(all.dat, bat_species=="Pteropus rufus" & origin=="All Bats" | bat_species=="Eidolon dupreanum" & origin=="All Bats"  | bat_species=="Rousettus madagascariensis" & origin=="All Bats"),
+  geom_point(data=subset(all.dat, bat_species=="Pteropus rufus" & origin=="All Pteropodids" | bat_species=="Eidolon dupreanum" & origin=="All Pteropodids"  | bat_species=="Rousettus madagascariensis" & origin=="All Pteropodids"),
              aes(x= origin, y= ear_length_mm), color="black", size=4,) +
-  geom_point(data=subset(all.dat, bat_species=="Pteropus rufus" & origin=="All Bats" | bat_species=="Eidolon dupreanum" & origin=="All Bats"  | bat_species=="Rousettus madagascariensis" & origin=="All Bats"),
+  geom_point(data=subset(all.dat, bat_species=="Pteropus rufus" & origin=="All Pteropodids" | bat_species=="Eidolon dupreanum" & origin=="All Pteropodids"  | bat_species=="Rousettus madagascariensis" & origin=="All Pteropodids"),
              aes(x= origin, y= ear_length_mm, color=Genus), size=2) +
   facet_grid(bat_sex~.)+theme_bw()+theme(legend.position = "none")+
   theme(element_blank(), axis.title.x = element_blank(), 
@@ -373,77 +373,77 @@ ggsave(file = paste0(homewd, "/final-figures/Fig2.png"),
 ####ResultInterpret_Ear
 
 
-quant_EarAllBAtsF<- quantile(all.dat$ear_length_mm[all.dat$bat_sex=="F" & all.dat$origin=="All Bats" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"],probs=c(0.025,0.5,0.975),na.rm = T)
+quant_EarAllBAtsF<- quantile(all.dat$ear_length_mm[all.dat$bat_sex=="F" & all.dat$origin=="All Pteropodids" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"],probs=c(0.025,0.5,0.975),na.rm = T)
 
 quant_EarAllBAtsF <- rbind.data.frame(quant_EarAllBAtsF)
 names(quant_EarAllBAtsF) <- c("2.5%", "50%", "97.5%")
-quant_EarAllBAtsF$min = min(all.dat$ear_length_mm[all.dat$bat_sex=="F" & all.dat$origin=="All Bats" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"], na.rm = T)
-quant_EarAllBAtsF$max = max(all.dat$ear_length_mm[all.dat$bat_sex=="F" & all.dat$origin=="All Bats" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"], na.rm = T)
+quant_EarAllBAtsF$min = min(all.dat$ear_length_mm[all.dat$bat_sex=="F" & all.dat$origin=="All Pteropodids" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"], na.rm = T)
+quant_EarAllBAtsF$max = max(all.dat$ear_length_mm[all.dat$bat_sex=="F" & all.dat$origin=="All Pteropodids" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"], na.rm = T)
 
 
-quant_EarAllBAtsM<- quantile(all.dat$ear_length_mm[all.dat$bat_sex=="M" & all.dat$origin=="All Bats" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"],probs=c(0.025,0.5,0.975),na.rm = T)
+quant_EarAllBAtsM<- quantile(all.dat$ear_length_mm[all.dat$bat_sex=="M" & all.dat$origin=="All Pteropodids" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"],probs=c(0.025,0.5,0.975),na.rm = T)
 quant_EarAllBAtsM <- rbind.data.frame(quant_EarAllBAtsM)
 names(quant_EarAllBAtsM) <- c("2.5%", "50%", "97.5%")
-quant_EarAllBAtsM$min = min(all.dat$ear_length_mm[all.dat$bat_sex=="M" & all.dat$origin=="All Bats" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"], na.rm = T)
-quant_EarAllBAtsM$max = max(all.dat$ear_length_mm[all.dat$bat_sex=="M" & all.dat$origin=="All Bats" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"], na.rm = T)
+quant_EarAllBAtsM$min = min(all.dat$ear_length_mm[all.dat$bat_sex=="M" & all.dat$origin=="All Pteropodids" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"], na.rm = T)
+quant_EarAllBAtsM$max = max(all.dat$ear_length_mm[all.dat$bat_sex=="M" & all.dat$origin=="All Pteropodids" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"], na.rm = T)
 
 
 
 #and do t-test: 
 #is there a significant different in the mean ear length for males vs. female bats? welch's t-test
-out = t.test(all.dat$ear_length_mm[all.dat$bat_sex=="F" & all.dat$origin=="All Bats" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"], all.dat$ear_length_mm[all.dat$bat_sex=="M" & all.dat$origin=="All Bats" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"], alternative = "two.sided")
+out = t.test(all.dat$ear_length_mm[all.dat$bat_sex=="F" & all.dat$origin=="All Pteropodids" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"], all.dat$ear_length_mm[all.dat$bat_sex=="M" & all.dat$origin=="All Pteropodids" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"], alternative = "two.sided")
 t_EarAllBAtsMvF <- cbind.data.frame(meanM = out$estimate[1], meanF = out$estimate[2], p_val_t_test = out$p.value) 
 rownames(t_EarAllBAtsMvF) <- c()
 t_EarAllBAtsMvF$metric <- "ear length"
-t_EarAllBAtsMvF$source <- "All Bats"
+t_EarAllBAtsMvF$source <- "All Pteropodids"
 t_EarAllBAtsMvF$species <- NA
 
 ############Result_2-Ear Malagasy bats#############
 
-quant_EarPert_F<- quantile(all.dat$ear_length_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Pteropus rufus"],probs=c(0.025,0.5,0.975),na.rm = T)
+quant_EarPert_F<- quantile(all.dat$ear_length_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Pteropus rufus"],probs=c(0.025,0.5,0.975),na.rm = T)
 
 quant_EarPert_F
 
 
 quant_EarPert_F <- rbind.data.frame(quant_EarPert_F)
 names(quant_EarPert_F) <- c("2.5%", "50%", "97.5%")
-quant_EarPert_F$min = min(all.dat$ear_length_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Pteropus rufus"], na.rm = T)
-quant_EarPert_F$max = max(all.dat$ear_length_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Pteropus rufus"], na.rm = T)
+quant_EarPert_F$min = min(all.dat$ear_length_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Pteropus rufus"], na.rm = T)
+quant_EarPert_F$max = max(all.dat$ear_length_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Pteropus rufus"], na.rm = T)
 
 
-quant_EarPert_M<-quantile(all.dat$ear_length_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Pteropus rufus"],probs=c(0.025,0.5,0.975),na.rm = T)
+quant_EarPert_M<-quantile(all.dat$ear_length_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Pteropus rufus"],probs=c(0.025,0.5,0.975),na.rm = T)
 
 
 quant_EarPert_M <- rbind.data.frame(quant_EarPert_M)
 names(quant_EarPert_M) <- c("2.5%", "50%", "97.5%")
-quant_EarPert_M$min = min(all.dat$ear_length_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Pteropus rufus"], na.rm = T)
-quant_EarPert_M$max = max(all.dat$ear_length_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Pteropus rufus"], na.rm = T)
+quant_EarPert_M$min = min(all.dat$ear_length_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Pteropus rufus"], na.rm = T)
+quant_EarPert_M$max = max(all.dat$ear_length_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Pteropus rufus"], na.rm = T)
 
 
 ##
 
-quant_EarEid_F<-quantile(all.dat$ear_length_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Eidolon dupreanum"],probs=c(0.025,0.5,0.975),na.rm = T)
+quant_EarEid_F<-quantile(all.dat$ear_length_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Eidolon dupreanum"],probs=c(0.025,0.5,0.975),na.rm = T)
 
 quant_EarEid_F
 
 
 quant_EarEid_F <- rbind.data.frame(quant_EarEid_F)
 names(quant_EarEid_F) <- c("2.5%", "50%", "97.5%")
-quant_EarEid_F$min = min(all.dat$ear_length_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Eidolon dupreanum"], na.rm = T)
-quant_EarEid_F$max = max(all.dat$ear_length_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Eidolon dupreanum"], na.rm = T)
+quant_EarEid_F$min = min(all.dat$ear_length_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Eidolon dupreanum"], na.rm = T)
+quant_EarEid_F$max = max(all.dat$ear_length_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Eidolon dupreanum"], na.rm = T)
 
 
-quant_EarEid_M<-quantile(all.dat$ear_length_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Eidolon dupreanum"],probs=c(0.025,0.5,0.975),na.rm = T)
+quant_EarEid_M<-quantile(all.dat$ear_length_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Eidolon dupreanum"],probs=c(0.025,0.5,0.975),na.rm = T)
 
 quant_EarEid_M
 
 quant_EarEid_M <- rbind.data.frame(quant_EarEid_M)
 names(quant_EarEid_M) <- c("2.5%", "50%", "97.5%")
-quant_EarEid_M$min = min(all.dat$ear_length_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Eidolon dupreanum"], na.rm = T)
-quant_EarEid_M$max = max(all.dat$ear_length_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Eidolon dupreanum"], na.rm = T)
+quant_EarEid_M$min = min(all.dat$ear_length_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Eidolon dupreanum"], na.rm = T)
+quant_EarEid_M$max = max(all.dat$ear_length_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Eidolon dupreanum"], na.rm = T)
 
 ###
-quant_EarRou_F<-quantile(all.dat$ear_length_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Rousettus madagascariensis"],probs=c(0.025,0.5,0.975),na.rm = T)
+quant_EarRou_F<-quantile(all.dat$ear_length_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Rousettus madagascariensis"],probs=c(0.025,0.5,0.975),na.rm = T)
 
 quant_EarRou_F
 
@@ -451,12 +451,12 @@ quant_EarRou_F
 
 quant_EarRou_F <- rbind.data.frame(quant_EarRou_F)
 names(quant_EarRou_F) <- c("2.5%", "50%", "97.5%")
-quant_EarRou_F$min = min(all.dat$ear_length_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Rousettus madagascariensis"], na.rm = T)
-quant_EarRou_F$max = max(all.dat$ear_length_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Rousettus madagascariensis"], na.rm = T)
+quant_EarRou_F$min = min(all.dat$ear_length_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Rousettus madagascariensis"], na.rm = T)
+quant_EarRou_F$max = max(all.dat$ear_length_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Rousettus madagascariensis"], na.rm = T)
 
 
 
-quant_EarRou_M<-quantile(all.dat$ear_length_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Rousettus madagascariensis"],probs=c(0.025,0.5,0.975),na.rm = T)
+quant_EarRou_M<-quantile(all.dat$ear_length_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Rousettus madagascariensis"],probs=c(0.025,0.5,0.975),na.rm = T)
 
 quant_EarRou_M
 
@@ -464,8 +464,8 @@ quant_EarRou_M
 
 quant_EarRou_M <- rbind.data.frame(quant_EarRou_M)
 names(quant_EarRou_M) <- c("2.5%", "50%", "97.5%")
-quant_EarRou_M$min = min(all.dat$ear_length_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Rousettus madagascariensis"], na.rm = T)
-quant_EarRou_M$max = max(all.dat$ear_length_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Rousettus madagascariensis"], na.rm = T)
+quant_EarRou_M$min = min(all.dat$ear_length_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Rousettus madagascariensis"], na.rm = T)
+quant_EarRou_M$max = max(all.dat$ear_length_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Rousettus madagascariensis"], na.rm = T)
 
 
 QuantBat_ear<- rbind.data.frame(quant_EarPert_F,quant_EarPert_M,quant_EarEid_F,quant_EarEid_M,
@@ -473,32 +473,32 @@ QuantBat_ear<- rbind.data.frame(quant_EarPert_F,quant_EarPert_M,quant_EarEid_F,q
 
 names(QuantBat_ear) <- names(quant_EarEid_F)
 head(QuantBat_ear)
-QuantBat_ear$bat_species <- c(rep(c("Pteropus rufus", "Eidolon dupreanum", "Rousettus madagascariensis", "All Bats"), each = 2))
+QuantBat_ear$bat_species <- c(rep(c("Pteropus rufus", "Eidolon dupreanum", "Rousettus madagascariensis", "All Pteropodids"), each = 2))
 QuantBat_ear$sex <- rep(c("F", "M"), 4)
 
 QuantBat_ear$metric <- "ear"
 
 
 #and the t test
-out = t.test(all.dat$ear_length_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats"& all.dat$bat_species=="Pteropus rufus"], all.dat$ear_length_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats"& all.dat$bat_species=="Pteropus rufus"], alternative = "two.sided")
+out = t.test(all.dat$ear_length_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids"& all.dat$bat_species=="Pteropus rufus"], all.dat$ear_length_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids"& all.dat$bat_species=="Pteropus rufus"], alternative = "two.sided")
 t_EarPteropus <- cbind.data.frame(meanM = out$estimate[1], meanF = out$estimate[2], p_val_t_test = out$p.value) 
 rownames(t_EarPteropus) <- c()
 t_EarPteropus$metric <- "ear length"
-t_EarPteropus$source <- "Malagasy Bats"
+t_EarPteropus$source <- "Malagasy Pteropodids"
 t_EarPteropus$species <- "Pteropus rufus"
 
-out = t.test(all.dat$ear_length_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats"& all.dat$bat_species=="Eidolon dupreanum"], all.dat$ear_length_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats"& all.dat$bat_species=="Eidolon dupreanum"], alternative = "two.sided")
+out = t.test(all.dat$ear_length_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids"& all.dat$bat_species=="Eidolon dupreanum"], all.dat$ear_length_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids"& all.dat$bat_species=="Eidolon dupreanum"], alternative = "two.sided")
 t_EarEid <- cbind.data.frame(meanM = out$estimate[1], meanF = out$estimate[2], p_val_t_test = out$p.value) 
 rownames(t_EarEid) <- c()
 t_EarEid$metric <- "ear length"
-t_EarEid$source <- "Malagasy Bats"
+t_EarEid$source <- "Malagasy Pteropodids"
 t_EarEid$species <- "Eidolon dupreanum"
 
-out = t.test(all.dat$ear_length_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats"& all.dat$bat_species=="Rousettus madagascariensis"], all.dat$ear_length_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats"& all.dat$bat_species=="Rousettus madagascariensis"], alternative = "two.sided")
+out = t.test(all.dat$ear_length_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids"& all.dat$bat_species=="Rousettus madagascariensis"], all.dat$ear_length_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids"& all.dat$bat_species=="Rousettus madagascariensis"], alternative = "two.sided")
 t_EarRou <- cbind.data.frame(meanM = out$estimate[1], meanF = out$estimate[2], p_val_t_test = out$p.value) 
 rownames(t_EarRou) <- c()
 t_EarRou$metric <- "ear length"
-t_EarRou$source <- "Malagasy Bats"
+t_EarRou$source <- "Malagasy Pteropodids"
 t_EarRou$species <- "Rousettus madagascariensis"
 
 t_test_ear <- rbind(t_EarAllBAtsMvF,t_EarPteropus, t_EarEid, t_EarRou)
@@ -510,40 +510,40 @@ t_test_ear <- rbind(t_EarAllBAtsMvF,t_EarPteropus, t_EarEid, t_EarRou)
 
 
 
-quant_tibiaAllBAtsF<- quantile(all.dat$bat_tibia_mm[all.dat$bat_sex=="F" & all.dat$origin=="All Bats" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"],probs=c(0.025,0.5,0.975),na.rm = T)
+quant_tibiaAllBAtsF<- quantile(all.dat$bat_tibia_mm[all.dat$bat_sex=="F" & all.dat$origin=="All Pteropodids" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"],probs=c(0.025,0.5,0.975),na.rm = T)
 quant_tibiaAllBAtsF
 
 
 quant_tibiaAllBAtsF <- rbind.data.frame(quant_tibiaAllBAtsF)
 names(quant_tibiaAllBAtsF) <- c("2.5%", "50%", "97.5%")
-quant_tibiaAllBAtsF$min = min(all.dat$bat_tibia_mm[all.dat$bat_sex=="F" & all.dat$origin=="All Bats" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"], na.rm = T)
-quant_tibiaAllBAtsF$max = max(all.dat$bat_tibia_mm[all.dat$bat_sex=="F" & all.dat$origin=="All Bats" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"], na.rm = T)
+quant_tibiaAllBAtsF$min = min(all.dat$bat_tibia_mm[all.dat$bat_sex=="F" & all.dat$origin=="All Pteropodids" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"], na.rm = T)
+quant_tibiaAllBAtsF$max = max(all.dat$bat_tibia_mm[all.dat$bat_sex=="F" & all.dat$origin=="All Pteropodids" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"], na.rm = T)
 
 
 
-quant_tibiaAllBAtsM<- quantile(all.dat$bat_tibia_mm[all.dat$bat_sex=="M" & all.dat$origin=="All Bats" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"],probs=c(0.025,0.5,0.975),na.rm = T)
+quant_tibiaAllBAtsM<- quantile(all.dat$bat_tibia_mm[all.dat$bat_sex=="M" & all.dat$origin=="All Pteropodids" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"],probs=c(0.025,0.5,0.975),na.rm = T)
 
 
 quant_tibiaAllBAtsM
 
 quant_tibiaAllBAtsM <- rbind.data.frame(quant_tibiaAllBAtsM)
 names(quant_tibiaAllBAtsM) <- c("2.5%", "50%", "97.5%")
-quant_tibiaAllBAtsM$min = min(all.dat$bat_tibia_mm[all.dat$bat_sex=="M" & all.dat$origin=="All Bats" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"], na.rm = T)
-quant_tibiaAllBAtsM$max = max(all.dat$bat_tibia_mm[all.dat$bat_sex=="M" & all.dat$origin=="All Bats" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"], na.rm = T)
+quant_tibiaAllBAtsM$min = min(all.dat$bat_tibia_mm[all.dat$bat_sex=="M" & all.dat$origin=="All Pteropodids" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"], na.rm = T)
+quant_tibiaAllBAtsM$max = max(all.dat$bat_tibia_mm[all.dat$bat_sex=="M" & all.dat$origin=="All Pteropodids" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"], na.rm = T)
 
 
 #is there a significant different in the mean ear length for males vs. female mala
-out = t.test(all.dat$bat_tibia_mm[all.dat$bat_sex=="F" & all.dat$origin=="All Bats" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"], all.dat$bat_tibia_mm[all.dat$bat_sex=="M" & all.dat$origin=="All Bats" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"], alternative = "two.sided")
+out = t.test(all.dat$bat_tibia_mm[all.dat$bat_sex=="F" & all.dat$origin=="All Pteropodids" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"], all.dat$bat_tibia_mm[all.dat$bat_sex=="M" & all.dat$origin=="All Pteropodids" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"], alternative = "two.sided")
 t_TibAllBAtsMvF <- cbind.data.frame(meanM = out$estimate[1], meanF = out$estimate[2], p_val_t_test = out$p.value) 
 rownames(t_EarAllBAtsMvF) <- c()
 t_TibAllBAtsMvF$metric <- "ear length"
-t_TibAllBAtsMvF$source <- "All Bats"
+t_TibAllBAtsMvF$source <- "All Pteropodids"
 t_TibAllBAtsMvF$species <- NA
 
 
 ############Result_2-tibia Malagasy bats#############
 
-quant_tibiaPert_F<- quantile(all.dat$bat_tibia_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Pteropus rufus"],probs=c(0.025,0.5,0.975),na.rm = T)
+quant_tibiaPert_F<- quantile(all.dat$bat_tibia_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Pteropus rufus"],probs=c(0.025,0.5,0.975),na.rm = T)
 
 quant_tibiaPert_F
 
@@ -551,67 +551,67 @@ quant_tibiaPert_F
 
 quant_tibiaPert_F <- rbind.data.frame(quant_tibiaPert_F)
 names(quant_tibiaPert_F) <- c("2.5%", "50%", "97.5%")
-quant_tibiaPert_F$min = min(all.dat$bat_tibia_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Pteropus rufus"], na.rm = T)
-quant_tibiaPert_F$max = max(all.dat$bat_tibia_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Pteropus rufus"], na.rm = T)
+quant_tibiaPert_F$min = min(all.dat$bat_tibia_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Pteropus rufus"], na.rm = T)
+quant_tibiaPert_F$max = max(all.dat$bat_tibia_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Pteropus rufus"], na.rm = T)
 
 
 
-quant_tibiaPert_M<-quantile(all.dat$bat_tibia_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Pteropus rufus"],probs=c(0.025,0.5,0.975),na.rm = T)
+quant_tibiaPert_M<-quantile(all.dat$bat_tibia_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Pteropus rufus"],probs=c(0.025,0.5,0.975),na.rm = T)
 
 quant_tibiaPert_M
 
 
 quant_tibiaPert_M <- rbind.data.frame(quant_tibiaPert_M)
 names(quant_tibiaPert_M) <- c("2.5%", "50%", "97.5%")
-quant_tibiaPert_M$min = min(all.dat$bat_tibia_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Pteropus rufus"], na.rm = T)
-quant_tibiaPert_M$max = max(all.dat$bat_tibia_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Pteropus rufus"], na.rm = T)
+quant_tibiaPert_M$min = min(all.dat$bat_tibia_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Pteropus rufus"], na.rm = T)
+quant_tibiaPert_M$max = max(all.dat$bat_tibia_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Pteropus rufus"], na.rm = T)
 
 
 
 ##
 
-quant_tibiaEid_F<-quantile(all.dat$bat_tibia_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Eidolon dupreanum"],probs=c(0.025,0.5,0.975),na.rm = T)
+quant_tibiaEid_F<-quantile(all.dat$bat_tibia_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Eidolon dupreanum"],probs=c(0.025,0.5,0.975),na.rm = T)
 
 quant_tibiaEid_F
 
 
 quant_tibiaEid_F <- rbind.data.frame(quant_tibiaEid_F)
 names(quant_tibiaEid_F) <- c("2.5%", "50%", "97.5%")
-quant_tibiaEid_F$min = min(all.dat$bat_tibia_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Eidolon dupreanum"], na.rm = T)
-quant_tibiaEid_F$max = max(all.dat$bat_tibia_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Eidolon dupreanum"], na.rm = T)
+quant_tibiaEid_F$min = min(all.dat$bat_tibia_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Eidolon dupreanum"], na.rm = T)
+quant_tibiaEid_F$max = max(all.dat$bat_tibia_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Eidolon dupreanum"], na.rm = T)
 
 
-quant_tibiaEid_M<-quantile(all.dat$bat_tibia_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Eidolon dupreanum"],probs=c(0.025,0.5,0.975),na.rm = T)
+quant_tibiaEid_M<-quantile(all.dat$bat_tibia_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Eidolon dupreanum"],probs=c(0.025,0.5,0.975),na.rm = T)
 
 quant_tibiaEid_M
 
 
 quant_tibiaEid_M <- rbind.data.frame(quant_tibiaEid_M)
 names(quant_tibiaEid_M) <- c("2.5%", "50%", "97.5%")
-quant_tibiaEid_M$min = min(all.dat$bat_tibia_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Eidolon dupreanum"], na.rm = T)
-quant_tibiaEid_M$max = max(all.dat$bat_tibia_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Eidolon dupreanum"], na.rm = T)
+quant_tibiaEid_M$min = min(all.dat$bat_tibia_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Eidolon dupreanum"], na.rm = T)
+quant_tibiaEid_M$max = max(all.dat$bat_tibia_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Eidolon dupreanum"], na.rm = T)
 
 
 ###
-quant_tibiaRou_F<-quantile(all.dat$bat_tibia_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Rousettus madagascariensis"],probs=c(0.025,0.5,0.975),na.rm = T)
+quant_tibiaRou_F<-quantile(all.dat$bat_tibia_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Rousettus madagascariensis"],probs=c(0.025,0.5,0.975),na.rm = T)
 
 quant_tibiaRou_F
 
 quant_tibiaRou_F <- rbind.data.frame(quant_tibiaRou_F)
 names(quant_tibiaRou_F) <- c("2.5%", "50%", "97.5%")
-quant_tibiaRou_F$min = min(all.dat$bat_tibia_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Rousettus madagascariensis"], na.rm = T)
-quant_tibiaRou_F$max = max(all.dat$bat_tibia_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Rousettus madagascariensis"], na.rm = T)
+quant_tibiaRou_F$min = min(all.dat$bat_tibia_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Rousettus madagascariensis"], na.rm = T)
+quant_tibiaRou_F$max = max(all.dat$bat_tibia_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Rousettus madagascariensis"], na.rm = T)
 
 
 
-quant_tibiaRou_M<-quantile(all.dat$bat_tibia_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Rousettus madagascariensis"],probs=c(0.025,0.5,0.975),na.rm = T)
+quant_tibiaRou_M<-quantile(all.dat$bat_tibia_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Rousettus madagascariensis"],probs=c(0.025,0.5,0.975),na.rm = T)
 
 quant_tibiaRou_M
 
 quant_tibiaRou_M <- rbind.data.frame(quant_tibiaRou_M)
 names(quant_tibiaRou_M) <- c("2.5%", "50%", "97.5%")
-quant_tibiaRou_M$min = min(all.dat$bat_tibia_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Rousettus madagascariensis"], na.rm = T)
-quant_tibiaRou_M$max = max(all.dat$bat_tibia_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Rousettus madagascariensis"], na.rm = T)
+quant_tibiaRou_M$min = min(all.dat$bat_tibia_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Rousettus madagascariensis"], na.rm = T)
+quant_tibiaRou_M$max = max(all.dat$bat_tibia_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Rousettus madagascariensis"], na.rm = T)
 
 
 
@@ -622,7 +622,7 @@ QuantBat_tibia<- rbind.data.frame(quant_tibiaPert_F,quant_tibiaPert_M,quant_tibi
 
 names(QuantBat_tibia) <- names(quant_tibiaEid_F)
 head(QuantBat_tibia)
-QuantBat_tibia$bat_species <- c(rep(c("Pteropus rufus", "Eidolon dupreanum", "Rousettus madagascariensis", "All Bats"), each = 2))
+QuantBat_tibia$bat_species <- c(rep(c("Pteropus rufus", "Eidolon dupreanum", "Rousettus madagascariensis", "All Pteropodids"), each = 2))
 QuantBat_tibia$sex <- rep(c("F", "M"), 4)
 
 QuantBat_tibia$metric <- "tibia"
@@ -630,25 +630,25 @@ QuantBat_tibia$metric <- "tibia"
 
 
 #and the t test
-out = t.test(all.dat$bat_tibia_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats"& all.dat$bat_species=="Pteropus rufus"], all.dat$bat_tibia_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats"& all.dat$bat_species=="Pteropus rufus"], alternative = "two.sided")
+out = t.test(all.dat$bat_tibia_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids"& all.dat$bat_species=="Pteropus rufus"], all.dat$bat_tibia_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids"& all.dat$bat_species=="Pteropus rufus"], alternative = "two.sided")
 t_TibPteropus <- cbind.data.frame(meanM = out$estimate[1], meanF = out$estimate[2], p_val_t_test = out$p.value) 
 rownames(t_TibPteropus) <- c()
 t_TibPteropus$metric <- "Tibia length"
-t_TibPteropus$source <- "Malagasy Bats"
+t_TibPteropus$source <- "Malagasy Pteropodids"
 t_TibPteropus$species <- "Pteropus rufus"
 
-out = t.test(all.dat$bat_tibia_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats"& all.dat$bat_species=="Eidolon dupreanum"], all.dat$bat_tibia_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats"& all.dat$bat_species=="Eidolon dupreanum"], alternative = "two.sided")
+out = t.test(all.dat$bat_tibia_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids"& all.dat$bat_species=="Eidolon dupreanum"], all.dat$bat_tibia_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids"& all.dat$bat_species=="Eidolon dupreanum"], alternative = "two.sided")
 t_TibEid <- cbind.data.frame(meanM = out$estimate[1], meanF = out$estimate[2], p_val_t_test = out$p.value) 
 rownames(t_TibEid) <- c()
 t_TibEid$metric <- "Tibia length"
-t_TibEid$source <- "Malagasy Bats"
+t_TibEid$source <- "Malagasy Pteropodids"
 t_TibEid$species <- "Eidolon dupreanum"
 
-out = t.test(all.dat$bat_tibia_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats"& all.dat$bat_species=="Rousettus madagascariensis"], all.dat$bat_tibia_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats"& all.dat$bat_species=="Rousettus madagascariensis"], alternative = "two.sided")
+out = t.test(all.dat$bat_tibia_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids"& all.dat$bat_species=="Rousettus madagascariensis"], all.dat$bat_tibia_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids"& all.dat$bat_species=="Rousettus madagascariensis"], alternative = "two.sided")
 t_TibRou <- cbind.data.frame(meanM = out$estimate[1], meanF = out$estimate[2], p_val_t_test = out$p.value) 
 rownames(t_TibRou) <- c()
 t_TibRou$metric <- "Tibia length"
-t_TibRou$source <- "Malagasy Bats"
+t_TibRou$source <- "Malagasy Pteropodids"
 t_TibRou$species <- "Rousettus madagascariensis"
 
 t_test_Tib <- rbind(t_TibAllBAtsMvF,t_TibPteropus, t_TibEid, t_TibRou)
@@ -661,18 +661,18 @@ rownames(t_test_Tib) <- c()
 
 
 
-quant_forearmAllBAtsF<- quantile(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="All Bats" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"],probs=c(0.025,0.5,0.975),na.rm = T)
+quant_forearmAllBAtsF<- quantile(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="All Pteropodids" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"],probs=c(0.025,0.5,0.975),na.rm = T)
 quant_forearmAllBAtsF
 
 
 quant_forearmAllBAtsF <- rbind.data.frame(quant_forearmAllBAtsF)
 names(quant_forearmAllBAtsF) <- c("2.5%", "50%", "97.5%")
-quant_forearmAllBAtsF$min = min(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="All Bats" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"], na.rm = T)
-quant_forearmAllBAtsF$max = max(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="All Bats" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"], na.rm = T)
+quant_forearmAllBAtsF$min = min(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="All Pteropodids" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"], na.rm = T)
+quant_forearmAllBAtsF$max = max(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="All Pteropodids" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"], na.rm = T)
 
 
 
-quant_forearmAllBAtsM<- quantile(all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="All Bats" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"],probs=c(0.025,0.5,0.975),na.rm = T)
+quant_forearmAllBAtsM<- quantile(all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="All Pteropodids" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"],probs=c(0.025,0.5,0.975),na.rm = T)
 
 
 quant_forearmAllBAtsM
@@ -680,83 +680,83 @@ quant_forearmAllBAtsM
 
 quant_forearmAllBAtsM <- rbind.data.frame(quant_forearmAllBAtsM)
 names(quant_forearmAllBAtsM) <- c("2.5%", "50%", "97.5%")
-quant_forearmAllBAtsM$min = min(all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="All Bats" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"], na.rm = T)
-quant_forearmAllBAtsM$max = max(all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="All Bats" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"], na.rm = T)
+quant_forearmAllBAtsM$min = min(all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="All Pteropodids" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"], na.rm = T)
+quant_forearmAllBAtsM$max = max(all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="All Pteropodids" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"], na.rm = T)
 
 
-out = t.test(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="All Bats" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"], all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="All Bats" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"], alternative = "two.sided")
+out = t.test(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="All Pteropodids" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"], all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="All Pteropodids" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"], alternative = "two.sided")
 t_ForAllBAtsMvF <- cbind.data.frame(meanM = out$estimate[1], meanF = out$estimate[2], p_val_t_test = out$p.value) 
 rownames(t_ForAllBAtsMvF) <- c()
 t_ForAllBAtsMvF$metric <- "ear length"
-t_ForAllBAtsMvF$source <- "All Bats"
+t_ForAllBAtsMvF$source <- "All Pteropodids"
 t_ForAllBAtsMvF$species <- NA
 
 
 ############Result_2-forearm Malagasy bats#############
 
-quant_forearmPert_F<- quantile(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Pteropus rufus"],probs=c(0.025,0.5,0.975),na.rm = T)
+quant_forearmPert_F<- quantile(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Pteropus rufus"],probs=c(0.025,0.5,0.975),na.rm = T)
 
 quant_forearmPert_F
 
 quant_forearmPert_F <- rbind.data.frame(quant_forearmPert_F)
 names(quant_forearmPert_F) <- c("2.5%", "50%", "97.5%")
-quant_forearmPert_F$min = min(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Pteropus rufus"], na.rm = T)
-quant_forearmPert_F$max = max(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Pteropus rufus"], na.rm = T)
+quant_forearmPert_F$min = min(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Pteropus rufus"], na.rm = T)
+quant_forearmPert_F$max = max(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Pteropus rufus"], na.rm = T)
 
 
-quant_forearmPert_M<-quantile(all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Pteropus rufus"],probs=c(0.025,0.5,0.975),na.rm = T)
+quant_forearmPert_M<-quantile(all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Pteropus rufus"],probs=c(0.025,0.5,0.975),na.rm = T)
 
 quant_forearmPert_M
 
 
 quant_forearmPert_M <- rbind.data.frame(quant_forearmPert_M)
 names(quant_forearmPert_M) <- c("2.5%", "50%", "97.5%")
-quant_forearmPert_M$min = min(all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Pteropus rufus"], na.rm = T)
-quant_forearmPert_M$max = max(all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Pteropus rufus"], na.rm = T)
+quant_forearmPert_M$min = min(all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Pteropus rufus"], na.rm = T)
+quant_forearmPert_M$max = max(all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Pteropus rufus"], na.rm = T)
 
 
 
 ##
 
-quant_forearmEid_F<-quantile(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Eidolon dupreanum"],probs=c(0.025,0.5,0.975),na.rm = T)
+quant_forearmEid_F<-quantile(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Eidolon dupreanum"],probs=c(0.025,0.5,0.975),na.rm = T)
 
 quant_forearmEid_F
 
 quant_forearmEid_F <- rbind.data.frame(quant_forearmEid_F)
 names(quant_forearmEid_F) <- c("2.5%", "50%", "97.5%")
-quant_forearmEid_F$min = min(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Eidolon dupreanum"], na.rm = T)
-quant_forearmEid_F$max = max(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Eidolon dupreanum"], na.rm = T)
+quant_forearmEid_F$min = min(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Eidolon dupreanum"], na.rm = T)
+quant_forearmEid_F$max = max(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Eidolon dupreanum"], na.rm = T)
 
 
-quant_forearmEid_M<-quantile(all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Eidolon dupreanum"],probs=c(0.025,0.5,0.975),na.rm = T)
+quant_forearmEid_M<-quantile(all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Eidolon dupreanum"],probs=c(0.025,0.5,0.975),na.rm = T)
 
 quant_forearmEid_M
 
 quant_forearmEid_M <- rbind.data.frame(quant_forearmEid_M)
 names(quant_forearmEid_M) <- c("2.5%", "50%", "97.5%")
-quant_forearmEid_M$min = min(all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Eidolon dupreanum"], na.rm = T)
-quant_forearmEid_M$max = max(all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Eidolon dupreanum"], na.rm = T)
+quant_forearmEid_M$min = min(all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Eidolon dupreanum"], na.rm = T)
+quant_forearmEid_M$max = max(all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Eidolon dupreanum"], na.rm = T)
 
 
 
 
 ###
-quant_forearmRou_F<-quantile(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Rousettus madagascariensis"],probs=c(0.025,0.5,0.975),na.rm = T)
+quant_forearmRou_F<-quantile(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Rousettus madagascariensis"],probs=c(0.025,0.5,0.975),na.rm = T)
 
 quant_forearmRou_F
 
 quant_forearmRou_F <- rbind.data.frame(quant_forearmRou_F)
 names(quant_forearmRou_F) <- c("2.5%", "50%", "97.5%")
-quant_forearmRou_F$min = min(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Rousettus madagascariensis"], na.rm = T)
-quant_forearmRou_F$max = max(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Rousettus madagascariensis"], na.rm = T)
+quant_forearmRou_F$min = min(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Rousettus madagascariensis"], na.rm = T)
+quant_forearmRou_F$max = max(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Rousettus madagascariensis"], na.rm = T)
 
 
-quant_forearmRou_M<-quantile(all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Rousettus madagascariensis"],probs=c(0.025,0.5,0.975),na.rm = T)
+quant_forearmRou_M<-quantile(all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Rousettus madagascariensis"],probs=c(0.025,0.5,0.975),na.rm = T)
 
 quant_forearmRou_M <- rbind.data.frame(quant_forearmRou_M)
 names(quant_forearmRou_M) <- c("2.5%", "50%", "97.5%")
-quant_forearmRou_M$min = min(all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Rousettus madagascariensis"], na.rm = T)
-quant_forearmRou_M$max = max(all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats" & all.dat$bat_species=="Rousettus madagascariensis"], na.rm = T)
+quant_forearmRou_M$min = min(all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Rousettus madagascariensis"], na.rm = T)
+quant_forearmRou_M$max = max(all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids" & all.dat$bat_species=="Rousettus madagascariensis"], na.rm = T)
 
 
 
@@ -765,7 +765,7 @@ QuantBat_forearm<- rbind.data.frame(quant_forearmPert_F,quant_forearmPert_M,quan
 
 names(QuantBat_forearm) <- names(quant_forearmEid_F)
 head(QuantBat_forearm)
-QuantBat_forearm$bat_species <- c(rep(c("Pteropus rufus", "Eidolon dupreanum", "Rousettus madagascariensis", "All Bats"), each = 2))
+QuantBat_forearm$bat_species <- c(rep(c("Pteropus rufus", "Eidolon dupreanum", "Rousettus madagascariensis", "All Pteropodids"), each = 2))
 QuantBat_forearm$sex <- rep(c("F", "M"), 4)
 
 QuantBat_forearm$metric <- "forearm"
@@ -778,25 +778,25 @@ write.csv(all_quant, file = "QuantileDat.csv", row.names = F)
 
 
 #and the t test
-out = t.test(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats"& all.dat$bat_species=="Pteropus rufus"], all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats"& all.dat$bat_species=="Pteropus rufus"], alternative = "two.sided")
+out = t.test(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids"& all.dat$bat_species=="Pteropus rufus"], all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids"& all.dat$bat_species=="Pteropus rufus"], alternative = "two.sided")
 t_ForPteropus <- cbind.data.frame(meanM = out$estimate[1], meanF = out$estimate[2], p_val_t_test = out$p.value) 
 rownames(t_ForPteropus) <- c()
 t_ForPteropus$metric <- "Forearm length"
-t_ForPteropus$source <- "Malagasy Bats"
+t_ForPteropus$source <- "Malagasy Pteropodids"
 t_ForPteropus$species <- "Pteropus rufus"
 
-out = t.test(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats"& all.dat$bat_species=="Eidolon dupreanum"], all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats"& all.dat$bat_species=="Eidolon dupreanum"], alternative = "two.sided")
+out = t.test(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids"& all.dat$bat_species=="Eidolon dupreanum"], all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids"& all.dat$bat_species=="Eidolon dupreanum"], alternative = "two.sided")
 t_ForEid <- cbind.data.frame(meanM = out$estimate[1], meanF = out$estimate[2], p_val_t_test = out$p.value) 
 rownames(t_ForEid) <- c()
 t_ForEid$metric <- "Forearm length"
-t_ForEid$source <- "Malagasy Bats"
+t_ForEid$source <- "Malagasy Pteropodids"
 t_ForEid$species <- "Eidolon dupreanum"
 
-out = t.test(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Bats"& all.dat$bat_species=="Rousettus madagascariensis"], all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Bats"& all.dat$bat_species=="Rousettus madagascariensis"], alternative = "two.sided")
+out = t.test(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="Malagasy Pteropodids"& all.dat$bat_species=="Rousettus madagascariensis"], all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="Malagasy Pteropodids"& all.dat$bat_species=="Rousettus madagascariensis"], alternative = "two.sided")
 t_ForRou <- cbind.data.frame(meanM = out$estimate[1], meanF = out$estimate[2], p_val_t_test = out$p.value) 
 rownames(t_ForRou) <- c()
 t_ForRou$metric <- "Forearm length"
-t_ForRou$source <- "Malagasy Bats"
+t_ForRou$source <- "Malagasy Pteropodids"
 t_ForRou$species <- "Rousettus madagascariensis"
 
 t_test_For <- rbind(t_ForAllBAtsMvF,t_ForPteropus, t_ForEid, t_ForRou)

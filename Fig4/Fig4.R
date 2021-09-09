@@ -746,7 +746,7 @@ TFE+theme(legend.position = "none",plot.margin =unit(c(0,.1,0,.1), "cm"), plot.t
 TFR+theme(legend.position = "none",plot.margin =unit(c(0,.1,0,.1), "cm"), plot.tag = element_text(face = "bold"))+labs(tag = 'F')+
   EFP+theme(legend.position = "none",plot.margin =unit(c(0,.1,0,.1), "cm"), plot.tag = element_text(face = "bold"))+labs(tag = 'G')+
 EFE+theme(legend.position = "none",plot.margin =unit(c(0,.1,0,.1), "cm"), plot.tag = element_text(face = "bold"))+labs(tag = 'H')+
-EFR+theme(plot.margin =unit(c(0,.1,0,.1), "cm"))+labs(tag = 'I')+
+EFR+theme(legend.position = c(.17,.83),legend.background = element_rect(color="gray"), legend.title = element_blank(), plot.margin =unit(c(0,.1,0,.1), "cm"))+labs(tag = 'I')+
   plot_layout(nrow = 3, heights = c(35,35,35)))
 
 

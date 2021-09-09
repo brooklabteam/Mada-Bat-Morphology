@@ -1,13 +1,13 @@
 "meanM","meanF","p_val_t_test","metric","source","species"
-19.9802574207143,20.6974633052083,0.437306876592256,"ear length","All Bats",NA
-29.2294573643411,28.7708148148148,0.409636012333784,"ear length","Malagasy Bats","Pteropus rufus"
-28.1763145539906,28.1075461741425,0.781102233877971,"ear length","Malagasy Bats","Eidolon dupreanum"
-13.6002631578947,13.0713381995134,0.00110861488319146,"ear length","Malagasy Bats","Rousettus madagascariensis"
-88.6035709494406,93.8248975178832,0.258596454567505,"ear length","All Bats",NA
-162.448217054264,167.477037037037,1.62057475255962e-06,"Forearm length","Malagasy Bats","Pteropus rufus"
-129.138196721311,128.914459102902,0.484029092928053,"Forearm length","Malagasy Bats","Eidolon dupreanum"
-69.5303206997085,71.3120631067961,3.11342964649108e-14,"Forearm length","Malagasy Bats","Rousettus madagascariensis"
-34.6308528837097,37.0539711685484,0.471152957389025,"ear length","All Bats",NA
-78.6084615384615,81.0373333333333,0.000459577717595464,"Tibia length","Malagasy Bats","Pteropus rufus"
-61.4950351288056,62.0958311345646,0.028985319598998,"Tibia length","Malagasy Bats","Eidolon dupreanum"
-32.0467055393586,33.7395145631068,2.63422770726196e-19,"Tibia length","Malagasy Bats","Rousettus madagascariensis"
+19.9802574207143,20.6974633052083,0.437306876592256,"ear length","All Pteropodids",NA
+29.2294573643411,28.7708148148148,0.409636012333784,"ear length","Malagasy Pteropodids","Pteropus rufus"
+28.1763145539906,28.1075461741425,0.781102233877971,"ear length","Malagasy Pteropodids","Eidolon dupreanum"
+13.6002631578947,13.0713381995134,0.00110861488319146,"ear length","Malagasy Pteropodids","Rousettus madagascariensis"
+88.6035709494406,93.8248975178832,0.258596454567505,"ear length","All Pteropodids",NA
+162.448217054264,167.477037037037,1.62057475255962e-06,"Forearm length","Malagasy Pteropodids","Pteropus rufus"
+129.138196721311,128.914459102902,0.484029092928053,"Forearm length","Malagasy Pteropodids","Eidolon dupreanum"
+69.5303206997085,71.3120631067961,3.11342964649108e-14,"Forearm length","Malagasy Pteropodids","Rousettus madagascariensis"
+34.6308528837097,37.0539711685484,0.471152957389025,"ear length","All Pteropodids",NA
+78.6084615384615,81.0373333333333,0.000459577717595464,"Tibia length","Malagasy Pteropodids","Pteropus rufus"
+61.4950351288056,62.0958311345646,0.028985319598998,"Tibia length","Malagasy Pteropodids","Eidolon dupreanum"
+32.0467055393586,33.7395145631068,2.63422770726196e-19,"Tibia length","Malagasy Pteropodids","Rousettus madagascariensis"
