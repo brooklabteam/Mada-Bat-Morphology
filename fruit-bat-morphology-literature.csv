@@ -24,8 +24,8 @@ Chiroptera,Pteropodidae,Dobsonia,pannietensis,Dobsonia pannietensis,M,NA,NA,NA,N
 Chiroptera,Pteropodidae,Dobsonia,pannietensis,Dobsonia pannietensis,F,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,117.8,5,Bergmans 1979
 Chiroptera,Pteropodidae,Dobsonia,praedatrix,Dobsonia praedatrix,M,198,2,Bhatnagar et al 1990,NA,26.25,2,Bhatnagar et al 1990,25,2,Bhatnagar et al 1990,113.5,2,Bhatnagar et al 1990
 Chiroptera,Pteropodidae,Dobsonia,praedatrix,Dobsonia praedatrix,F,169.6,5,Bhatnagar et al 1990,NA,24.9,5,Bhatnagar et al 1990,24.5,5,Bhatnagar et al 1990,111.1,5,Bhatnagar et al 1990
-Chiroptera,Pteropodidae,Eidolon,dupreanum,Eidolon dupreanum,M,320.1,,Brook et al 2019,NA,62.11,,Brook et al 2019,28.9,NA,Brook et al 2019,129.1,,Brook et al 2019
-Chiroptera,Pteropodidae,Eidolon,dupreanum,Eidolon dupreanum,F,308.8,,Brook et al 2019,NA,61.47,,Brook et al 2019,28.24,NA,Brook et al 2019,129.3,,Brook et al 2019
+Chiroptera,Pteropodidae,Eidolon,dupreanum,Eidolon dupreanum,M,320.3695,,Brook et al 2019,NA,62.11,,Brook et al 2019,28.10755,NA,Brook et al 2019,128.91446,,Brook et al 2019
+Chiroptera,Pteropodidae,Eidolon,dupreanum,Eidolon dupreanum,F,310.91038,,Brook et al 2019,NA,61.47,,Brook et al 2019,28.17631,NA,Brook et al 2019,129.1382,,Brook et al 2019
 Chiroptera,Pteropodidae,Epomophorus,angolensis,Epomophorus angolensis,M,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,88.42,,Bergmans 1988
 Chiroptera,Pteropodidae,Epomophorus,angolensis,Epomophorus angolensis,F,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,83.34,,Bergmans 1988
 Chiroptera,Pteropodidae,Epomophorus,gambianus,Epomophorus gambianus,M,134.59,1,Boulay and Robbins 1989,NA,37,1,Boulay and Robbins 1989,,1,NA,90,1,Boulay and Robbins 1989
@@ -100,8 +100,8 @@ Chiroptera,Pteropodidae,Pteropus,personatus,Pteropus personatus,M,114.88,12,Wile
 Chiroptera,Pteropodidae,Pteropus,personatus,Pteropus personatus,F,141,12,Wiantoro and Maryanto 2016,NA,45.07,12,Wiantoro and Maryanto 2016,24.41,12,Wiantoro and Maryanto 2016,94.22,12,Wiantoro and Maryanto 2016
 Chiroptera,Pteropodidae,Pteropus,pselaphon,Pteropus pselaphon,M,491.88,17 (SE=34.11; Range=400-616),Wiantoro and Maryanto 2016,NA,NA,NA,NA,NA,NA,NA,137.76,17,Sugita and Ueda 2014
 Chiroptera,Pteropodidae,Pteropus,pselaphon,Pteropus pselaphon,F,485.66,6 (SE=75.71; Range=363-580),Sugita and Ueda 2014,NA,NA,NA,NA,NA,NA,NA,138.4,6,Sugita and Ueda 2014
-Chiroptera,Pteropodidae,Pteropus,rufus,Pteropus rufus,M,669.3,131,Brook et al. 2019,NA,80.93,131,Brook et al. 2019,28.89,131,Brook et al. 2019,167.3,131,Brook et al. 2019
-Chiroptera,Pteropodidae,Pteropus,rufus,Pteropus rufus,F,557.9,121,Brook et al. 2019,NA,78.46,121,Brook et al. 2019,29.11,121,Brook et al. 2019,161.9,121,Brook et al. 2019
+Chiroptera,Pteropodidae,Pteropus,rufus,Pteropus rufus,M,670.37778,131,Brook et al. 2019,NA,81.03733,,Brook et al. 2019,28.77081,131,Brook et al. 2019,162.44822,131,Brook et al. 2019
+Chiroptera,Pteropodidae,Pteropus,rufus,Pteropus rufus,F,565.84496,121,Brook et al. 2019,NA,78.60846,,Brook et al. 2019,29.22946,121,Brook et al. 2019,167.47704,121,Brook et al. 2019
 Chiroptera,Pteropodidae,Pteropus,ualanus,Pteropus ualanus,M,NA,NA,NA,NA,NA,NA,NA,23.4,1,Harvard University Museum of Comparative Zoology 1910,130,1,Harvard University Museum of Comparative Zoology 1910
 Chiroptera,Pteropodidae,Pteropus,ualanus,Pteropus ualanus,M,NA,NA,NA,NA,NA,NA,NA,24,1,Harvard University Museum of Comparative Zoology 1910,126,1,Harvard University Museum of Comparative Zoology 1910
 Chiroptera,Pteropodidae,Pteropus,vampyrus,Pteropus vampyrus,M,1027.54,NA,Tsang 2015,NA,103.556667,3,Tsang 2015,40.05875,3,Tsang 2015,238.666667,3,Tsang 2015
@@ -337,8 +337,8 @@ Chiroptera,Pteropodidae,Rousettus,celebensis,Rousettus celebensis,F,76.36,12,Mar
 Chiroptera,Pteropodidae,Rousettus,celebensis,Rousettus celebensis,M,76.36,12,Maryanto and Yani 2003,NA,36.87,12,Maryanto and Yani 2003,18.43,12,Maryanto and Yani 2003,75.81,12,Maryanto and Yani 2003
 Chiroptera,Pteropodidae,Rousettus,linduensis,Rousettus linduensis,F,90.75,4,Maryanto and Yani 2003,NA,36.8,4,Maryanto and Yani 2003,18.55,4,Maryanto and Yani 2003,76.73,4,Maryanto and Yani 2003
 Chiroptera,Pteropodidae,Rousettus,linduensis,Rousettus linduensis,M,90.75,4,Maryanto and Yani 2003,NA,36.8,4,Maryanto and Yani 2003,18.55,4,Maryanto and Yani 2003,76.73,4,Maryanto and Yani 2003
-Chiroptera,Pteropodidae,Rousettus,madagascariensis,Rousettus madagascariensis,F,45.9,7,Ramasindrazana and Goodman 2011,NA,NA,NA,NA,17.6,7,Ramasindrazana and Goodman 2011,69,7,Ramasindrazana and Goodman 2011
-Chiroptera,Pteropodidae,Rousettus,madagascariensis,Rousettus madagascariensis,M,60.7,3,Ramasindrazana and Goodman 2011,NA,NA,NA,NA,17.3,3,Ramasindrazana and Goodman 2011,73,3,Ramasindrazana and Goodman 2011
+Chiroptera,Pteropodidae,Rousettus,madagascariensis,Rousettus madagascariensis,F,53.85337,7,Brook et al. 2019,NA,32.04671,NA,NA,13.60026,7,Ramasindrazana and Goodman 2011,69.53032,7,Ramasindrazana and Goodman 2011
+Chiroptera,Pteropodidae,Rousettus,madagascariensis,Rousettus madagascariensis,M,64.63527,3,Brook et al. 2019,NA,33.73951,NA,NA,13.07134,3,Ramasindrazana and Goodman 2011,71.31206,3,Ramasindrazana and Goodman 2011
 Chiroptera,Pteropodidae,Rousettus,obliviosus,Rousettus obliviosus,F,42.5,6,Reason et al. 1994,NA,NA,NA,NA,13.4,43,Reason et al. 1994,74,43,Reason et al. 1994
 Chiroptera,Pteropodidae,Rousettus,obliviosus,Rousettus obliviosus,M,45.7,3,Reason et al. 1994,NA,NA,NA,NA,13.7,31,Reason et al. 1994,74.2,31,Reason et al. 1994
 Chiroptera,Pteropodidae,Scotonycteris,bergmansi,Scotonycteris bergmansi,F,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,50.2,10,Hassanin et al. 2015
