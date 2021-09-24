@@ -1,0 +1,26 @@
+Linear mixed model fit by REML. t-tests use Satterthwaite's method ['lmerModLmerTest']
+Formula: bat_forearm_mm ~ bat_sex + (1 | roost_site)
+   Data: subset(sub.dat1, bat_species == "Eidolon dupreanum")
+
+REML criterion at convergence: 4717.9
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-5.7411 -0.5638  0.0804  0.6360  3.0811 
+
+Random effects:
+ Groups     Name        Variance Std.Dev.
+ roost_site (Intercept)  5.531   2.352   
+ Residual               20.241   4.499   
+Number of obs: 806, groups:  roost_site, 3
+
+Fixed effects:
+            Estimate Std. Error       df t value Pr(>|t|)    
+(Intercept) 128.3195     1.4262   1.7183  89.976  0.00037 ***
+bat_sexM     -0.2907     0.3204 802.3967  -0.907  0.36464    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+         (Intr)
+bat_sexM -0.125

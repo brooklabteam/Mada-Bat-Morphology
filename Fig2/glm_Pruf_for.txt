@@ -1,0 +1,29 @@
+Linear mixed model fit by REML. t-tests use Satterthwaite's method ['lmerModLmerTest']
+Formula: bat_forearm_mm ~ bat_sex + (1 | roost_site)
+   Data: subset(sub.dat1, bat_species == "Pteropus rufus")
+
+REML criterion at convergence: 1865
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.8286 -0.4167  0.1825  0.6653  2.8189 
+
+Random effects:
+ Groups     Name        Variance Std.Dev.
+ roost_site (Intercept)  0.00    0.000   
+ Residual               69.63    8.345   
+Number of obs: 264, groups:  roost_site, 3
+
+Fixed effects:
+            Estimate Std. Error       df t value Pr(>|t|)    
+(Intercept) 162.4482     0.7347 262.0000 221.108  < 2e-16 ***
+bat_sexM      5.0288     1.0274 262.0000   4.895 1.72e-06 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+         (Intr)
+bat_sexM -0.715
+optimizer (nloptwrap) convergence code: 0 (OK)
+boundary (singular) fit: see ?isSingular
+

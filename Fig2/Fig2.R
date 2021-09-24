@@ -83,6 +83,7 @@ sub.dat1$bat_sex[sub.dat1$bat_sex=="female"] <- "F"
 
 unique(sub.dat1$bat_sex)
 
+
 #summarise to just points of interest
 mad.dat1 <- ddply(sub.dat1, .(Genus, bat_species, bat_sex, bat_weight_g, bat_forearm_mm, bat_tibia_mm, ear_length_mm))
 head(mad.dat1)

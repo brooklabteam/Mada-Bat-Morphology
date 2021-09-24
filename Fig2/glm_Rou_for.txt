@@ -1,0 +1,26 @@
+Linear mixed model fit by REML. t-tests use Satterthwaite's method ['lmerModLmerTest']
+Formula: bat_forearm_mm ~ bat_sex + (1 | roost_site)
+   Data: subset(sub.dat1, bat_species == "Rousettus madagascariensis")
+
+REML criterion at convergence: 3875.2
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-6.1875 -0.5058  0.0454  0.6428  3.2984 
+
+Random effects:
+ Groups     Name        Variance Std.Dev.
+ roost_site (Intercept) 0.04435  0.2106  
+ Residual               9.88857  3.1446  
+Number of obs: 755, groups:  roost_site, 3
+
+Fixed effects:
+            Estimate Std. Error       df t value Pr(>|t|)    
+(Intercept)  69.4931     0.2210   3.0008   314.5 7.06e-08 ***
+bat_sexM      1.7296     0.2337 561.2964     7.4 5.01e-13 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+         (Intr)
+bat_sexM -0.544

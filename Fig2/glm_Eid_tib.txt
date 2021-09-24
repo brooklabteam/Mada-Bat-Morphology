@@ -1,0 +1,26 @@
+Linear mixed model fit by REML. t-tests use Satterthwaite's method ['lmerModLmerTest']
+Formula: bat_tibia_mm ~ bat_sex + (1 | roost_site)
+   Data: subset(sub.dat1, bat_species == "Eidolon dupreanum")
+
+REML criterion at convergence: 4484.9
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-7.9492 -0.4415  0.0784  0.5202  4.8932 
+
+Random effects:
+ Groups     Name        Variance Std.Dev.
+ roost_site (Intercept)  0.7171  0.8468  
+ Residual               15.2027  3.8991  
+Number of obs: 806, groups:  roost_site, 3
+
+Fixed effects:
+            Estimate Std. Error       df t value Pr(>|t|)  
+(Intercept)  61.3639     0.5855   0.8193 104.808   0.0138 *
+bat_sexM      0.5506     0.2775 803.9624   1.984   0.0476 *
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+         (Intr)
+bat_sexM -0.255
