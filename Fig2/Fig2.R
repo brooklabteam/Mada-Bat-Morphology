@@ -537,7 +537,7 @@ quant_tibiaAllBAtsM$max = max(all.dat$bat_tibia_mm[all.dat$bat_sex=="M" & all.da
 out = t.test(all.dat$bat_tibia_mm[all.dat$bat_sex=="F" & all.dat$origin=="All Pteropodids" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"], all.dat$bat_tibia_mm[all.dat$bat_sex=="M" & all.dat$origin=="All Pteropodids" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"], alternative = "two.sided")
 t_TibAllBAtsMvF <- cbind.data.frame(meanM = out$estimate[1], meanF = out$estimate[2], p_val_t_test = out$p.value) 
 rownames(t_EarAllBAtsMvF) <- c()
-t_TibAllBAtsMvF$metric <- "ear length"
+t_TibAllBAtsMvF$metric <- "tibia"
 t_TibAllBAtsMvF$source <- "All Pteropodids"
 t_TibAllBAtsMvF$species <- NA
 
@@ -688,7 +688,7 @@ quant_forearmAllBAtsM$max = max(all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & al
 out = t.test(all.dat$bat_forearm_mm[all.dat$bat_sex=="F" & all.dat$origin=="All Pteropodids" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"], all.dat$bat_forearm_mm[all.dat$bat_sex=="M" & all.dat$origin=="All Pteropodids" & all.dat$bat_species!="Pteropus rufus" & all.dat$bat_species!="Eidolon dupreanum" & all.dat$bat_species!="Rousettus madagascariensis"], alternative = "two.sided")
 t_ForAllBAtsMvF <- cbind.data.frame(meanM = out$estimate[1], meanF = out$estimate[2], p_val_t_test = out$p.value) 
 rownames(t_ForAllBAtsMvF) <- c()
-t_ForAllBAtsMvF$metric <- "ear length"
+t_ForAllBAtsMvF$metric <- "forearm"
 t_ForAllBAtsMvF$source <- "All Pteropodids"
 t_ForAllBAtsMvF$species <- NA
 
