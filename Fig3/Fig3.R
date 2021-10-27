@@ -1,9 +1,12 @@
 rm(list = ls())
 
+library(plyr)
 library(dplyr)
 library(ggplot2)
 library(lubridate)
 library(lmodel2)
+library(lmer)
+library(lmerTest)
 
 # Set wd to data on this computer. Also ID homewd, assuming that 
 # Mada-GIS is cloned to the same series of sub-folders
@@ -50,45 +53,32 @@ AllsppAdults1$bat_weight_g= as.numeric(AllsppAdults1$bat_weight_g)
 
 AllsppAdults1$bat_forearm_mm= as.numeric(AllsppAdults1$bat_forearm_mm)
 
+                                     
+AllsppAdults1$bat_species <- factor(AllsppAdults1$bat_species)
 
-#first, refit GAM from Fig 2:
-modAllF <- lmodel2(log10(bat_weight_g)~log10(bat_forearm_mm), data=subset(AllsppAdults1, bat_sex=="female"),nperm= 99)
-modAllM <- lmodel2(log10(bat_weight_g)~log10(bat_forearm_mm), data=subset(AllsppAdults1, bat_sex=="male"),nperm= 99)
+AllsppAdults1 <- subset(AllsppAdults1, !is.na(bat_sex) &!is.na(bat_weight_g) & !is.na(bat_forearm_mm))
+modAllF <- lm(log10(bat_weight_g)~log10(bat_forearm_mm) +(bat_species), data=subset(AllsppAdults1, bat_sex=="female"))
+modAllM <- lm(log10(bat_weight_g)~log10(bat_forearm_mm)+(bat_species), data=subset(AllsppAdults1, bat_sex=="male"))
+modAllFmixed <- lmer(log10(bat_weight_g)~log10(bat_forearm_mm) +(1|bat_species), data=subset(AllsppAdults1, bat_sex=="female"))
+modAllMmixed <- lmer(log10(bat_weight_g)~log10(bat_forearm_mm)+(1|bat_species), data=subset(AllsppAdults1, bat_sex=="male"))
 
+AIC(modAllF, modAllFmixed)
+AIC(modAllM, modAllMmixed)
+summary(modAllFmixed)
+AllsppAdults1$prediction <- NA
+AllsppAdults1$prediction[AllsppAdults1$bat_sex=="female"] <- 10^predict(modAllF)
+AllsppAdults1$prediction[AllsppAdults1$bat_sex=="male"] <- 10^predict(modAllM)
 
-#save them as "m" and "b" as in y=mx+b
-mfemMad <- modAllF$regression.results[3,3]
-bfemMad <- modAllF$regression.results[3,2]
-mmalMad <- modAllM$regression.results[3,3]
-bmalMad <- modAllM$regression.results[3,2]
-
-#and lci and uci
-mfemMad_lci <- modAllF$confidence.intervals[3,4]
-bfemMad_lci <- modAllF$confidence.intervals[3,2]
-mmalMad_lci <- modAllM$confidence.intervals[3,4]
-bmalMad_lci <- modAllM$confidence.intervals[3,2]
-
-mfemMad_uci <- modAllF$confidence.intervals[3,5]
-bfemMad_uci <- modAllF$confidence.intervals[3,3]
-mmalMad_uci <- modAllM$confidence.intervals[3,5]
-bmalMad_uci <- modAllM$confidence.intervals[3,3]
-
-# Save R-squar for all of the model (already saved in csv from Fig2)
-RsqF<- modAllF[["rsquare"]]
-RsqM<-modAllM[["rsquare"]]
-
-
-#write a function to predict y = mx+b
-regress.func <- function(x,m,b){
-  log10y = m*log10(x)+b
-  y=10^(log10y)
-  return(y)
-  
-}
+#plot for reality check
+p1 <- ggplot(data=AllsppAdults1) +
+      geom_line(aes(x=bat_forearm_mm, y=prediction, color=bat_species)) +
+      geom_point(aes(x=bat_forearm_mm, y=bat_weight_g, color=bat_species)) +
+      facet_grid(~bat_sex) +theme_bw()
+p1
 
 #sub-select only the Moramanga sites
 unique(AllsppAdults1$roost_site)
-AllsppAdult_Mora <- filter(select(AllsppAdults1, sampleid,bat_species, roost_site,day, collection_date,month, bat_sex, 
+AllsppAdult_Mora <- filter(select(AllsppAdults1, sampleid,bat_species, roost_site,day, collection_date,month, bat_sex, prediction,
                                   bat_age_class, bat_weight_g, bat_forearm_mm, bat_tibia_mm, ear_length_mm, body_length_cm), 
                            roost_site %in% c("AngavoKely","Angavokely", "AngavoBe","Ambakoana","Maromizaha","Marotsipohy", "Mahialambo", "Lakato", "Marovitsika", "Mangarivotra")) 
 
@@ -121,25 +111,11 @@ print(p2)
 
 
 #and predict
-AllsppAdult_Mora$prediction<- NA
-AllsppAdult_Mora$prediction_lci<- NA
-AllsppAdult_Mora$prediction_uci<- NA
-
-AllsppAdult_Mora$prediction[AllsppAdult_Mora$bat_sex=="female"] <- regress.func(x= AllsppAdult_Mora$bat_forearm_mm[AllsppAdult_Mora$bat_sex=="female"], m=mfemMad, b=bfemMad)
-AllsppAdult_Mora$prediction[AllsppAdult_Mora$bat_sex=="male"] <- regress.func(x= AllsppAdult_Mora$bat_forearm_mm[AllsppAdult_Mora$bat_sex=="male"], m=mmalMad, b=bmalMad)
-
-AllsppAdult_Mora$prediction_lci[AllsppAdult_Mora$bat_sex=="female"] <- regress.func(x= AllsppAdult_Mora$bat_forearm_mm[AllsppAdult_Mora$bat_sex=="female"], m=mfemMad_lci, b=bfemMad_lci)
-AllsppAdult_Mora$prediction_lci[AllsppAdult_Mora$bat_sex=="male"] <- regress.func(x= AllsppAdult_Mora$bat_forearm_mm[AllsppAdult_Mora$bat_sex=="male"], m=mmalMad_lci, b=bmalMad_lci)
-
-AllsppAdult_Mora$prediction_uci[AllsppAdult_Mora$bat_sex=="female"] <- regress.func(x= AllsppAdult_Mora$bat_forearm_mm[AllsppAdult_Mora$bat_sex=="female"], m=mfemMad_uci, b=bfemMad_uci)
-AllsppAdult_Mora$prediction_uci[AllsppAdult_Mora$bat_sex=="male"] <- regress.func(x= AllsppAdult_Mora$bat_forearm_mm[AllsppAdult_Mora$bat_sex=="male"], m=mmalMad_uci, b=bmalMad_uci)
-  
-head(AllsppAdult_Mora )
 
 p3b <- ggplot(data = AllsppAdult_Mora) + 
   geom_point(aes(x=bat_forearm_mm,y=bat_weight_g, color=bat_age_class)) +
   geom_line(aes(x=bat_forearm_mm, y= prediction), color="black", size=1) +
-  geom_ribbon(aes(x=bat_forearm_mm, ymin= prediction_lci, ymax=prediction_uci), fill="black", alpha=.3) +
+  #geom_ribbon(aes(x=bat_forearm_mm, ymin= prediction_lci, ymax=prediction_uci), fill="black", alpha=.3) +
   facet_grid(bat_species~bat_sex) +
   coord_cartesian(xlim=c(50,200), ylim=c(0,1000))
 
@@ -174,12 +150,6 @@ Rou.dat.adult= Rou.dat.adult[!is.na(Rou.dat.adult$resid),]
 
 library(mgcv)
 #k = 7 as suggested by package author Simon Wood
-
-#diived up by each male/female subset
-#gamPterplot <- gam(resid~ 
-#                     s(day, by=as.numeric(bat_sex=="male"),  k=7, bs = "cc") +
-#                     s(day, by=as.numeric(bat_sex=="female"), k=7, bs = "cc"), data = Pter.dat.adult)
-
 
 gamPterF <- gam(resid~ s(day, k=7, bs = "cc"), data = subset(Pter.dat.adult, bat_sex=="female"))
 gamPterM <- gam(resid~ s(day, k=7, bs = "cc"), data = subset(Pter.dat.adult, bat_sex=="male"))
@@ -326,9 +296,6 @@ preg.dat$bat_species <- factor(preg.dat$bat_species, levels=c("Pteropus rufus", 
 p4_main <- ggplot(data = new.All.dat) + 
   geom_ribbon(data = seas.dat, aes(x=x, ymin=-Inf, ymax=Inf),fill="cornflowerblue", alpha=0.3)+
   geom_ribbon(data = preg.dat, aes(x=x, ymin=-Inf, ymax=Inf),fill="hotpink3", alpha=0.3)+
-            #aes(xmin=111, xmax=304, ymin=-Inf, ymax=Inf),fill="#FEEEAA", alpha=0.5)+
-  #geom_rect(aes(xmin=0, xmax=111, ymin=-Inf, ymax=Inf),fill="gray90", alpha=0.5)+
-  #geom_rect(aes(xmin=304, xmax=365, ymin=-Inf, ymax=Inf),fill="gray90", alpha=0.5)+
   geom_point(aes(x= as.numeric(day), y= resid, color=bat_species), alpha=.3, show.legend = F)+ 
   scale_color_manual(values=ColM)+ 
   scale_fill_manual(values=ColM)+ 
@@ -358,35 +325,131 @@ ggsave(file = paste0(homewd, "final-figures/Fig3.png"),
        dpi=300)
 
 
-# #and the supplementary figure with the females
-# 
-# p4_supp <- ggplot(data = subset(new.All.dat, bat_sex=="female")) + 
-#   geom_rect(aes(xmin=111, xmax=304, ymin=-Inf, ymax=Inf),fill="#FEEEAA", alpha=0.5)+
-#   geom_rect(aes(xmin=0, xmax=111, ymin=-Inf, ymax=Inf),fill="gray90", alpha=0.5)+
-#   geom_rect(aes(xmin=304, xmax=365, ymin=-Inf, ymax=Inf),fill="gray90", alpha=0.5)+
-#   geom_point(aes(x= as.numeric(day), y= resid, color=bat_species), alpha=.3, show.legend = F)+ 
-#   scale_color_manual(values=ColM)+ 
-#   geom_hline(aes(yintercept=0)) +
-#   xlab ("Days of year")+ 
-#   ylab("Mass residuals")+
-#   geom_ribbon(aes(x= day, ymin=prediction_resid_plot_lci, ymax=prediction_resid_plot_uci), fill="black",
-#               size=1, alpha=.3 ) +
-#   geom_line(aes(x=day, y= prediction_resid_plot, color=bat_species), size=1, show.legend = F)+
-#   facet_grid(bat_species~xlab, scales = "free_y")+theme_bw() + 
-#   theme(strip.background= element_rect(fill="white"), 
-#         strip.text.y = element_text(face="italic"),
-#         panel.grid = element_blank(),
-#         axis.title.x = element_blank()) +
-#   scale_x_continuous(breaks=c(0,91,182, 274, 365), 
-#                      labels = c("Jan-1", "Apr-1", "Jul-1", "Oct-1", "Dec-31"))
-# 
-# p4_supp
-# 
-# 
-# ggsave(file = paste0(homewd, "final-figures/FigS1_female_seasonal_mass_residuals.png"),
-#        plot = p4_supp,
-#        units="mm",  
-#        width=50, 
-#        height=60, 
-#        scale=3, 
-#        dpi=300)
+#and for supplement, try GAM of just body mass with or without random effect of forearm
+
+#or try just the mass GAM - with site 
+AllsppAdults1$roost_site[AllsppAdults1$roost_site=="Lakato" |AllsppAdults1$roost_site=="Marovitsika" |AllsppAdults1$roost_site=="Ambakoana" |AllsppAdults1$roost_site=="AngavoBe" | AllsppAdults1$roost_site=="AngavoKely" | AllsppAdults1$roost_site=="Maromizaha" |AllsppAdults1$roost_site=="Mangarivotra" | AllsppAdults1$roost_site=="Mahialambo" |AllsppAdults1$roost_site=="Marotsipohy" |AllsppAdults1$roost_site=="Angavokely" ] <- "Moramanga"
+AllsppAdults1$roost_site[AllsppAdults1$roost_site=="Ankarana_Canyon" |AllsppAdults1$roost_site=="Ankarana_Cathedral" |AllsppAdults1$roost_site=="Ankarana_Chauves_Souris" ] <- "Ankarana"
+AllsppAdults1$roost_site <- as.factor(AllsppAdults1$roost_site)
+MoramangAdults = subset(AllsppAdults1, roost_site=="Moramanga")
+MoramangAdults <- arrange(MoramangAdults, day)
+Pter.dat.adult = subset(MoramangAdults , bat_species=="Pteropus rufus")
+Eid.dat.adult = subset(MoramangAdults , bat_species=="Eidolon dupreanum")
+Rou.dat.adult = subset(MoramangAdults, bat_species=="Rousettus madagascariensis")
+gamPterF <- gam(bat_weight_g~ s(day, k=7, bs = "cc") + 
+                              s(bat_forearm_mm, bs="re"), data = subset(Pter.dat.adult, bat_sex=="female"))
+gamPterM <- gam(bat_weight_g~ s(day, k=7, bs = "cc")+
+                              s(bat_forearm_mm, bs="re"), data = subset(Pter.dat.adult, bat_sex=="male"))
+summary(gamPterF) #day + forearm
+summary(gamPterM) #day + forearm
+
+
+
+gamEidF <- gam(bat_weight_g~ s(day, k=7, bs = "cc") + 
+                 s(bat_forearm_mm, bs="re"), data = subset(Eid.dat.adult, bat_sex=="female"))
+gamEidM <- gam(bat_weight_g~ s(day, k=7, bs = "cc") + 
+                 s(bat_forearm_mm, bs="re"), data = subset(Eid.dat.adult, bat_sex=="male"))
+summary(gamEidF)#day + forearm
+summary(gamEidM) #day + forarm
+
+
+gamRouF <- gam(bat_weight_g~ s(day, k=7, bs = "cc") + 
+                 s(bat_forearm_mm, bs="re"), data = subset(Rou.dat.adult, bat_sex=="female"))
+gamRouM <- gam(bat_weight_g~ s(day, k=7, bs = "cc") + 
+                 s(bat_forearm_mm, bs="re"), data = subset(Rou.dat.adult, bat_sex=="male"))
+summary(gamRouF)#day + forearm
+summary(gamRouM) #forearm only
+
+
+#and no forearm for plotting
+gamPterF <- gam(bat_weight_g~ s(day, k=7, bs = "cc"), data = subset(Pter.dat.adult, bat_sex=="female"))
+gamPterM <- gam(bat_weight_g~ s(day, k=7, bs = "cc"), data = subset(Pter.dat.adult, bat_sex=="male"))
+
+gamEidF <- gam(bat_weight_g~ s(day, k=7, bs = "cc"), data = subset(Eid.dat.adult, bat_sex=="female"))
+gamEidM <- gam(bat_weight_g~ s(day, k=7, bs = "cc"), data = subset(Eid.dat.adult, bat_sex=="male"))
+
+
+gamRouF <- gam(bat_weight_g~ s(day, k=7, bs = "cc"), data = subset(Rou.dat.adult, bat_sex=="female"))
+gamRouM <- gam(bat_weight_g~ s(day, k=7, bs = "cc"), data = subset(Rou.dat.adult, bat_sex=="male"))
+
+
+#and predict by day and species
+predict.dat <- cbind.data.frame(bat_species=rep(c("Pteropus rufus", "Eidolon dupreanum", "Rousettus madagascariensis"), each = 365*2), bat_sex= rep(rep(c("female", "male"), each=365), 3), day = rep((1:365), 3*2))
+
+
+#now add the predictions to each dataframe
+predict.dat$prediction_resid_plot <- NA
+predict.dat$prediction_resid_plot_lci <- NA
+predict.dat$prediction_resid_plot_uci <- NA
+predict.dat$prediction_resid_plot[predict.dat$bat_sex=="female" & predict.dat$bat_species=="Pteropus rufus"] = predict.gam(gamPterF, newdata = predict.dat[predict.dat$bat_sex=="female" & predict.dat$bat_species=="Pteropus rufus",],  type="response", se.fit=T)$fit
+predict.dat$prediction_resid_plot_lci[predict.dat$bat_sex=="female"& predict.dat$bat_species=="Pteropus rufus"] = predict.gam(gamPterF, newdata = predict.dat[predict.dat$bat_sex=="female" & predict.dat$bat_species=="Pteropus rufus",], type="response", se.fit=T)$fit -1.96*(predict.gam(gamPterF, newdata = predict.dat[predict.dat$bat_sex=="female" & predict.dat$bat_species=="Pteropus rufus",], type="response", se.fit=T)$se)
+predict.dat$prediction_resid_plot_uci[predict.dat$bat_sex=="female"& predict.dat$bat_species=="Pteropus rufus"] = predict.gam(gamPterF, newdata = predict.dat[predict.dat$bat_sex=="female" & predict.dat$bat_species=="Pteropus rufus",], type="response", se.fit=T)$fit +1.96*(predict.gam(gamPterF, newdata = predict.dat[predict.dat$bat_sex=="female" & predict.dat$bat_species=="Pteropus rufus",], type="response", se.fit=T)$se)
+predict.dat$prediction_resid_plot[predict.dat$bat_sex=="male"& predict.dat$bat_species=="Pteropus rufus"] = predict.gam(gamPterM, newdata = predict.dat[predict.dat$bat_sex=="male" & predict.dat$bat_species=="Pteropus rufus",],  type="response", se.fit=T)$fit
+predict.dat$prediction_resid_plot_lci[predict.dat$bat_sex=="male"& predict.dat$bat_species=="Pteropus rufus"] = predict.gam(gamPterM, newdata = predict.dat[predict.dat$bat_sex=="male" & predict.dat$bat_species=="Pteropus rufus",], type="response", se.fit=T)$fit -1.96*(predict.gam(gamPterM, newdata = predict.dat[predict.dat$bat_sex=="male" & predict.dat$bat_species=="Pteropus rufus",], type="response", se.fit=T)$se)
+predict.dat$prediction_resid_plot_uci[predict.dat$bat_sex=="male"& predict.dat$bat_species=="Pteropus rufus"] = predict.gam(gamPterM, newdata = predict.dat[predict.dat$bat_sex=="male" & predict.dat$bat_species=="Pteropus rufus",], type="response", se.fit=T)$fit +1.96*(predict.gam(gamPterM, newdata = predict.dat[predict.dat$bat_sex=="male" & predict.dat$bat_species=="Pteropus rufus",], type="response", se.fit=T)$se)
+
+
+predict.dat$prediction_resid_plot[predict.dat$bat_sex=="female" & predict.dat$bat_species=="Eidolon dupreanum"] = predict.gam(gamEidF, newdata = predict.dat[predict.dat$bat_sex=="female" & predict.dat$bat_species=="Eidolon dupreanum",],  type="response", se.fit=T)$fit
+predict.dat$prediction_resid_plot_lci[predict.dat$bat_sex=="female"& predict.dat$bat_species=="Eidolon dupreanum"] = predict.gam(gamEidF, newdata = predict.dat[predict.dat$bat_sex=="female" & predict.dat$bat_species=="Eidolon dupreanum",], type="response", se.fit=T)$fit -1.96*(predict.gam(gamEidF, newdata = predict.dat[predict.dat$bat_sex=="female" & predict.dat$bat_species=="Eidolon dupreanum",], type="response", se.fit=T)$se)
+predict.dat$prediction_resid_plot_uci[predict.dat$bat_sex=="female"& predict.dat$bat_species=="Eidolon dupreanum"] = predict.gam(gamEidF, newdata = predict.dat[predict.dat$bat_sex=="female" & predict.dat$bat_species=="Eidolon dupreanum",], type="response", se.fit=T)$fit +1.96*(predict.gam(gamEidF, newdata = predict.dat[predict.dat$bat_sex=="female" & predict.dat$bat_species=="Eidolon dupreanum",], type="response", se.fit=T)$se)
+predict.dat$prediction_resid_plot[predict.dat$bat_sex=="male"& predict.dat$bat_species=="Eidolon dupreanum"] = predict.gam(gamEidM, newdata = predict.dat[predict.dat$bat_sex=="male" & predict.dat$bat_species=="Eidolon dupreanum",],  type="response", se.fit=T)$fit
+predict.dat$prediction_resid_plot_lci[predict.dat$bat_sex=="male"& predict.dat$bat_species=="Eidolon dupreanum"] = predict.gam(gamEidM, newdata = predict.dat[predict.dat$bat_sex=="male" & predict.dat$bat_species=="Eidolon dupreanum",], type="response", se.fit=T)$fit -1.96*(predict.gam(gamEidM, newdata = predict.dat[predict.dat$bat_sex=="male" & predict.dat$bat_species=="Eidolon dupreanum",], type="response", se.fit=T)$se)
+predict.dat$prediction_resid_plot_uci[predict.dat$bat_sex=="male"& predict.dat$bat_species=="Eidolon dupreanum"] = predict.gam(gamEidM, newdata = predict.dat[predict.dat$bat_sex=="male" & predict.dat$bat_species=="Eidolon dupreanum",], type="response", se.fit=T)$fit +1.96*(predict.gam(gamEidM, newdata = predict.dat[predict.dat$bat_sex=="male" & predict.dat$bat_species=="Eidolon dupreanum",], type="response", se.fit=T)$se)
+
+
+predict.dat$prediction_resid_plot[predict.dat$bat_sex=="female" & predict.dat$bat_species=="Rousettus madagascariensis"] = predict.gam(gamRouF, newdata = predict.dat[predict.dat$bat_sex=="female" & predict.dat$bat_species=="Rousettus madagascariensis",],  type="response", se.fit=T)$fit
+predict.dat$prediction_resid_plot_lci[predict.dat$bat_sex=="female"& predict.dat$bat_species=="Rousettus madagascariensis"] = predict.gam(gamRouF, newdata = predict.dat[predict.dat$bat_sex=="female" & predict.dat$bat_species=="Rousettus madagascariensis",], type="response", se.fit=T)$fit -1.96*(predict.gam(gamRouF, newdata = predict.dat[predict.dat$bat_sex=="female" & predict.dat$bat_species=="Rousettus madagascariensis",], type="response", se.fit=T)$se)
+predict.dat$prediction_resid_plot_uci[predict.dat$bat_sex=="female"& predict.dat$bat_species=="Rousettus madagascariensis"] = predict.gam(gamRouF, newdata = predict.dat[predict.dat$bat_sex=="female" & predict.dat$bat_species=="Rousettus madagascariensis",], type="response", se.fit=T)$fit +1.96*(predict.gam(gamRouF, newdata = predict.dat[predict.dat$bat_sex=="female" & predict.dat$bat_species=="Rousettus madagascariensis",], type="response", se.fit=T)$se)
+predict.dat$prediction_resid_plot[predict.dat$bat_sex=="male"& predict.dat$bat_species=="Rousettus madagascariensis"] = predict.gam(gamRouM, newdata = predict.dat[predict.dat$bat_sex=="male" & predict.dat$bat_species=="Rousettus madagascariensis",],  type="response", se.fit=T)$fit
+predict.dat$prediction_resid_plot_lci[predict.dat$bat_sex=="male"& predict.dat$bat_species=="Rousettus madagascariensis"] = predict.gam(gamRouM, newdata = predict.dat[predict.dat$bat_sex=="male" & predict.dat$bat_species=="Rousettus madagascariensis",], type="response", se.fit=T)$fit -1.96*(predict.gam(gamRouM, newdata = predict.dat[predict.dat$bat_sex=="male" & predict.dat$bat_species=="Rousettus madagascariensis",], type="response", se.fit=T)$se)
+predict.dat$prediction_resid_plot_uci[predict.dat$bat_sex=="male"& predict.dat$bat_species=="Rousettus madagascariensis"] = predict.gam(gamRouM, newdata = predict.dat[predict.dat$bat_sex=="male" & predict.dat$bat_species=="Rousettus madagascariensis",], type="response", se.fit=T)$fit +1.96*(predict.gam(gamRouM, newdata = predict.dat[predict.dat$bat_sex=="male" & predict.dat$bat_species=="Rousettus madagascariensis",], type="response", se.fit=T)$se)
+
+
+predict.dat$xlab <- "F"
+predict.dat$xlab[predict.dat$bat_sex=="male"] <- "M"
+
+new.All.dat <- rbind(Pter.dat.adult, Eid.dat.adult, Rou.dat.adult)
+seas.dat = cbind.data.frame(x=c(111, 304), xlab=rep("M", 2))
+
+#observed gestation for the females
+library(lubridate)
+preg.dat <- cbind.data.frame(x = c(yday("2015-07-10"),yday("2019-09-29"),
+                                   yday("2014-08-03"), yday("2019-11-16"),
+                                   yday("2018-09-11"), yday("2014-12-12")), bat_species= rep(c("Pteropus rufus", "Eidolon dupreanum", "Rousettus madagascariensis"), each=2))
+preg.dat$xlab = "F"
+
+preg.dat$bat_species <- factor(preg.dat$bat_species, levels=c("Pteropus rufus", "Eidolon dupreanum", "Rousettus madagascariensis"))
+
+ColM<- c("Pteropus rufus"="blue", "Eidolon dupreanum"="light green","Rousettus madagascariensis"="purple")
+
+predict.dat <- arrange(predict.dat, bat_species, bat_sex, day)
+FigS2 <- ggplot(data = new.All.dat) + 
+  geom_ribbon(data = seas.dat, aes(x=x, ymin=-Inf, ymax=Inf),fill="cornflowerblue", alpha=0.3)+
+  geom_ribbon(data = preg.dat, aes(x=x, ymin=-Inf, ymax=Inf),fill="hotpink3", alpha=0.3)+
+  geom_point(aes(x= as.numeric(day), y= bat_weight_g, color=bat_species), alpha=.3, show.legend = F)+ 
+  scale_color_manual(values=ColM)+ 
+  scale_fill_manual(values=ColM)+ 
+  geom_hline(aes(yintercept=0), color="gray50") +
+  xlab ("Days of year")+ 
+  ylab("Mass (g)")+
+  geom_ribbon(data = predict.dat, aes(x= day, ymin=prediction_resid_plot_lci, ymax=prediction_resid_plot_uci, 
+                                      group=bat_species), fill="black",alpha=.3 ) +
+  geom_line(data = predict.dat, aes(x=day, y= prediction_resid_plot, color=bat_species), size=1, show.legend = F)+
+  facet_grid(bat_species~xlab, scales = "free_y")+theme_bw() + 
+  theme(strip.background= element_rect(fill="white"), 
+        strip.text.y = element_text(face="italic"),
+        panel.grid = element_blank(),
+        axis.title.x = element_blank()) +
+  scale_x_continuous(breaks=c(0,91,182, 274, 365), 
+                     labels = c("Jan-1", "Apr-1", "Jul-1", "Oct-1", "Dec-31"))
+
+FigS2
+
+
+ggsave(file = paste0(homewd, "final-figures/FigS2.png"),
+       plot = p4_main,
+       units="mm",  
+       width=80, 
+       height=60, 
+       scale=3, 
+       dpi=300)
