@@ -7,15 +7,15 @@ resid ~ s(day, k = 7, bs = "cc")
 
 Parametric coefficients:
             Estimate Std. Error t value Pr(>|t|)    
-(Intercept)   3.0276     0.6917   4.377 1.95e-05 ***
+(Intercept)   3.2682     0.6682   4.891 2.09e-06 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 Approximate significance of smooth terms:
-         edf Ref.df     F p-value  
-s(day) 3.568      5 2.317  0.0114 *
+         edf Ref.df     F p-value   
+s(day) 3.859      5 2.678 0.00689 **
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-R-sq.(adj) =  0.0466   Deviance explained = 6.36%
-GCV = 98.391  Scale est. = 96.155    n = 201
+R-sq.(adj) =  0.0537   Deviance explained = 7.19%
+GCV = 91.977  Scale est. = 89.754    n = 201

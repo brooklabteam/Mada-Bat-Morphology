@@ -6,16 +6,16 @@ Formula:
 resid ~ s(day, k = 7, bs = "cc")
 
 Parametric coefficients:
-            Estimate Std. Error t value Pr(>|t|)   
-(Intercept)    6.562      2.475   2.651  0.00838 **
+            Estimate Std. Error t value Pr(>|t|)  
+(Intercept)    5.142      2.271   2.264   0.0242 *
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 Approximate significance of smooth terms:
-        edf Ref.df    F p-value   
-s(day) 4.51      5 2.85 0.00889 **
+         edf Ref.df     F p-value   
+s(day) 4.716      5 3.057 0.00726 **
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-R-sq.(adj) =  0.0299   Deviance explained =  4.2%
-GCV = 2251.8  Scale est. = 2217.5    n = 362
+R-sq.(adj) =  0.032   Deviance explained = 4.47%
+GCV = 1897.6  Scale est. = 1867.6    n = 362
