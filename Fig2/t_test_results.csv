@@ -1,0 +1,13 @@
+meanM,meanF,p_val_t_test,metric,source,species
+20.69746331,19.98025742,0.437306877,ear length,All Pteropodids,NA
+28.77081481,29.22945736,0.409636012,ear length,Malagasy Pteropodids,Pteropus rufus
+28.10754617,28.17631455,0.781102234,ear length,Malagasy Pteropodids,Eidolon dupreanum
+13.0713382,13.60026316,0.001108615,ear length,Malagasy Pteropodids,Rousettus madagascariensis
+93.82489752,88.60357095,0.258596455,forearm,All Pteropodids,NA
+167.477037,162.4482171,1.62E-06,Forearm length,Malagasy Pteropodids,Pteropus rufus
+128.9144591,129.1381967,0.484029093,Forearm length,Malagasy Pteropodids,Eidolon dupreanum
+71.31206311,69.5303207,3.11E-14,Forearm length,Malagasy Pteropodids,Rousettus madagascariensis
+37.05397117,34.63085288,0.471152957,tibia,All Pteropodids,NA
+81.03733333,78.60846154,0.000459578,Tibia length,Malagasy Pteropodids,Pteropus rufus
+62.09583113,61.49503513,0.02898532,Tibia length,Malagasy Pteropodids,Eidolon dupreanum
+33.73951456,32.04670554,2.63E-19,Tibia length,Malagasy Pteropodids,Rousettus madagascariensis

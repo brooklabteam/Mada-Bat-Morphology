@@ -63,6 +63,21 @@ sub.dat1$Genus[sub.dat1$bat_species=="Pteropus rufus"] <- "Pteropus rufus"
 sub.dat1$Genus[sub.dat1$bat_species=="Eidolon dupreanum"] <- "Eidolon dupreanum"
 sub.dat1$Genus[sub.dat1$bat_species=="Rousettus madagascariensis"] <- "Rousettus madagascariensis"
 
+#and plot histogram
+
+p0 <- ggplot(data=sub.dat1) +
+      geom_histogram(aes(bat_tibia_mm, color=Genus)) + 
+      facet_grid(bat_species~bat_sex)
+
+p02 <- ggplot(data=sub.dat1) +
+  geom_histogram(aes(bat_forearm_mm, color=Genus)) + 
+  facet_grid(bat_species~bat_sex)
+
+p03 <- ggplot(data=sub.dat1) +
+  geom_histogram(aes(ear_length_mm, color=Genus)) + 
+  facet_grid(bat_species~bat_sex)
+
+#all normal so t.test appropriate -- pull sig data from Fi2 script
 colz=c("Pteropus rufus" = "blue", "Eidolon dupreanum" = "lightgreen", "Rousettus madagascariensis" = "purple")
 
 p1<- ggplot(data=sub.dat1) +
@@ -95,82 +110,6 @@ p1<- ggplot(data=sub.dat1) +
   theme(element_blank(), axis.title.x = element_blank(), 
         plot.margin = unit(c(.3,.3,.3,.5), "lines"),
         strip.background = element_rect(fill="white"))+scale_y_continuous(name = "Tibia length (mm)") 
-
-#print(p1)
-
-#is there variation in body size by site, species, and sex?
-
-#tibia
-sub.dat1$roost_site <- as.factor(sub.dat1$roost_site)
-sub.dat1$bat_sex <- as.factor(sub.dat1$bat_sex)
-sub.dat1$bat_species <- as.factor(sub.dat1$bat_species)
-
-modPtib <- lmer(bat_tibia_mm~bat_sex + (1|roost_site), data=subset(sub.dat1, bat_species=="Pteropus rufus"))
-modPtibtest <- lmerTest::lmer(bat_tibia_mm~bat_sex + (1|roost_site), data=subset(sub.dat1, bat_species=="Pteropus rufus"))
-summary(modPtib)
-summary(modPtibtest)
-#plot_model(modPtibtest) #males bigger ***
-
-modEtib <- lmer(bat_tibia_mm~bat_sex + (1|roost_site), data=subset(sub.dat1, bat_species=="Eidolon dupreanum"))
-modEtibtest <- lmerTest::lmer(bat_tibia_mm~bat_sex + (1|roost_site), data=subset(sub.dat1, bat_species=="Eidolon dupreanum"))
-summary(modEtib)
-summary(modEtibtest)
-#plot_model(modEtibtest) #males bigger *
-
-
-modRtib <- lmer(bat_tibia_mm~bat_sex + (1|roost_site), data=subset(sub.dat1, bat_species=="Rousettus madagascariensis"))
-modRtibtest <- lmerTest::lmer(bat_tibia_mm~bat_sex + (1|roost_site), data=subset(sub.dat1, bat_species=="Rousettus madagascariensis"))
-summary(modRtib)
-summary(modRtibtest)
-#plot_model(modRtibtest) #males bigger ***
-
-#forearm
-sub.dat1$roost_site <- as.factor(sub.dat1$roost_site)
-sub.dat1$bat_sex <- as.factor(sub.dat1$bat_sex)
-sub.dat1$bat_species <- as.factor(sub.dat1$bat_species)
-
-modPfor <- lmer(bat_forearm_mm~bat_sex + (1|roost_site), data=subset(sub.dat1, bat_species=="Pteropus rufus"))
-modPfortest <- lmerTest::lmer(bat_forearm_mm~bat_sex + (1|roost_site), data=subset(sub.dat1, bat_species=="Pteropus rufus"))
-summary(modPfor)
-summary(modPfortest)
-#plot_model(modPfor) #males bigger ***
-
-modEfor <- lmer(bat_forearm_mm~bat_sex + (1|roost_site), data=subset(sub.dat1, bat_species=="Eidolon dupreanum"))
-modEfortest <- lmerTest::lmer(bat_forearm_mm~bat_sex + (1|roost_site), data=subset(sub.dat1, bat_species=="Eidolon dupreanum"))
-summary(modEfor)
-summary(modEfortest)
-#plot_model(modEfortest) #no diff
-
-
-modRfor <- lmer(bat_forearm_mm~bat_sex + (1|roost_site), data=subset(sub.dat1, bat_species=="Rousettus madagascariensis"))
-modRfortest <- lmerTest::lmer(bat_forearm_mm~bat_sex + (1|roost_site), data=subset(sub.dat1, bat_species=="Rousettus madagascariensis"))
-summary(modRfor)
-summary(modRfortest)
-#plot_model(modRfor) #males bigger ***
-
-
-#ear
-sub.dat1$roost_site <- as.factor(sub.dat1$roost_site)
-sub.dat1$bat_sex <- as.factor(sub.dat1$bat_sex)
-sub.dat1$bat_species <- as.factor(sub.dat1$bat_species)
-
-modPear <- lmer(ear_length_mm~bat_sex + (1|roost_site), data=subset(sub.dat1, bat_species=="Pteropus rufus"))
-modPeartest <- lmerTest::lmer(ear_length_mm~bat_sex + (1|roost_site), data=subset(sub.dat1, bat_species=="Pteropus rufus"))
-summary(modPear)
-summary(modPeartest)
-#plot_model(modPear) #no diff
-
-modEear <- lmer(ear_length_mm~bat_sex + (1|roost_site), data=subset(sub.dat1, bat_species=="Eidolon dupreanum"))
-modEeartest <- lmerTest::lmer(ear_length_mm~bat_sex + (1|roost_site), data=subset(sub.dat1, bat_species=="Eidolon dupreanum"))
-summary(modEear)
-summary(modEeartest)
-#plot_model(modEeartest) #no diff
-
-modRear <- lmer(ear_length_mm~bat_sex + (1|roost_site), data=subset(sub.dat1, bat_species=="Rousettus madagascariensis"))
-modReartest <- lmerTest::lmer(ear_length_mm~bat_sex + (1|roost_site), data=subset(sub.dat1, bat_species=="Rousettus madagascariensis"))
-summary(modRear)
-summary(modReartest)
-#plot_model(modReartest) #males smaller **
 
 
 
@@ -237,41 +176,3 @@ ggsave(file = paste0(homewd, "/final-figures/FigS1.png"),
        height=60, 
        scale=3, 
        dpi=300)
-
-#and save the glm output
-sink("glm_Pruf_ear.txt")
-summary(modPeartest) #sig
-sink()
-sink("glm_Pruf_tib.txt")
-summary(modPtibtest) #sig
-sink()
-sink("glm_Pruf_for.txt")
-summary(modPfortest) #sig
-sink()
-
-
-sink("glm_Eid_ear.txt")
-summary(modEeartest) #sig
-sink()
-sink("glm_Eid_tib.txt")
-summary(modEtibtest) #sig
-sink()
-sink("glm_Eid_for.txt")
-summary(modEfortest) #sig
-sink()
-
-
-sink("glm_Rou_ear.txt")
-summary(modReartest) #sig
-sink()
-sink("glm_Rou_tib.txt")
-summary(modRtibtest) #sig
-sink()
-sink("glm_Rou_for.txt")
-summary(modRfortest) #sig
-sink()
-
-
-
-
-
