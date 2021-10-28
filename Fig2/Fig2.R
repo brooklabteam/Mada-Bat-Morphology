@@ -157,16 +157,41 @@ female.mod.nonmada <- lm(log10(bat_weight_g) ~ log10(bat_forearm_mm), data=subse
 male.mod.nonmada <- lm(log10(bat_weight_g) ~ log10(bat_forearm_mm), data=subset(all.dat, bat_sex=="M" & origin=="All Pteropodids"))
 
 
-# Save R-squar for all of the model
+# Save R-square for all of the model
 RsqF<- summary(female.mod.mada)$r.squared
+RsqM<-summary(male.mod.mada)$r.squared
+RsqNF<-summary(female.mod.nonmada)$r.squared
+RsqNM<-summary(male.mod.nonmada)$r.squared
+
+#and slope + lci and uci
+slopeF<- summary(female.mod.mada)$coefficients[2,1]
+slopeF_lci<- summary(female.mod.mada)$coefficients[2,1] -1.96*summary(female.mod.mada)$coefficients[2,2]
+slopeF_uci<- summary(female.mod.mada)$coefficients[2,1] +1.96*summary(female.mod.mada)$coefficients[2,2]
+slopeM<- summary(male.mod.mada)$coefficients[2,1]
+slopeM_lci<- summary(male.mod.mada)$coefficients[2,1] -1.96*summary(female.mod.mada)$coefficients[2,2]
+slopeM_uci<- summary(male.mod.mada)$coefficients[2,1] +1.96*summary(female.mod.mada)$coefficients[2,2]
+
+slopeNF<- summary(female.mod.nonmada)$coefficients[2,1]
+slopeNF_lci<- summary(female.mod.nonmada)$coefficients[2,1] -1.96*summary(female.mod.mada)$coefficients[2,2]
+slopeNF_uci<- summary(female.mod.nonmada)$coefficients[2,1] +1.96*summary(female.mod.mada)$coefficients[2,2]
+slopeNM<- summary(male.mod.nonmada)$coefficients[2,1]
+slopeNM_lci<- summary(male.mod.nonmada)$coefficients[2,1] -1.96*summary(female.mod.mada)$coefficients[2,2]
+slopeNM_uci<- summary(male.mod.nonmada)$coefficients[2,1] +1.96*summary(female.mod.mada)$coefficients[2,2]
+
 RsqM<-summary(male.mod.mada)$r.squared
 RsqNF<-summary(female.mod.nonmada)$r.squared
 RsqNM<-summary(male.mod.nonmada)$r.squared
 
 
 
+
+
 rsq_all<-cbind.data.frame(model = c("F-Malagasy-Bats","M-Malagasy-Bats", "F-Non-Malagasy", "M-Non-Malagasy"), 
-                            r_sq= c(RsqF,RsqM,RsqNF, RsqNM))
+                            r_sq= c(RsqF,RsqM,RsqNF, RsqNM),
+                            slope= c(slopeF,slopeM,slopeNF, slopeNM),
+                            slope_lci= c(slopeF_lci,slopeM_lci,slopeNF_lci, slopeNM_lci),
+                            slope_uci= c(slopeF_uci,slopeM_uci,slopeNF_uci, slopeNM_uci))
+                          
 
 
 write.csv(rsq_all,"bat_model_fits.csv", row.names = F)
