@@ -1,0 +1,22 @@
+
+Call:
+lm(formula = log10(bat_weight_g) ~ log10(bat_forearm_mm) + (bat_species), 
+    data = subset(AllsppAdults1, bat_sex == "male"))
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.38611 -0.03170  0.01225  0.04565  0.25664 
+
+Coefficients:
+                                      Estimate Std. Error t value Pr(>|t|)    
+(Intercept)                           -0.99772    0.28408  -3.512 0.000466 ***
+log10(bat_forearm_mm)                  1.65702    0.13463  12.308  < 2e-16 ***
+bat_speciesPteropus rufus              0.13267    0.01709   7.764 2.18e-14 ***
+bat_speciesRousettus madagascariensis -0.26847    0.03506  -7.658 4.80e-14 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.07656 on 918 degrees of freedom
+Multiple R-squared:  0.9652,	Adjusted R-squared:  0.9651 
+F-statistic:  8493 on 3 and 918 DF,  p-value: < 2.2e-16
+

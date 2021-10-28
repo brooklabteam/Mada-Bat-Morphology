@@ -69,6 +69,15 @@ AllsppAdults1$prediction <- NA
 AllsppAdults1$prediction[AllsppAdults1$bat_sex=="female"] <- 10^predict(modAllF)
 AllsppAdults1$prediction[AllsppAdults1$bat_sex=="male"] <- 10^predict(modAllM)
 
+#and save those linear models for the supplement
+sink("lmAllFemale_Bat_Spp.txt")
+summary(modAllF )
+sink()
+
+sink("lmAllMale_Bat_Spp.txt")
+summary(modAllM)
+sink()
+
 #plot for reality check
 p1 <- ggplot(data=AllsppAdults1) +
       geom_line(aes(x=bat_forearm_mm, y=prediction, color=bat_species)) +
@@ -102,12 +111,12 @@ AllsppAdult_Mora$bat_forearm_mm= as.numeric(AllsppAdult_Mora$bat_forearm_mm)
 #first, plot it to visualize
 p1 <- ggplot(data = AllsppAdult_Mora) + geom_point(aes(x=bat_forearm_mm,y=bat_weight_g, color=bat_species))
 
-print(p1) #this is all species together. 
+#print(p1) #this is all species together. 
 
 #look with log10
 p2 <- ggplot(data = AllsppAdult_Mora) + geom_point(aes(x=bat_forearm_mm,y=bat_weight_g)) +
       scale_y_log10() + scale_x_log10()
-print(p2)
+#print(p2)
 
 
 #and predict
@@ -119,7 +128,7 @@ p3b <- ggplot(data = AllsppAdult_Mora) +
   facet_grid(bat_species~bat_sex) +
   coord_cartesian(xlim=c(50,200), ylim=c(0,1000))
 
-print(p3b) #good!
+#print(p3b) #good!
 
 # Now can get residuals for all bat spp by sites
 AllsppAdult_Mora$resid <- AllsppAdult_Mora$bat_weight_g - AllsppAdult_Mora$prediction
@@ -313,7 +322,7 @@ p4_main <- ggplot(data = new.All.dat) +
   scale_x_continuous(breaks=c(0,91,182, 274, 365), 
                      labels = c("Jan-1", "Apr-1", "Jul-1", "Oct-1", "Dec-31"))
 
-p4_main
+#p4_main
 
 
 ggsave(file = paste0(homewd, "final-figures/Fig3.png"),
