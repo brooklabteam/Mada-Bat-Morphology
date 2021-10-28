@@ -429,7 +429,7 @@ FigS2 <- ggplot(data = new.All.dat) +
   geom_point(aes(x= as.numeric(day), y= bat_weight_g, color=bat_species), alpha=.3, show.legend = F)+ 
   scale_color_manual(values=ColM)+ 
   scale_fill_manual(values=ColM)+ 
-  geom_hline(aes(yintercept=0), color="gray50") +
+  #geom_hline(aes(yintercept=0), color="gray50") +
   xlab ("Days of year")+ 
   ylab("Mass (g)")+
   geom_ribbon(data = predict.dat, aes(x= day, ymin=prediction_resid_plot_lci, ymax=prediction_resid_plot_uci, 
@@ -443,11 +443,11 @@ FigS2 <- ggplot(data = new.All.dat) +
   scale_x_continuous(breaks=c(0,91,182, 274, 365), 
                      labels = c("Jan-1", "Apr-1", "Jul-1", "Oct-1", "Dec-31"))
 
-FigS2
+#FigS2
 
 
 ggsave(file = paste0(homewd, "final-figures/FigS2.png"),
-       plot = p4_main,
+       plot = FigS2,
        units="mm",  
        width=80, 
        height=60, 

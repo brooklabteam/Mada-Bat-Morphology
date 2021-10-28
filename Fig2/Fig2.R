@@ -144,7 +144,7 @@ p.all <- ggplot(data=all.dat) +
   theme(strip.text.x = element_blank(), legend.position = "bottom")+
   theme(element_blank())+labs(x="Forearm Length (mm)", y="Body mass (g)")
 
-print(p.all)
+#print(p.all)
 
 ###################################################
 ################ fit model linear model 
@@ -247,11 +247,11 @@ p2T_6_1<- ggplot() +
   geom_point(data=subset(all.dat, bat_species=="Pteropus rufus" & origin=="All Pteropodids" | bat_species=="Eidolon dupreanum" & origin=="All Pteropodids"  | bat_species=="Rousettus madagascariensis" & origin=="All Pteropodids"),
              aes(x= origin, y= bat_tibia_mm, color=Genus), size=2) +
   facet_grid(bat_sex~.)+theme_bw()+theme(legend.position = "none")+
-  theme(element_blank(), axis.title.x = element_blank(), 
+  theme(element_blank(), axis.title.x = element_blank(), legend.position = "none",
         plot.margin = unit(c(.3,.3,.3,.5), "lines"),
         strip.background = element_rect(fill="white"))+scale_y_continuous(name = "Tibia length (mm)") 
 
-#print(p2T_6_1)
+print(p2T_6_1)
 
 #########Ear
 
@@ -268,23 +268,22 @@ p2E_6_1<- ggplot() +
   geom_point(data=subset(all.dat, bat_species=="Pteropus rufus" & origin=="All Pteropodids" | bat_species=="Eidolon dupreanum" & origin=="All Pteropodids"  | bat_species=="Rousettus madagascariensis" & origin=="All Pteropodids"),
              aes(x= origin, y= ear_length_mm, color=Genus), size=2) +
   facet_grid(bat_sex~.)+theme_bw()+theme(legend.position = "none")+
-  theme(element_blank(), axis.title.x = element_blank(), 
+  theme(element_blank(), axis.title.x = element_blank(), legend.position = "none",
         plot.margin = unit(c(.3,.3,.3,.5), "lines"),
         strip.background = element_rect(fill="white"))+scale_y_continuous(name = "Ear length (mm)") 
 
-#print(p2E_6_1)
+print(p2E_6_1)
 
 
 
 
-p10<- plot_grid(p2T_6_1+ theme(legend.position = "none"),
-                p2E_6_1 + theme(legend.position = "none"),
+p10<- cowplot::plot_grid(p2T_6_1, p2E_6_1,
                 ncol = 2, labels = "AUTO")
 
 
 #print(p10)
 
-plot_grid(p10, pall_2 + theme(legend.position = "right"),
+cowplot::plot_grid(p10, pall_2 + theme(legend.position = "right"),
           ncol = 1,
           labels = c("","C"))
 
