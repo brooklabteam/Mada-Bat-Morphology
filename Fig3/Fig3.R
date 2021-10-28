@@ -79,11 +79,28 @@ summary(modAllM)
 sink()
 
 #plot for reality check
+
+ColM<- c("Pteropus rufus"="blue", "Eidolon dupreanum"="light green","Rousettus madagascariensis"="purple")
+
 p1 <- ggplot(data=AllsppAdults1) +
-      geom_line(aes(x=bat_forearm_mm, y=prediction, color=bat_species)) +
       geom_point(aes(x=bat_forearm_mm, y=bat_weight_g, color=bat_species)) +
-      facet_grid(~bat_sex) +theme_bw()
+      scale_color_manual(values=ColM) +
+      geom_line(aes(x=bat_forearm_mm, y=prediction, group=bat_species),  color="black", size=1) +
+      facet_grid(~bat_sex) +theme_bw() +
+      theme(panel.grid = element_blank(), legend.position = "bottom",
+            strip.background = element_rect(fill="white"), legend.title = element_blank()) +
+      xlab("bat forearm (mm)") + ylab("bat mass (g)")
 p1
+
+
+ggsave(file = paste0(homewd, "final-figures/FigS2.png"),
+       plot = p1,
+       units="mm",  
+       width=80, 
+       height=40, 
+       scale=3, 
+       dpi=300)
+
 
 #sub-select only the Moramanga sites
 unique(AllsppAdults1$roost_site)
@@ -432,7 +449,7 @@ preg.dat$bat_species <- factor(preg.dat$bat_species, levels=c("Pteropus rufus", 
 ColM<- c("Pteropus rufus"="blue", "Eidolon dupreanum"="light green","Rousettus madagascariensis"="purple")
 
 predict.dat <- arrange(predict.dat, bat_species, bat_sex, day)
-FigS2 <- ggplot(data = new.All.dat) + 
+FigS3 <- ggplot(data = new.All.dat) + 
   geom_ribbon(data = seas.dat, aes(x=x, ymin=-Inf, ymax=Inf),fill="cornflowerblue", alpha=0.3)+
   geom_ribbon(data = preg.dat, aes(x=x, ymin=-Inf, ymax=Inf),fill="hotpink3", alpha=0.3)+
   geom_point(aes(x= as.numeric(day), y= bat_weight_g, color=bat_species), alpha=.3, show.legend = F)+ 
@@ -455,10 +472,10 @@ FigS2 <- ggplot(data = new.All.dat) +
 #FigS2
 
 
-ggsave(file = paste0(homewd, "final-figures/FigS2.png"),
-       plot = FigS2,
+ggsave(file = paste0(homewd, "final-figures/FigS3.png"),
+       plot = FigS3,
        units="mm",  
        width=80, 
-       height=60, 
+       height=30, 
        scale=3, 
        dpi=300)

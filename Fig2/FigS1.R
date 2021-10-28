@@ -152,7 +152,7 @@ pfor <-  ggplot(data=sub.dat1) + geom_beeswarm(aes(x=bat_sex, y=bat_forearm_mm, 
   facet_grid(~bat_species) +theme_bw()+theme(legend.position = "none")+
   geom_label(data=subset(mod.dat, metric=="forearm"), aes(x=1.5, y=value, label=label), label.size = NA, size=5) +
   scale_color_manual(values=colz) +
-  theme(element_blank(), axis.title.x = element_blank(), 
+  theme(element_blank(), axis.title.x = element_blank(), strip.text = element_text(face = "italic"),
         plot.margin = unit(c(.3,.3,.3,.5), "lines"),
         strip.background = element_rect(fill="white"))+scale_y_continuous(name = "Forearm length (mm)") 
 
