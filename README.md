@@ -1,6 +1,6 @@
 # Mada-Bat-Morphology
 
-This folder contains script and analyses and figures for Andrianiaina and Andry et al. 2021, our Madagascar bat morphology paper, currently in review at the *Journal of Mammalogy*. Please see the preprint at XXX to view the paper early.
+This folder contains script and analyses and figures for Andrianiaina and Andry et al. 2021, our Madagascar bat morphology paper, currently in review at the *Journal of Mammalogy*. Please see the preprint at doi [10.1101/2021.10.28.466299](https://www.biorxiv.org/content/10.1101/2021.10.28.466299v1) to view the paper early.
 
 Analyses, scripts, and data for each figure are self-contained within the corresponding folder ("Fig1A", "Fig2", "Fig3", and "Fig4"), and the final figure files are stored in the folder, "final-figures". 
 
