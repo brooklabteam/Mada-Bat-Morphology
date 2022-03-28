@@ -15,7 +15,7 @@ library(sjPlot)
 
 # Set wd to data on this computer. Also ID homewd, assuming that 
 # Mada-GIS is cloned to the same series of sub-folders
-homewd = "/Users/caraebrook/Documents/R/R_repositories/Mada-Bat-Morphology/" #should be wherever "Mada-Bat-Morphology" is stored on your home computer
+homewd = "/Users/carabrook/Developer/Mada-Bat-Morphology/" #should be wherever "Mada-Bat-Morphology" is stored on your home computer
 setwd(paste0(homewd, "/", "Fig2/"))
 
 #load madagascar data  
@@ -143,7 +143,7 @@ ptib <-  ggplot(data=sub.dat1) + geom_beeswarm(aes(x=bat_sex, y=bat_tibia_mm, co
           facet_grid(~bat_species) +theme_bw()+theme(legend.position = "none")+
   geom_label(data=subset(mod.dat, metric=="tibia"), aes(x=1.5, y=value, label=label), label.size = NA, size=5) +
   scale_color_manual(values=colz) +
-  theme(element_blank(), axis.title.x = element_blank(), 
+  theme(element_blank(), axis.title.x = element_blank(), strip.text = element_text(face = "italic"),
         plot.margin = unit(c(.3,.3,.3,.5), "lines"),
         strip.background = element_rect(fill="white"))+scale_y_continuous(name = "Tibia length (mm)") 
   
