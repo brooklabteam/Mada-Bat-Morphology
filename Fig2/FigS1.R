@@ -170,7 +170,7 @@ pall <- cowplot::plot_grid(pfor, ptib, pear, nrow=3,ncol=1)
 
 
 
-ggsave(file = paste0(homewd, "/final-figures/eps_tiff/FigS1.eps"),
+ggsave(file = paste0(homewd, "/final-figures/eps_tiff/SuppDataSD1.eps"),
        units="mm",  
        width=90, 
        height=60, 

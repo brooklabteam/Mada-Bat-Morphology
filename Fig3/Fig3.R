@@ -93,7 +93,7 @@ p1 <- ggplot(data=AllsppAdults1) +
 p1
 
 
-ggsave(file = paste0(homewd, "final-figures/eps_tiff/FigS2.eps"),
+ggsave(file = paste0(homewd, "final-figures/eps_tiff/SuppDataSD3.eps"),
        plot = p1,
        units="mm",  
        width=80, 
@@ -348,7 +348,7 @@ ggsave(file = paste0(homewd, "final-figures/eps_tiff/Fig3.tiff"),
        width=80, 
        height=60, 
        scale=3, 
-       dpi=600)
+       dpi=200)
 
 
 #and for supplement, try GAM of just body mass with or without random effect of forearm
@@ -472,10 +472,10 @@ FigS3 <- ggplot(data = new.All.dat) +
 #FigS2
 
 
-ggsave(file = paste0(homewd, "final-figures/eps_tiff/FigS3.tiff"),
+ggsave(file = paste0(homewd, "final-figures/eps_tiff/SuppDataSD4.tiff"),
        plot = FigS3,
        units="mm",  
        width=80, 
        height=60, 
        scale=3, 
-       dpi=600)
+       dpi=200)
