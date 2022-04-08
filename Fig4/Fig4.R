@@ -750,7 +750,7 @@ EFR+theme(legend.position = c(.17,.83),legend.background = element_rect(color="g
   plot_layout(nrow = 3, heights = c(35,35,35)))
 
 
-ggsave(file = paste0(homewd, "final-figures/eps_tiff/Fig4.tiff"),
+ggsave(file = paste0(homewd, "final-figures/eps_tiff/Fig4.eps"),
        units="mm",  
        width=120, 
        height=90, 
