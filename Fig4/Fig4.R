@@ -14,7 +14,7 @@ library(gratia)
 library(patchwork)
 
 # first, set the working directory to this Fig4 subfolder
-homewd = "/Users/caraebrook/Documents/R/R_repositories/Mada-Bat-Morphology/"
+homewd = "/Users/carabrook/Developer/Mada-Bat-Morphology/"
 # above should be the parent directory for the entire project
 # for me, this is "/Users/caraebrook/Documents/R/R_repositories/Mada-Bat-Morphology/"
 
@@ -750,12 +750,12 @@ EFR+theme(legend.position = c(.17,.83),legend.background = element_rect(color="g
   plot_layout(nrow = 3, heights = c(35,35,35)))
 
 
-ggsave(file = paste0(homewd, "final-figures/Fig4.png"),
+ggsave(file = paste0(homewd, "final-figures/eps_tiff/Fig4.tiff"),
        units="mm",  
        width=120, 
        height=90, 
        scale=2.5, 
-       dpi=300)
+       dpi=600)
 
 out.all <- rbind(out.Pter, out.Rou, out.Eid)
 

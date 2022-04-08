@@ -11,7 +11,7 @@ library(BSDA)
 
 # Set wd to data on this computer. Also ID homewd, assuming that 
 # Mada-GIS is cloned to the same series of sub-folders
-homewd = "/Users/caraebrook/Documents/R/R_repositories/Mada-Bat-Morphology/" #should be wherever "Mada-Bat-Morphology" is stored on your home computer
+homewd = "/Users/carabrook/Developer/Mada-Bat-Morphology/" #should be wherever "Mada-Bat-Morphology" is stored on your home computer
 setwd(paste0(homewd, "/", "Fig2/"))
 
 #load the data from the literature.
@@ -315,12 +315,12 @@ cowplot::plot_grid(p10, pall_2 + theme(legend.position = "right"),
 
 
 
-ggsave(file = paste0(homewd, "/final-figures/Fig2.png"),
+ggsave(file = paste0(homewd, "/final-figures/eps_tiff/Fig2.eps"),
        units="mm",  
        width=90, 
        height=60, 
        scale=3, 
-       dpi=300)
+       dpi=600)
 
 
 ####ResultInterpret_Ear

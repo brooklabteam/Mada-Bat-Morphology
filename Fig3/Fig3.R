@@ -10,7 +10,7 @@ library(lmerTest)
 
 # Set wd to data on this computer. Also ID homewd, assuming that 
 # Mada-GIS is cloned to the same series of sub-folders
-homewd = "/Users/caraebrook/Documents/R/R_repositories/Mada-Bat-Morphology/" #should be wherever "Mada-Bat-Morphology" is stored on your home computer
+homewd = "/Users/carabrook/Developer/Mada-Bat-Morphology/" #should be wherever "Mada-Bat-Morphology" is stored on your home computer
 setwd(paste0(homewd, "/", "Fig3/"))
 
 
@@ -93,13 +93,13 @@ p1 <- ggplot(data=AllsppAdults1) +
 p1
 
 
-ggsave(file = paste0(homewd, "final-figures/FigS2.png"),
+ggsave(file = paste0(homewd, "final-figures/eps_tiff/FigS2.eps"),
        plot = p1,
        units="mm",  
        width=80, 
        height=40, 
        scale=3, 
-       dpi=300)
+       dpi=600)
 
 
 #sub-select only the Moramanga sites
@@ -342,13 +342,13 @@ p4_main <- ggplot(data = new.All.dat) +
 #p4_main
 
 
-ggsave(file = paste0(homewd, "final-figures/Fig3.png"),
+ggsave(file = paste0(homewd, "final-figures/eps_tiff/Fig3.tiff"),
        plot = p4_main,
        units="mm",  
        width=80, 
        height=60, 
        scale=3, 
-       dpi=300)
+       dpi=600)
 
 
 #and for supplement, try GAM of just body mass with or without random effect of forearm
@@ -472,10 +472,10 @@ FigS3 <- ggplot(data = new.All.dat) +
 #FigS2
 
 
-ggsave(file = paste0(homewd, "final-figures/FigS3.png"),
+ggsave(file = paste0(homewd, "final-figures/eps_tiff/FigS3.tiff"),
        plot = FigS3,
        units="mm",  
        width=80, 
-       height=30, 
+       height=60, 
        scale=3, 
-       dpi=300)
+       dpi=600)
