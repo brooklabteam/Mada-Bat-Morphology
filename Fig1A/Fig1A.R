@@ -316,3 +316,19 @@ ggsave(file = paste0(homewd, "/final-figures/Fig1A_final_map.pdf"),
        scale=2, 
        dpi=300)
 
+#or even higher res
+ggsave(file = paste0(homewd, "/final-figures/Fig1A_final_map.pdf"),
+       plot=p4,
+       units="mm",  
+       width=60, 
+       height=50, 
+       scale=2, 
+       dpi=600)
+
+ggsave(file = paste0(homewd, "/final-figures/Fig1A_final_map.png"),
+       plot=p4,
+       units="mm",  
+       width=60, 
+       height=50, 
+       scale=2, 
+       dpi=600)
