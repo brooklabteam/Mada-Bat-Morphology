@@ -755,7 +755,7 @@ ggsave(file = paste0(homewd, "final-figures/eps_tiff/Fig4.tiff"),
        width=120, 
        height=90, 
        scale=2.5, 
-       dpi=200)
+       dpi=300)
 
 out.all <- rbind(out.Pter, out.Rou, out.Eid)
 

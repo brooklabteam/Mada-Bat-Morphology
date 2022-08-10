@@ -348,7 +348,7 @@ ggsave(file = paste0(homewd, "final-figures/eps_tiff/Fig3.tiff"),
        width=80, 
        height=60, 
        scale=3, 
-       dpi=200)
+       dpi=300)
 
 
 #and for supplement, try GAM of just body mass with or without random effect of forearm
@@ -478,4 +478,4 @@ ggsave(file = paste0(homewd, "final-figures/eps_tiff/SuppDataSD4.tiff"),
        width=80, 
        height=60, 
        scale=3, 
-       dpi=200)
+       dpi=300)
